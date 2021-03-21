@@ -47,3 +47,4 @@ Thumbs.db
 
 #Exclude files
 front-app/node_modules/
+backend-api/node_modules/
