@@ -1,45 +1,33 @@
 import { Component , OnInit} from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
+import { Router } from '@angular/router';
 import { AppState } from '../app.state';
-import { userGetAll , userCreate ,  } from './store/actions/login.actions';
-import {
-  getUsersError ,
-  isLogged ,
-  getCreateError ,
-  isUpdated ,
-  getUpdateError ,
-  isDeleted,
-  getUserError,
-  getDeleteError
-} from './store/reducers/login.reducers';
-import { User } from  './shared/user';
-import { tap } from 'rxjs/operators';
-import { Observable , from } from 'rxjs';
+import { loginUser } from './store/actions/login.actions';
+import { erroLogging } from './store/reducers/login.reducers';
+import { User } from './shared/user';
+
+class Error {
+  messageError: string;
+  status: string;
+}
 
 
 @Component({
-  selector:'app-login',
+  selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls:['./login.component.css']
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  constructor(private router: Router,private store :Store<AppState>){
+
+  constructor(private router: Router, private store: Store<AppState>){}
+
+  ngOnInit(): void{
+      this.loginError();
   }
 
-  ngOnInit(){
-      this.loginError()
-  }
-
-  /**
-   * Display error message if load fails
-   */
-  loadingError(error) {
-  
-  }
 
   /**
-   * Display success message after execute specific action 
+   * Display success message after execute specific action
    * @param done true if action was completed or false
    * @param message the message to be displayed
    */
@@ -60,18 +48,19 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  login() : void {
-      const user:User = {
-        email:'test@test.com1212',
-        password:'1234'
-      }
-      this.store.dispatch(userCreate({user}));
+  login(): void {
+      const user: User = {
+        email: 'test@test.com',
+        password: '1234'
+      };
+      this.store.dispatch(loginUser({user}));
   }
 
-  loginError(): void {  
-    this.store.select(getCreateError).subscribe( error =>{
-      if(error !== null){
-        alert( error['messageError'])
+  loginError(): void {
+    this.store.select(erroLogging).subscribe((error) => {
+      if (error !== null){
+        const erromessage = Object.assign(new Error(), error);
+        alert(erromessage.messageError);
       }
     });
   }

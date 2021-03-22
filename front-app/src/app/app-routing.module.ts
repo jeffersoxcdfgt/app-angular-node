@@ -3,9 +3,9 @@ import { Routes, RouterModule } from '@angular/router'; // CLI imports router
 import { PageNotFoundComponent } from './shared/not-found/not-found.component';
 
 const routes: Routes = [
-  { path:'' , redirectTo:'/user' , pathMatch:'full'},
+  { path: '' , redirectTo: '/user' , pathMatch: 'full'},
   {
-    path:'user',
+    path: 'user',
     loadChildren: () => import('./private/login.module').then(m => m.LoginModule)
   },
   {path: '**', component: PageNotFoundComponent}
@@ -13,7 +13,7 @@ const routes: Routes = [
 
 // configures NgModule imports and exports
 @NgModule({
-  imports:[RouterModule.forRoot(routes,{useHash:true})],
+  imports: [RouterModule.forRoot(routes, {useHash: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -2,10 +2,10 @@ import { NgModule , CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule , ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-//components
-import { PageNotFoundComponent }  from './not-found/not-found.component';
+// components
+import { PageNotFoundComponent } from './not-found/not-found.component';
 
-//services
+// services
 import { HTTP_INTERCEPTORS , HttpClientModule} from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -15,22 +15,22 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 
 
 @NgModule({
-  imports:[
+  imports: [
     CommonModule,
     HttpClientModule,
-    //HttpClientInMemoryWebApiModule.forRoot(AppInMemoryApi),
+    // HttpClientInMemoryWebApiModule.forRoot(AppInMemoryApi),
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
     StoreModule,
     EffectsModule
   ],
-  declarations:[
+  declarations: [
     PageNotFoundComponent,
     ExtractNamesPipe
   ],
-  providers:[],
-  exports:[
+  providers: [],
+  exports: [
     CommonModule,
     HttpClientModule,
     FormsModule,
@@ -41,7 +41,7 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
     PageNotFoundComponent,
     ExtractNamesPipe
   ],
-  schemas:[CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SharedModule{
 

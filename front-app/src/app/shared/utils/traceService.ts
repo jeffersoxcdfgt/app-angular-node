@@ -6,7 +6,7 @@ import { MessageService } from './message.service';
 export class TraceService {
 
   /*Constructor for get info*/
-  constructor(private messageService:MessageService){}
+  constructor(private messageService: MessageService){}
 
   /**
    * Handle Http operation that failed.
@@ -14,7 +14,7 @@ export class TraceService {
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
    */
-  public handleError<T> (operation = 'operation', result?: T) {
+  public handleError<T>(operation = 'operation', result?: T): any {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
@@ -29,11 +29,11 @@ export class TraceService {
   }
 
   /** Log a All Service message with the MessageService */
-  public log(message: string) {
+  public log(message: string): void {
     this.messageService.add(`Service: ${message}`);
   }
 
-  public logMetaReducers() {
+  public logMetaReducers(): void {
     console.log(`Esto es un webhook en angular`);
   }
 
