@@ -16,7 +16,6 @@ export class HomeAdminComponent implements OnInit {
   ngOnInit(): void {
     this.store.select(isLogged).subscribe( data => {
       if(data!=null){
-        console.log(data)
         this.store.dispatch(userIslogged({ user:data.currentuser})); 
       }                 
     });
