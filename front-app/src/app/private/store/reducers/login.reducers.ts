@@ -42,10 +42,11 @@ const userdReducer = createReducer(
     error: err
   })),
   // User is logged
-  on(loginActions.userIslogged, state => ({ 
+  on(loginActions.userIslogged, (state, { user }) => ({ 
     ...state, 
+    selected:user, 
     action:loginActions.LoginActionTypes.IS_USER_LOGGED,
-    done:false, selected:null, 
+    done:false, 
     error:null 
   })),
   on(loginActions.userIsloggedSuccess, (state, { user }) => ({ 

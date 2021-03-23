@@ -5,6 +5,11 @@ import { tap , catchError} from 'rxjs/operators';
 import { User } from '../../shared/user';
 import { TraceService } from '../../../shared/utils/traceService';
 
+interface Userlogged {
+   stateIslogged: boolean,
+   currentUser: string
+}
+
 @Injectable()
 export class UserService {
   protected URL = 'http://localhost:1337/login';
@@ -32,8 +37,13 @@ export class UserService {
     /**
     * Verify is user is logged
     */
-   public islogged(): Observable<any> { 
-      return of(true) 
+   public islogged(usercurrent: string ): Observable<any> { 
+      return of<Userlogged>(
+         { 
+            stateIslogged: true, 
+            currentUser: usercurrent
+         }
+      ) 
          .pipe(
             tap((_ ) => this.traceService.log(`user is logged`)),
              catchError(err => of({err})

@@ -39,11 +39,11 @@ export class LoginComponent implements OnInit  , AfterViewInit{
 
   ngAfterViewInit() : void {
     this.store.select(userisLogged).subscribe((isLogged) => {
-      setTimeout(() => {
-        if(isLogged !== null){
+      setTimeout(() => {       
+        if(isLogged !== null){          
           this.subAdmin.next(isLogged)
           this.obsAdmin = this.subAdmin.pipe()
-          this.currentuser = 'test@test.com'
+          this.currentuser = isLogged.currentUser.user
         }
        })   
     });
@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit  , AfterViewInit{
   login(): void {
       if(this.validationLoginService.ifGood()){
           const user: User = {
-            email: 'test@test.com121',
+            email: 'test@test.com',
             password: '1234'
           };
           this.store.dispatch(loginUser({user}));

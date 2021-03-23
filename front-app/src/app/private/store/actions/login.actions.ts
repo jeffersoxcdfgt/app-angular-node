@@ -17,6 +17,6 @@ export const loginUserError = createAction(LoginActionTypes.LOGIN_USER_ERROR, pr
 
 //Verify is user is logged
 
-export const userIslogged = createAction(LoginActionTypes.IS_USER_LOGGED);
+export const userIslogged = createAction(LoginActionTypes.IS_USER_LOGGED , props<{user: string} >());
 export const userIsloggedSuccess = createAction(LoginActionTypes.IS_USER_LOGGED_SUCESS, props<{user: boolean}>());
 export const userIsloggedError = createAction(LoginActionTypes.IS_USER_LOGGED_ERROR, props<{err: Error}>());

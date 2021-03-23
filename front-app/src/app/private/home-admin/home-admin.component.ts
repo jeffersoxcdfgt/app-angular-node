@@ -14,9 +14,11 @@ export class HomeAdminComponent implements OnInit {
   constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
-   this.store.select(isLogged).subscribe( data => {
-        console.log(data);
-        this.store.dispatch(userIslogged());          
+    this.store.select(isLogged).subscribe( data => {
+      if(data!=null){
+        console.log(data)
+        this.store.dispatch(userIslogged({ user:data.currentuser})); 
+      }                 
     });
   }
 }
