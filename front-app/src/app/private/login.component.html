@@ -1,2 +1,86 @@
-<button type="button" name="button" (click)="login()">Login</button>
+
+<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8" *ngIf="showHomeadmin">
+    <div class="max-w-md w-full space-y-8">
+      <div>
+        <img class="mx-auto h-12 w-auto" src="../assets/img/workflow-mark-indigo-600.svg" alt="Workflow">
+        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          Create your account
+        </h2>
+        <p class="mt-2 text-center text-sm text-gray-600">
+            Already registered?
+          <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">
+            Sign in
+          </a>
+        </p>
+      </div>
+      <div class="mt-8 sm:mx-auto sm:w-full sm:mas-w-md">
+          <div class="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
+            <form class="mb-0 space-y-6" action="#" method="POST">
+                <div>  
+                    <label for="email" [className]="'block text-sm font-medium text-gray-700'" [ngClass]="{'text-red-400' : !(validationLoginService.obsEmail | async) }">Email address </label>
+                    <div class="mt-1">
+                        <input  id="email" name="email"  type="email"  autocomplete="email" required (input)="validationLoginService.inputEmail( $event.target.value)"
+                          [className]="'w-full border-gray-300 rounded-lg shadow-sm'" 
+                          [ngClass]="{'border border-transparent border-red-400  focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent' : !(validationLoginService.obsEmail | async) }"/>
+                    </div>                    
+                    <div class="mt-2">
+                      <span *ngIf="!(validationLoginService.obsEmail | async)" class="text-red-400" >Email is required</span>
+                    </div>
+                </div>
+                <div>
+                    <label for="password" [className]="'block text-sm font-medium text-gray-700'" [ngClass]="{'text-red-400' : !(validationLoginService.obsPassword | async) }"  >Password</label>
+                    <div class="mt-1">
+                        <input  id="password" name="password"  type="password"  autocomplete="current-password" required (input)="validationLoginService.inputPassword( $event.target.value)"
+                          [className]="'w-full border-gray-300 rounded-lg shadow-sm'" 
+                          [ngClass]="{'border border-transparent border-red-400 focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent' : !(validationLoginService.obsPassword | async) }"/>
+                    </div>
+                    <div class="mt-2">
+                      <span *ngIf="!(validationLoginService.obsPassword | async)" class="text-red-400" >Password is required</span>
+                    </div>                    
+                </div>
+                <div class="flex items-center">
+                    <input 
+                    id="terms-and-privacy" 
+                    name="terms-and-privacy" 
+                    type="checkbox" 
+                    (change)="validationLoginService.inputTerms( $event.target.checked)"
+                    [ngClass]="{'rounded border-red-400 text-red-400 focus:ring-red-400' : !(validationLoginService.obsTerms | async) }"/>
+                    <label for="terms-and-privacy"                     
+                    [className]="'ml-2 block text-sm text-gray-900'"                   
+                    > I agree to the
+                      <a href="#" class="text-indigo-600 hover:text-indigo-500" >Terms</a>
+                      and
+                      <a href="#" class="text-indigo-600 hover:text-indigo-500">Privacy Policy</a>.
+                    </label>
+                </div>
+                <div class="mt-2">
+                  <span *ngIf="!(validationLoginService.obsTerms | async)" class="text-red-400" >It is required checked </span>
+                </div>
+                <div>
+                    <button
+                    (click)="login()"
+                    type="submit" class="
+                    w-full flex 
+                    justify-center 
+                    py-2 px-4 
+                    border 
+                    border-transparent 
+                    rounded-md shadow-sm 
+                    text-sm 
+                    font-medium 
+                    text-white 
+                    bg-indigo-600
+                    hover:bg-indigo-700
+                    focus:outline-none
+                    focus:ring-2
+                    focus:ring-offset-2
+                    focus:ring-indigo-500">
+                    Sign up
+                    </button>
+                </div>
+            </form>
+          </div>
+      </div>
+    </div>
+  </div>
 <router-outlet></router-outlet>

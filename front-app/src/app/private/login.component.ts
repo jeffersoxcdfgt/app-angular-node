@@ -5,12 +5,12 @@ import { AppState } from '../app.state';
 import { loginUser } from './store/actions/login.actions';
 import { erroLogging } from './store/reducers/login.reducers';
 import { User } from './shared/user';
+import { ValidationLoginService } from '../shared/validations/validationLogin';
 
 class Error {
   messageError: string;
   status: string;
 }
-
 
 @Component({
   selector: 'app-login',
@@ -19,9 +19,16 @@ class Error {
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private router: Router, private store: Store<AppState>){}
+  showHomeadmin: boolean = true;
+
+  constructor(
+    private router: Router, 
+    private store: Store<AppState>,
+    public validationLoginService:ValidationLoginService
+    ){}
 
   ngOnInit(): void{
+      this.validationLoginService.initValidation();
       this.loginError();
   }
 
@@ -49,11 +56,14 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-      const user: User = {
-        email: 'test@test.com',
-        password: '1234'
-      };
-      this.store.dispatch(loginUser({user}));
+      if(this.validationLoginService.ifGood()){
+          const user: User = {
+            email: 'test@test.com12121',
+            password: '1234'
+          };
+          this.store.dispatch(loginUser({user}));
+          this.showHomeadmin = false;
+      }
   }
 
   loginError(): void {

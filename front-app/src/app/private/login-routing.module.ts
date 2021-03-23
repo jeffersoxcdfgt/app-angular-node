@@ -5,11 +5,13 @@ import { Routes , RouterModule } from '@angular/router';
 import { LoginComponent } from './login.component';
 import { HomeAdminComponent } from './home-admin/home-admin.component';
 
+
 const adminRoutes: Routes  =  [{
   path: '',
   component : LoginComponent,
   children: [
-    { path: 'homeadmin' , component:  HomeAdminComponent }
+    { path: 'homeadmin' , component:  HomeAdminComponent },
+  
   ]
 }] as Routes;
 
