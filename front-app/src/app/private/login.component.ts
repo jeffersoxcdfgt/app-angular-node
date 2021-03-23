@@ -1,11 +1,12 @@
-import { Component , OnInit} from '@angular/core';
+import { Component , OnInit , AfterViewInit} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { AppState } from '../app.state';
 import { loginUser } from './store/actions/login.actions';
-import { erroLogging } from './store/reducers/login.reducers';
+import { erroLogging , userisLogged } from './store/reducers/login.reducers';
 import { User } from './shared/user';
 import { ValidationLoginService } from '../shared/validations/validationLogin';
+import { BehaviorSubject , of   } from 'rxjs';
 
 class Error {
   messageError: string;
@@ -17,9 +18,13 @@ class Error {
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit  , AfterViewInit{
 
-  showHomeadmin: boolean = true;
+  subAdmin:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  obsAdmin:any = of(false);
+  currentuser: string;
+  messageValidation : string = 'Error credentials user';
+
 
   constructor(
     private router: Router, 
@@ -32,6 +37,17 @@ export class LoginComponent implements OnInit {
       this.loginError();
   }
 
+  ngAfterViewInit() : void {
+    this.store.select(userisLogged).subscribe((isLogged) => {
+      setTimeout(() => {
+        if(isLogged !== null){
+          this.subAdmin.next(isLogged)
+          this.obsAdmin = this.subAdmin.pipe()
+          this.currentuser = 'test@test.com'
+        }
+       })   
+    });
+  }
 
   /**
    * Display success message after execute specific action
@@ -58,11 +74,10 @@ export class LoginComponent implements OnInit {
   login(): void {
       if(this.validationLoginService.ifGood()){
           const user: User = {
-            email: 'test@test.com12121',
+            email: 'test@test.com121',
             password: '1234'
           };
           this.store.dispatch(loginUser({user}));
-          this.showHomeadmin = false;
       }
   }
 

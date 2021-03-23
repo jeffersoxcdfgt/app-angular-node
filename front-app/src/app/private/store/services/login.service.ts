@@ -24,7 +24,20 @@ export class UserService {
            catchError(err => {
                return   of({err});
            }
-        )
+         )
      );
+   }
+
+
+    /**
+    * Verify is user is logged
+    */
+   public islogged(): Observable<any> { 
+      return of(true) 
+         .pipe(
+            tap((_ ) => this.traceService.log(`user is logged`)),
+             catchError(err => of({err})
+         )
+      )
    }
 }

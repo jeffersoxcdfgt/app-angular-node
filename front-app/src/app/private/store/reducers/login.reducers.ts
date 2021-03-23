@@ -5,7 +5,7 @@ import * as loginActions from '../actions/login.actions';
 
 export interface State {
   data: User[];
-  selected: User;
+  selected: User | any;
   action: string;
   done: boolean;
   error?: Error;
@@ -21,7 +21,7 @@ const initialState: State  = {
 
 const userdReducer = createReducer(
   initialState,
-  // Create User
+  // Login user
   on(loginActions.loginUser, (state, { user }) => ({
     ...state,
     selected: user,
@@ -40,6 +40,26 @@ const userdReducer = createReducer(
     done: true,
     selected: null,
     error: err
+  })),
+  // User is logged
+  on(loginActions.userIslogged, state => ({ 
+    ...state, 
+    action:loginActions.LoginActionTypes.IS_USER_LOGGED,
+    done:false, selected:null, 
+    error:null 
+  })),
+  on(loginActions.userIsloggedSuccess, (state, { user }) => ({ 
+    ...state, 
+     selected :user,
+     done: 
+     true, error:  
+     null
+  })),
+  on(loginActions.userIsloggedError, (state, { err }) => ({ 
+    ...state, 
+    done:true, 
+    selected:null, 
+    error:err 
   }))
 );
 
@@ -47,8 +67,6 @@ export function reducer(state: State | undefined, action: AppAction): any{
   return userdReducer(state, action);
 }
 export const getUsersState = createFeatureSelector < State > ('user');
-
-
 
 // Selector logging user
 
@@ -65,4 +83,20 @@ export const erroLogging = createSelector( getUsersState , (state: State) => {
       return state.action === loginActions.LoginActionTypes.LOGIN_USER
        ? state.error
        : null;
+});
+
+
+//Is user is logged
+export const userisLogged = createSelector( getUsersState , ( state: State ) => {
+  if (state.action ===  loginActions.LoginActionTypes.IS_USER_LOGGED && state.done && !state.error){
+    return state.selected;
+  } else{
+    return null;
+  }
+});
+
+export const userisLoggedError = createSelector( getUsersState , (state: State) => {
+  return state.action === loginActions.LoginActionTypes.IS_USER_LOGGED
+   ? state.error
+   : null;
 });

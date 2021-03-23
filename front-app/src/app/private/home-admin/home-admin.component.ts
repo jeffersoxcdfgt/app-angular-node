@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
 import { isLogged } from '../store/reducers/login.reducers';
+import { userIslogged } from '../store/actions/login.actions';
 
 @Component({
   selector: 'app-home-admin',
@@ -15,6 +16,7 @@ export class HomeAdminComponent implements OnInit {
   ngOnInit(): void {
    this.store.select(isLogged).subscribe( data => {
         console.log(data);
+        this.store.dispatch(userIslogged());          
     });
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType , Effect } from '@ngrx/effects';
-import { map , switchMap  } from 'rxjs/operators';
+import { map , switchMap  , mergeMap , catchError } from 'rxjs/operators';
 import { UserService } from '../services/login.service';
 import { LoginActionTypes ,  loginUserError } from '../actions/login.actions';
 import { Router } from '@angular/router';
@@ -10,6 +10,7 @@ import { AppState } from '../../../app.state';
 
 @Injectable()
 export class UserEffects {
+
     public logIn$ = createEffect(() =>  this.actions$.pipe(
     ofType(LoginActionTypes.LOGIN_USER),
         switchMap((userdata) => {
@@ -32,10 +33,25 @@ export class UserEffects {
     )
   );
 
+  public userIslogged$ = createEffect(() =>  this.actions$.pipe(
+    ofType(LoginActionTypes.IS_USER_LOGGED),
+        mergeMap(() => this.userService.islogged()
+            .pipe(
+              map((user) => ({ type: LoginActionTypes.IS_USER_LOGGED_SUCESS, user: user }))
+          ) 
+      )
+    )
+  );
+
+
+
+
+
   constructor(
     private actions$: Actions,
     private userService: UserService,
     private router: Router,
     private store: Store<AppState>
   ) {}
+  
 }
