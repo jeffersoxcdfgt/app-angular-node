@@ -20,7 +20,7 @@ export class UserEffects {
                 if (user.hasOwnProperty('err')){
                   throw user.err.error;
                 }
-                this.router.navigate(['/user/homeadmin']);
+                this.router.navigate(['/user/menu']);
               } catch (error) {
                 this.store.dispatch(loginUserError({err: error} ));
               }
@@ -32,20 +32,6 @@ export class UserEffects {
       )
     )
   );
-
-  public userIslogged$ = createEffect(() =>  this.actions$.pipe(
-    ofType(LoginActionTypes.IS_USER_LOGGED),
-        mergeMap((user) => this.userService.islogged(user)
-            .pipe(
-              map((user) => ({ type: LoginActionTypes.IS_USER_LOGGED_SUCESS, user: user }))
-          ) 
-      )
-    )
-  );
-
-
-
-
 
   constructor(
     private actions$: Actions,

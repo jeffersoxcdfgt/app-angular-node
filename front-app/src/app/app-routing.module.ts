@@ -6,7 +6,7 @@ const routes: Routes = [
   { path: '' , redirectTo: '/user' , pathMatch: 'full'},
   {
     path: 'user',
-    loadChildren: () => import('./private/login.module').then(m => m.LoginModule)
+    loadChildren: () => import('./private/admin.module').then(m => m.AdminModule)
   },
   {path: '**', component: PageNotFoundComponent}
 ]; // sets up routes constant where you define your routes

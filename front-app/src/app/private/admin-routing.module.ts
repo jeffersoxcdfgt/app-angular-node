@@ -2,17 +2,19 @@ import { NgModule   } from '@angular/core';
 import { Routes , RouterModule } from '@angular/router';
 
 // components
-import { LoginComponent } from './login.component';
-import { HomeAdminComponent } from './home-admin/home-admin.component';
-import { ExampleComponent } from './example/example.component';
+import { AdminComponent } from './admin.component';
+import { LoginAdminComponent } from './login-admin/login-admin.component';
 
 
 const adminRoutes: Routes  =  [{
   path: '',
-  component : LoginComponent,
+  component : AdminComponent,
   children: [
-    { path: 'homeadmin' , component:  HomeAdminComponent },
-    { path: 'example' , component:  ExampleComponent },
+    { path:'' , component:  LoginAdminComponent },
+    {
+      path: 'menu',
+      loadChildren: () => import('./menu-admin/menu.module').then(m => m.MenuModule)
+    }
   
   ]
 }] as Routes;
@@ -27,6 +29,6 @@ export class AdminRoutingModule {
 }
 
 export const adminRoutedComponents = [
-  LoginComponent,
-  HomeAdminComponent
+  AdminComponent,
+  LoginAdminComponent
 ];

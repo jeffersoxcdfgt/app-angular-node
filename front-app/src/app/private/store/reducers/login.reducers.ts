@@ -40,27 +40,6 @@ const userdReducer = createReducer(
     done: true,
     selected: null,
     error: err
-  })),
-  // User is logged
-  on(loginActions.userIslogged, (state, { user }) => ({ 
-    ...state, 
-    selected:user, 
-    action:loginActions.LoginActionTypes.IS_USER_LOGGED,
-    done:false, 
-    error:null 
-  })),
-  on(loginActions.userIsloggedSuccess, (state, { user }) => ({ 
-    ...state, 
-     selected :user,
-     done: 
-     true, error:  
-     null
-  })),
-  on(loginActions.userIsloggedError, (state, { err }) => ({ 
-    ...state, 
-    done:true, 
-    selected:null, 
-    error:err 
   }))
 );
 
@@ -84,20 +63,4 @@ export const erroLogging = createSelector( getUsersState , (state: State) => {
       return state.action === loginActions.LoginActionTypes.LOGIN_USER
        ? state.error
        : null;
-});
-
-
-//Is user is logged
-export const userisLogged = createSelector( getUsersState , ( state: State ) => {
-  if (state.action ===  loginActions.LoginActionTypes.IS_USER_LOGGED && state.done && !state.error){
-    return state.selected;
-  } else{
-    return null;
-  }
-});
-
-export const userisLoggedError = createSelector( getUsersState , (state: State) => {
-  return state.action === loginActions.LoginActionTypes.IS_USER_LOGGED
-   ? state.error
-   : null;
 });

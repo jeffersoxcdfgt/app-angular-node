@@ -32,22 +32,4 @@ export class UserService {
          )
      );
    }
-
-
-    /**
-    * Verify is user is logged
-    */
-   public islogged(usercurrent: string ): Observable<any> { 
-      return of<Userlogged>(
-         { 
-            stateIslogged: true, 
-            currentUser: usercurrent
-         }
-      ) 
-         .pipe(
-            tap((_ ) => this.traceService.log(`user is logged`)),
-             catchError(err => of({err})
-         )
-      )
-   }
 }

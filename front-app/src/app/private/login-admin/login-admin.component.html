@@ -1,0 +1,158 @@
+
+<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+      <div>
+        <img class="mx-auto h-12 w-auto" src="../assets/img/workflow-mark-indigo-600.svg" alt="Workflow">
+        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          Create your account
+        </h2>
+        <p class="mt-2 text-center text-sm text-gray-600">
+            Already registered?
+          <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">
+            Sign in
+          </a>
+        </p>
+      </div>
+      <div class="mt-8 sm:mx-auto sm:w-full sm:mas-w-md">
+          <div class="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
+            <form class="mb-0 space-y-6" action="#" method="POST">
+                <div>  
+                    <label for="email" [className]="'block text-sm font-medium text-gray-700'" [ngClass]="{'text-red-400' : !(validationLoginService.obsEmail | async) }">Email address </label>
+                    <div class="mt-1">
+                        <input  id="email" name="email"  type="email"  autocomplete="email" required (input)="validationLoginService.inputEmail( $event.target.value)"
+                          [className]="'w-full border-gray-300 rounded-lg shadow-sm'" 
+                          [ngClass]="{'border border-transparent border-red-400  focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent' : !(validationLoginService.obsEmail | async) }"/>
+                    </div>                    
+                    <div class="mt-2">
+                      <span *ngIf="!(validationLoginService.obsEmail | async)" class="text-red-400" >Email is required</span>
+                    </div>
+                </div>
+                <div>
+                    <label for="password" [className]="'block text-sm font-medium text-gray-700'" [ngClass]="{'text-red-400' : !(validationLoginService.obsPassword | async) }"  >Password</label>
+                    <div class="mt-1">
+                        <input  id="password" name="password"  type="password"  autocomplete="current-password" required (input)="validationLoginService.inputPassword( $event.target.value)"
+                          [className]="'w-full border-gray-300 rounded-lg shadow-sm'" 
+                          [ngClass]="{'border border-transparent border-red-400 focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent' : !(validationLoginService.obsPassword | async) }"/>
+                    </div>
+                    <div class="mt-2">
+                      <span *ngIf="!(validationLoginService.obsPassword | async)" class="text-red-400" >Password is required</span>
+                    </div>                    
+                </div>
+                <div class="flex items-center">
+                    <input 
+                    id="terms-and-privacy" 
+                    name="terms-and-privacy" 
+                    type="checkbox" 
+                    (change)="validationLoginService.inputTerms( $event.target.checked)"
+                    [ngClass]="{'rounded border-red-400 text-red-400 focus:ring-red-400' : !(validationLoginService.obsTerms | async) }"/>
+                    <label for="terms-and-privacy"                     
+                    [className]="'ml-2 block text-sm text-gray-900'"                   
+                    > I agree to the
+                      <a href="#" class="text-indigo-600 hover:text-indigo-500" >Terms</a>
+                      and
+                      <a href="#" class="text-indigo-600 hover:text-indigo-500">Privacy Policy</a>.
+                    </label>
+                </div>
+                <div class="mt-2">
+                  <span *ngIf="!(validationLoginService.obsTerms | async)" class="text-red-400" >It is required checked </span>
+                </div>
+                <div>
+                    <button
+                    (click)="login()"
+                    type="submit" class="
+                    w-full flex 
+                    justify-center 
+                    py-2 px-4 
+                    border 
+                    border-transparent 
+                    rounded-md shadow-sm 
+                    text-sm 
+                    font-medium 
+                    text-white 
+                    bg-indigo-600
+                    hover:bg-indigo-700
+                    focus:outline-none
+                    focus:ring-2
+                    focus:ring-offset-2
+                    focus:ring-indigo-500">
+                    Sign up
+                    </button>
+                </div>
+            </form>
+          </div>
+      </div>
+    </div>
+  </div>
+    <!-- This example requires Tailwind CSS v2.0+ -->
+  <div class="fixed z-10 inset-0 overflow-y-auto" [style.display]="showAlert">
+    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+      <!--
+        Background overlay, show/hide based on modal state.
+
+        Entering: "ease-out duration-300"
+          From: "opacity-0"
+          To: "opacity-100"
+        Leaving: "ease-in duration-200"
+          From: "opacity-100"
+          To: "opacity-0"
+      -->
+      <div [className]="'fixed inset-0 transition-opacity'"
+      [ngClass]="{
+        'ease-out duration-300 opacity-100': showAlert == 'block',
+        'ease-in duration-200  opacity-0': showAlert == 'none' 
+      }"
+      aria-hidden="true">
+        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+      </div>
+
+      <!-- This element is to trick the browser into centering the modal contents. -->
+      <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+      <!--
+        Modal panel, show/hide based on modal state.
+
+        Entering: "ease-out duration-300"
+          From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+          To: "opacity-100 translate-y-0 sm:scale-100"
+        Leaving: "ease-in duration-200"
+          From: "opacity-100 translate-y-0 sm:scale-100"
+          To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+      -->
+      <div [className]="'inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full'"
+      [ngClass]="{
+        'ease-out duration-300 opacity-100 translate-y-0 sm:scale-100': showAlert == 'block',
+        'ease-in duration-200  opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95': showAlert == 'none' 
+      }"
+      role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+          <div class="sm:flex sm:items-start">
+            <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+              <!-- Heroicon name: outline/exclamation -->
+              <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+              <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-headline">
+                Error validation user
+              </h3>
+              <div class="mt-2">
+                <p class="text-sm text-gray-500">
+                  {{messageValidation}}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+          <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"          
+            (click)="close()">
+            Accept
+          </button>
+          <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+            (click)="close()">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
