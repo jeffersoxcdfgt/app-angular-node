@@ -19,7 +19,7 @@
                 <div>  
                     <label for="email" [className]="'block text-sm font-medium text-gray-700'" [ngClass]="{'text-red-400' : (validationLoginService.obsEmail | async) === false }">Email address </label>
                     <div class="mt-1">
-                        <input  id="email" name="email"  type="email"  autocomplete="email" required (input)="validationLoginService.inputEmail( $event.target.value)"
+                        <input  id="email" name="email"  type="email"  autocomplete="email" required (input)="validationLoginService.inputEmail( $event.target.value); subgetEmail.next($event.target.value)"
                           [className]="'w-full border-gray-300 rounded-lg shadow-sm'" 
                           [ngClass]="{'border border-transparent border-red-400  focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent' : (validationLoginService.obsEmail | async) === false}"/>
                     </div>                    
@@ -30,7 +30,7 @@
                 <div>
                     <label for="password" [className]="'block text-sm font-medium text-gray-700'" [ngClass]="{'text-red-400' : (validationLoginService.obsPassword | async) === false }"  >Password</label>
                     <div class="mt-1">
-                        <input  id="password" name="password"  type="password"  autocomplete="current-password" required (input)="validationLoginService.inputPassword( $event.target.value)"
+                        <input  id="password" name="password"  type="password"  autocomplete="current-password" required (input)="validationLoginService.inputPassword( $event.target.value); subgetPassword.next($event.target.value)"
                           [className]="'w-full border-gray-300 rounded-lg shadow-sm'" 
                           [ngClass]="{'border border-transparent border-red-400 focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent' : (validationLoginService.obsPassword | async) === false }"/>
                     </div>
