@@ -22,18 +22,22 @@ export class LoginAdminComponent implements OnInit {
   messageValidation = '';
   showAlert = 'none';
 
-  subgetEmail: BehaviorSubject<string> = new BehaviorSubject<string>('')
+  subgetEmail: BehaviorSubject<string> = new BehaviorSubject<string>('');
   obsgetEmail: any;
 
-  subgetPassword: BehaviorSubject<string> = new BehaviorSubject<string>('')
+  subgetPassword: BehaviorSubject<string> = new BehaviorSubject<string>('');
   obsgetPassword: any;
+
+  email = '';
+  password = '';
 
   constructor(
     private store: Store<AppState>,
     public validationLoginService: ValidationLoginService
     ){
-        this.obsgetEmail = this.subgetEmail
-        this.obsgetPassword = this.subgetPassword       
+        this.obsgetEmail = this.subgetEmail;
+        this.obsgetPassword = this.subgetPassword;
+        this.getDatainputs();
     }
 
     ngOnInit(): void{
@@ -41,21 +45,19 @@ export class LoginAdminComponent implements OnInit {
       this.loginError();
     }
 
+    getDatainputs = () => combineLatest([this.obsgetEmail , this.obsgetPassword])
+      .subscribe(([email, password]) => {
+        this.email = email.toString();
+        this.password = password.toString();
+    })
 
     login(): void {
-
-      this.obsgetEmail = this.subgetEmail
-      this.obsgetPassword = this.subgetPassword  
-
-        if (this.validationLoginService.ifGood()){           
-            combineLatest([this.obsgetEmail , this.obsgetPassword])
-            .subscribe(([email,password])=>{
-                const user:User  = {
-                  email: email.toString(),
-                  password: password.toString()
-                };
-                this.store.dispatch(loginUser({user}));
-            })
+        if (this.validationLoginService.ifGood()){
+          const user: User  = {
+            email: this.email,
+            password: this.password
+          };
+          this.store.dispatch(loginUser({user}));
         }
     }
 
@@ -63,8 +65,8 @@ export class LoginAdminComponent implements OnInit {
       this.store.select(erroLogging).subscribe((error) => {
         if (error !== null){
           const erromessage = Object.assign(new Error(), error);
-          this.messageValidation = erromessage.messageError; 
-         // this.showAlert = 'block';
+          this.messageValidation = erromessage.messageError;
+          this.showAlert = 'block';
         }
       });
     }
