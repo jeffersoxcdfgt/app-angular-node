@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject , combineLatest ,of   } from 'rxjs';
+import { BehaviorSubject , combineLatest , of   } from 'rxjs';
 import { cleanBlank , ifEmpty , ifChecked , validObs } from './validation';
 import { tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class ValidationLoginService {
 
-  subEmail:BehaviorSubject<string>;
-  obsEmail:any;
+  subEmail: BehaviorSubject<string>;
+  obsEmail: any;
 
-  subPassword:BehaviorSubject<string>;
-  obsPassword:any;
+  subPassword: BehaviorSubject<string>;
+  obsPassword: any;
 
-  subTerms:BehaviorSubject<boolean>;
-  obsTerms:any;
+  subTerms: BehaviorSubject<boolean>;
+  obsTerms: any;
 
-  click$:boolean;
+  click$: boolean;
 
   constructor(){ }
 
@@ -32,42 +32,42 @@ export class ValidationLoginService {
 
   }
 
-  inputEmail(str:string):void{
-      this.subEmail.next(str)
-        this.obsEmail = this.subEmail.pipe(
+  inputEmail(str: string): void{
+      this.subEmail.next(str);
+      this.obsEmail = this.subEmail.pipe(
                 cleanBlank,
-                    ifEmpty)
+                    ifEmpty);
   }
 
-  inputPassword(str:string):void{
-    this.subPassword.next(str)
-      this.obsPassword = this.subPassword.pipe(
+  inputPassword(str: string): void{
+    this.subPassword.next(str);
+    this.obsPassword = this.subPassword.pipe(
               cleanBlank,
-                  ifEmpty)
+                  ifEmpty);
  }
 
- inputTerms(checked: boolean):void{
-   this.subTerms.next(checked)
-      this.obsTerms = this.subTerms.pipe(ifChecked)
-} 
+ inputTerms(checked: boolean): void{
+   this.subTerms.next(checked);
+   this.obsTerms = this.subTerms.pipe(ifChecked);
+}
 
 
-  ifGood():boolean{
-      this.click$ = false
-      this.obsEmail = this.subEmail.pipe(cleanBlank,ifEmpty)      
-      this.obsPassword = this.subPassword.pipe(cleanBlank,ifEmpty) 
-      this.obsTerms = this.subTerms.pipe(ifChecked)
+  ifGood(): boolean{
+      this.click$ = false;
+      this.obsEmail = this.subEmail.pipe(cleanBlank, ifEmpty);
+      this.obsPassword = this.subPassword.pipe(cleanBlank, ifEmpty);
+      this.obsTerms = this.subTerms.pipe(ifChecked);
 
       combineLatest(
-        this.obsEmail.pipe(validObs),
+        [this.obsEmail.pipe(validObs),
         this.obsPassword.pipe(validObs),
-        this.obsTerms.pipe(validObs)
-      ).subscribe(() => this.click$ =  true )
+        this.obsTerms.pipe(validObs)]
+      ).subscribe(() => this.click$ =  true );
 
-      if(this.click$){
-        return true
+      if (this.click$){
+        return true;
       }
-      return false
+      return false;
   }
 
 }

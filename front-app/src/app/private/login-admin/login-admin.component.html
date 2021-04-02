@@ -17,25 +17,25 @@
           <div class="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
             <form class="mb-0 space-y-6" action="#" method="POST">
                 <div>  
-                    <label for="email" [className]="'block text-sm font-medium text-gray-700'" [ngClass]="{'text-red-400' : !(validationLoginService.obsEmail | async) }">Email address </label>
+                    <label for="email" [className]="'block text-sm font-medium text-gray-700'" [ngClass]="{'text-red-400' : (validationLoginService.obsEmail | async) === false }">Email address </label>
                     <div class="mt-1">
                         <input  id="email" name="email"  type="email"  autocomplete="email" required (input)="validationLoginService.inputEmail( $event.target.value)"
                           [className]="'w-full border-gray-300 rounded-lg shadow-sm'" 
-                          [ngClass]="{'border border-transparent border-red-400  focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent' : !(validationLoginService.obsEmail | async) }"/>
+                          [ngClass]="{'border border-transparent border-red-400  focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent' : (validationLoginService.obsEmail | async) === false}"/>
                     </div>                    
                     <div class="mt-2">
-                      <span *ngIf="!(validationLoginService.obsEmail | async)" class="text-red-400" >Email is required</span>
+                      <span *ngIf="(validationLoginService.obsEmail | async) === false" class="text-red-400" >Email is required</span>
                     </div>
                 </div>
                 <div>
-                    <label for="password" [className]="'block text-sm font-medium text-gray-700'" [ngClass]="{'text-red-400' : !(validationLoginService.obsPassword | async) }"  >Password</label>
+                    <label for="password" [className]="'block text-sm font-medium text-gray-700'" [ngClass]="{'text-red-400' : (validationLoginService.obsPassword | async) === false }"  >Password</label>
                     <div class="mt-1">
                         <input  id="password" name="password"  type="password"  autocomplete="current-password" required (input)="validationLoginService.inputPassword( $event.target.value)"
                           [className]="'w-full border-gray-300 rounded-lg shadow-sm'" 
-                          [ngClass]="{'border border-transparent border-red-400 focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent' : !(validationLoginService.obsPassword | async) }"/>
+                          [ngClass]="{'border border-transparent border-red-400 focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent' : (validationLoginService.obsPassword | async) === false }"/>
                     </div>
                     <div class="mt-2">
-                      <span *ngIf="!(validationLoginService.obsPassword | async)" class="text-red-400" >Password is required</span>
+                      <span *ngIf="(validationLoginService.obsPassword | async) === false" class="text-red-400" >Password is required</span>
                     </div>                    
                 </div>
                 <div class="flex items-center">
@@ -44,7 +44,7 @@
                     name="terms-and-privacy" 
                     type="checkbox" 
                     (change)="validationLoginService.inputTerms( $event.target.checked)"
-                    [ngClass]="{'rounded border-red-400 text-red-400 focus:ring-red-400' : !(validationLoginService.obsTerms | async) }"/>
+                    [ngClass]="{'rounded border-red-400 text-red-400 focus:ring-red-400' : (validationLoginService.obsTerms | async) === false }"/>
                     <label for="terms-and-privacy"                     
                     [className]="'ml-2 block text-sm text-gray-900'"                   
                     > I agree to the
@@ -54,7 +54,7 @@
                     </label>
                 </div>
                 <div class="mt-2">
-                  <span *ngIf="!(validationLoginService.obsTerms | async)" class="text-red-400" >It is required checked </span>
+                  <span *ngIf="(validationLoginService.obsTerms | async) === false" class="text-red-400" >It is required checked </span>
                 </div>
                 <div>
                     <button

@@ -19,12 +19,12 @@ class Error {
   styleUrls: ['./login-admin.component.css']
 })
 export class LoginAdminComponent implements OnInit {
-  messageValidation : string = '';
-  showAlert : string = 'none';
+  messageValidation = '';
+  showAlert = 'none';
 
   constructor(
     private store: Store<AppState>,
-    public validationLoginService:ValidationLoginService
+    public validationLoginService: ValidationLoginService
     ){}
 
     ngOnInit(): void{
@@ -32,9 +32,9 @@ export class LoginAdminComponent implements OnInit {
       this.loginError();
     }
 
-  
+
     login(): void {
-        if(this.validationLoginService.ifGood()){
+        if (this.validationLoginService.ifGood()){
             const user: User = {
               email: 'test@test.com',
               password: '1234'
@@ -42,16 +42,16 @@ export class LoginAdminComponent implements OnInit {
             this.store.dispatch(loginUser({user}));
         }
     }
-  
+
     loginError(): void {
       this.store.select(erroLogging).subscribe((error) => {
         if (error !== null){
           const erromessage = Object.assign(new Error(), error);
-          this.messageValidation = erromessage.messageError
-          this.showAlert = 'block'
+          this.messageValidation = erromessage.messageError;
+          this.showAlert = 'block';
         }
       });
     }
-  
-    close = () => this.showAlert  = 'none'
+
+    close = () => this.showAlert  = 'none';
 }

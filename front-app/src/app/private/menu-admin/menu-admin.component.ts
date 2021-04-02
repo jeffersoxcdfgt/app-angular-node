@@ -10,24 +10,24 @@ import { isLogged } from '../store/reducers/login.reducers';
 })
 export class MenuAdminComponent implements OnInit {
 
-  currentuser: string = '';
-  valuestyle: string = 'none';
+  currentuser = '';
+  valuestyle = 'none';
 
   constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
-    this.store.select(isLogged).subscribe( data => {   
-      if(data!=null){
-        this.currentuser = data.currentuser
-      }                 
+    this.store.select(isLogged).subscribe( data => {
+      if (data != null){
+        this.currentuser = data.currentuser;
+      }
     });
   }
 
-  toggleDropdown = () =>  this.valuestyle = this.valuestyle === 'none' ? 'block' : 'none'
+  toggleDropdown = () =>  this.valuestyle = this.valuestyle === 'none' ? 'block' : 'none';
 
-  @HostListener("document:click") 
-  clickedOut = () => { 
-  } 
+  @HostListener('document:click')
+  clickedOut = () => {
+  }
 
 
 }

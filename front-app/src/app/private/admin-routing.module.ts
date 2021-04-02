@@ -10,12 +10,12 @@ const adminRoutes: Routes  =  [{
   path: '',
   component : AdminComponent,
   children: [
-    { path:'' , component:  LoginAdminComponent },
+    { path: '' , component:  LoginAdminComponent },
     {
       path: 'menu',
       loadChildren: () => import('./menu-admin/menu.module').then(m => m.MenuModule)
     }
-  
+
   ]
 }] as Routes;
 

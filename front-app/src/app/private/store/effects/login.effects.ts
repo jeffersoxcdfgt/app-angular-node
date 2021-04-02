@@ -39,5 +39,5 @@ export class UserEffects {
     private router: Router,
     private store: Store<AppState>
   ) {}
-  
+
 }

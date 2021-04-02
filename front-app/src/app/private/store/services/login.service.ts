@@ -6,8 +6,8 @@ import { User } from '../../shared/user';
 import { TraceService } from '../../../shared/utils/traceService';
 
 interface Userlogged {
-   stateIslogged: boolean,
-   currentUser: string
+   stateIslogged: boolean;
+   currentUser: string;
 }
 
 @Injectable()

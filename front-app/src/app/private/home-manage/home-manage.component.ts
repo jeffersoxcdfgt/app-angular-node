@@ -10,7 +10,7 @@ export class HomeManageComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log("home manage")
+    console.log('home manage');
   }
 
 }
