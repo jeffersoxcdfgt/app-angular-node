@@ -26,10 +26,7 @@ export class UserService {
      return this.http.post<User>(this.URL , data  , {headers })
      .pipe(
           map((userdata)=> { return { ...userdata, user:data['user'].email }}),
-           catchError(err => {
-               return   of({err});
-           }
-         )
+           catchError(err =>of({err}))
      );
    }
 }
