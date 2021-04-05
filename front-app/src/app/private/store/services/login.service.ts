@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient , HttpHeaders } from '@angular/common/http';
 import { Observable , of } from 'rxjs';
-import { tap , catchError} from 'rxjs/operators';
+import { catchError , map} from 'rxjs/operators';
 import { User } from '../../shared/user';
 import { TraceService } from '../../../shared/utils/traceService';
 
@@ -25,7 +25,7 @@ export class UserService {
      headers = headers.set('Content-Type', 'application/json; charset=utf-8');
      return this.http.post<User>(this.URL , data  , {headers })
      .pipe(
-        tap((loggingUser: User) => this.traceService.log(`email logging =${loggingUser.email}`)),
+          map((userdata)=> { return { ...userdata, user:data['user'].email }}),
            catchError(err => {
                return   of({err});
            }

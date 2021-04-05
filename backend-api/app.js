@@ -28,7 +28,6 @@ app.post('/register', (req, res, next)  => {
 });
 
 app.post('/login', (req, res, next) => {
-
   if (req.body.user.email === 'test@test.com') {
     res.status(200).json({
       status: 'success',
