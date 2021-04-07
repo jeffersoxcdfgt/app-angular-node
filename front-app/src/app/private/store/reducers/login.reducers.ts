@@ -2,6 +2,7 @@ import {  AppAction } from '../../../app.action';
 import { createFeatureSelector , createSelector, on , createReducer , Action  } from '@ngrx/store';
 import { User } from '../../shared/user';
 import * as loginActions from '../actions/login.actions';
+import * as storage from '../../shared/storage';
 
 export interface State {
   data: User[];
@@ -13,7 +14,7 @@ export interface State {
 
 const initialState: State  = {
   data: [],
-  selected: null,
+  selected:storage.getItem('user').selected,
   action: null,
   done: false,
   error: null
@@ -49,15 +50,7 @@ export function reducer(state: State | undefined, action: AppAction): any{
 export const getUsersState = createFeatureSelector < State > ('user');
 
 // Selector logging user
-
-export const isLogged = createSelector( getUsersState , ( state: State ) => {
-    if (state.action ===  loginActions.LoginActionTypes.LOGIN_USER && state.done && !state.error){
-      return state.selected;
-    } else{
-      return null;
-    }
-});
-
+export const isLogged = createSelector( getUsersState , ( state: State ) => state.selected );
 
 export const erroLogging = createSelector( getUsersState , (state: State) => {
       return state.action === loginActions.LoginActionTypes.LOGIN_USER

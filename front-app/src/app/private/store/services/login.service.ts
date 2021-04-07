@@ -25,7 +25,7 @@ export class UserService {
      headers = headers.set('Content-Type', 'application/json; charset=utf-8');
      return this.http.post<User>(this.URL , data  , {headers })
      .pipe(
-          map((userdata) => ({ ...userdata, user: data.user.email })),
+          map((userdata) => ({ ...userdata, user: data['user'].email })),
            catchError(err => of({err}))
      );
    }
