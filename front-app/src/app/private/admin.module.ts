@@ -12,7 +12,6 @@ import { LoginAdminComponent } from './login-admin/login-admin.component';
 import { localStorageSync } from 'ngrx-store-localstorage';
 import { usersHook } from './store/webhooks/webhooks';
 
-
 export const reducers: ActionReducerMap<any> = {
   user: usersReducers.reducer,
 };

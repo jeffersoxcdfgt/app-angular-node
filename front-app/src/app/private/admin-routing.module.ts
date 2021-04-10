@@ -5,7 +5,6 @@ import { Routes , RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { LoginAdminComponent } from './login-admin/login-admin.component';
 
-
 const adminRoutes: Routes  =  [{
   path: '',
   component : AdminComponent,
@@ -23,7 +22,8 @@ const adminRoutes: Routes  =  [{
   imports: [
     RouterModule.forChild(adminRoutes)
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [],
 })
 export class AdminRoutingModule {
 }

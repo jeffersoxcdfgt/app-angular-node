@@ -14,7 +14,12 @@ import { SharedModule } from './shared/shared.module';
     SharedModule,
     AppRoutingModule // CLI adds AppRoutingModule to the AppModule's imports array
   ],
-  providers: [{provide: APP_BASE_HREF, useValue: '/'}],
+  providers: [
+    {
+      provide: APP_BASE_HREF,
+      useValue: '/'
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

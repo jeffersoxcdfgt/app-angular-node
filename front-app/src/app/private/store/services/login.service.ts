@@ -31,4 +31,8 @@ export class UserService {
            catchError(err => of({err}))
      );
    }
+
+   getToken(): string {
+    return localStorage.getItem('user');
+  }
 }

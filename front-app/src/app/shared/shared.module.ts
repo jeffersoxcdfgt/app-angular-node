@@ -12,6 +12,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { ExtractNamesPipe } from './extract-names.pipe';
 import { AppInMemoryApi } from '../app.in-memory.api';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { MessageBoxComponent } from './components/message-box/message-box.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
   ],
   declarations: [
     PageNotFoundComponent,
-    ExtractNamesPipe
+    ExtractNamesPipe,
+    MessageBoxComponent
   ],
   providers: [],
   exports: [
@@ -39,7 +41,8 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
     StoreModule,
     EffectsModule,
     PageNotFoundComponent,
-    ExtractNamesPipe
+    ExtractNamesPipe,
+    MessageBoxComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
