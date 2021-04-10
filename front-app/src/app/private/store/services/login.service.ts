@@ -4,6 +4,7 @@ import { Observable , of } from 'rxjs';
 import { catchError , map} from 'rxjs/operators';
 import { User } from '../../shared/user';
 import { TraceService } from '../../../shared/utils/traceService';
+import { environment } from '../../../../environments/environment';
 
 
 interface Userlogged {
@@ -13,7 +14,7 @@ interface Userlogged {
 
 @Injectable()
 export class UserService {
-  protected URL = 'http://localhost:1337/login';
+  protected URL = environment.loginurl;
 
   constructor(private http: HttpClient , private traceService: TraceService){ }
   /**

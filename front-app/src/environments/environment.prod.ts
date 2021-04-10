@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  loginurl: 'http://localhost:1337/login'
 };
