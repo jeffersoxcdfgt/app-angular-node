@@ -11,6 +11,19 @@ export const cleanBlank = map((str: string) => {
 });
 
 
+export const  validateEmail = map((email: string) => {
+  const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  return emailPattern.test(email);
+});
+
+export const passwordLength = map((str: string) => {
+  if (str.length >= 6){
+    return true;
+  }
+  return false;
+});
+
+
 export const ifEmpty = mergeMap((str: string) => iif(() => str.length === 0, of(false) , of(true)));
 export const ifChecked = map((checked: boolean ) => checked );
 export const validObs =  filter(value => value === true);
