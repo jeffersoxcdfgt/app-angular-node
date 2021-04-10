@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType , Effect } from '@ngrx/effects';
-import { map , switchMap  , mergeMap , catchError } from 'rxjs/operators';
+import { Actions, createEffect, ofType  } from '@ngrx/effects';
+import { map , switchMap } from 'rxjs/operators';
 import { UserService } from '../services/login.service';
 import { LoginActionTypes ,  loginUserError } from '../actions/login.actions';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.state';
+import * as storage from '../../shared/storage';
 
 
 @Injectable()
@@ -32,6 +33,19 @@ export class UserEffects {
       )
     )
   );
+
+  public logOut$ = createEffect(() =>   this.actions$.pipe(
+    ofType(LoginActionTypes.LOGOUT),
+       map((_) => {
+          storage.clearStorage();
+          this.router.navigate(['/user']);
+          return  ({ type: LoginActionTypes.LOGOUT});
+       })
+  ),
+  { dispatch: false }
+  );
+
+
 
   constructor(
     private actions$: Actions,

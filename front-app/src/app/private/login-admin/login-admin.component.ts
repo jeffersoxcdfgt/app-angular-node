@@ -1,4 +1,4 @@
-import { Component , OnInit , AfterViewInit} from '@angular/core';
+import { Component , OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
 import { loginUser } from '../store/actions/login.actions';
@@ -11,9 +11,6 @@ class Error {
   messageError: string;
   status: string;
 }
-
-////
-
 
 @Component({
   selector: 'app-login-admin',

@@ -2,6 +2,7 @@ import { Component, OnInit , HostListener } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
 import { isLogged } from '../store/reducers/login.reducers';
+import { logOutuser } from '../store/actions/login.actions';
 
 
 @Component({
@@ -30,5 +31,5 @@ export class MenuAdminComponent implements OnInit {
   clickedOut = () => {
   }
 
-
+  logOut = () => this.store.dispatch(logOutuser());
 }

@@ -3,4 +3,5 @@ export class User {
   password: string;
   status?: string;
   token?: string;
+  user?: any;
 }

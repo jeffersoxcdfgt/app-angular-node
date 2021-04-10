@@ -14,7 +14,7 @@ export interface State {
 
 const initialState: State  = {
   data: [],
-  selected:storage.getItem('user').selected,
+  selected: storage.getItem('user') !== null ? storage.getItem('user').selected : null,
   action: null,
   done: false,
   error: null
@@ -41,7 +41,14 @@ const userdReducer = createReducer(
     done: true,
     selected: null,
     error: err
-  }))
+  })),
+  // LogOut
+  on(loginActions.logOutuser, state => ({
+    ...state,
+    action: loginActions.LoginActionTypes.LOGOUT,
+    done: false,
+    selected: null,
+    error: null })),
 );
 
 export function reducer(state: State | undefined, action: AppAction): any{
