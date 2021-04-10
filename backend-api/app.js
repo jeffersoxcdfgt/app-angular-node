@@ -10,6 +10,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 
+require('./routes')(app);
+
 app.get('/ping', (req, res, next)  => {
   res.status(200).json('pong!');
 });
