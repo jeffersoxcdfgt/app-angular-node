@@ -8,4 +8,5 @@ module.exports = (app) => {
 
    app.get('/api/user/list', userController.list);
    app.get('/api/user/find/email/:email', userController.find);
+   app.post('/api/user/uservalidate', userController.uservalidate);
 };
