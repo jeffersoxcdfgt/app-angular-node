@@ -1,5 +1,7 @@
 const Sequelize     = require('sequelize');
 const user       = require('../models').user;
+const bcrypt = require("bcrypt");
+
 module.exports = {
  list(_, res) {
      return user.findAll({})
@@ -17,16 +19,22 @@ module.exports = {
   },
   
   uservalidate (req, res) {
-    return user.findAll({
+    return user.findOne({
+        attributes: ['password'],
         where: {
-            email: req.body.user.email,
-            password:req.body.user.password
+            email: req.body.user.email
         }
     })
     .then( (user) => {
-        if(user.length === 0){ 
+        const verified =  
+                user !== null ?  
+                bcrypt.compareSync(req.body.user.password ,user.dataValues.password): 
+                false;
+
+        if(!verified){
             throw "No Allowed user" 
-        }        
+        }
+      
         res.status(200).send({
             status: 'success',
              token: '1234567'
