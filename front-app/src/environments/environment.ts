@@ -4,9 +4,8 @@
 
 export const environment = {
   production: false,
-  //loginurl: 'http://localhost:1337/login'
   loginurl: 'http://localhost:1337/api/user/uservalidate'
-};
+  };
 
 /*
  * For easier debugging in development mode, you can import the following file
