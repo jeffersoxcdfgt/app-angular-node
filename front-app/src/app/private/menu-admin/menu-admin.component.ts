@@ -1,8 +1,9 @@
-import { Component, OnInit , HostListener } from '@angular/core';
+import { Component, OnInit , HostListener ,  AfterViewInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
 import { isLogged } from '../store/reducers/login.reducers';
 import { logOutuser } from '../store/actions/login.actions';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -10,12 +11,13 @@ import { logOutuser } from '../store/actions/login.actions';
   templateUrl: './menu-admin.component.html',
   styleUrls: ['./menu-admin.component.css']
 })
-export class MenuAdminComponent implements OnInit {
+export class MenuAdminComponent implements OnInit , AfterViewInit {
 
   currentuser = '';
   valuestyle = 'none';
 
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>,
+              private router: Router, ) { }
 
   ngOnInit(): void {
     this.store.select(isLogged).subscribe( data => {
@@ -32,4 +34,11 @@ export class MenuAdminComponent implements OnInit {
   }
 
   logOut = () => this.store.dispatch(logOutuser());
+
+
+  ngAfterViewInit(): void {
+    this.router.navigate(['/user/menu/homemanage']);
+
+  }
+
 }

@@ -12,7 +12,12 @@ const menuRoutes: Routes  =  [{
   canActivate: [AuthGuardService],
   component : MenuAdminComponent,
   children: [
-    { path: 'homemanage' , component:  HomeManageComponent }
+    { path: 'homemanage' , component:  HomeManageComponent },
+    {
+      path: 'product',
+      loadChildren: () => import('../product/product.module').then(m => m.ProductsModule)
+    }
+
   ]
 }] as Routes as Routes;
 
