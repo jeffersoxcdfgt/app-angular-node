@@ -20,75 +20,30 @@
       </h2>
       <p class="py-1 text-sm text-center text-gray-500 mb-10">
         This is the list of products we have
-      </p>      
-      <div class="flex flex-wrap items-center justify-center py-4 pt-0 mx-auto">        
-        <div class="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden my-10 mr-12">
+      </p>   
+
+      <div class="flex flex-wrap items-center justify-center py-4 pt-0 mx-auto">   
+        <div class="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden my-10 mr-12" *ngFor="let product of products | async">
           <div class="px-4 py-2">
-            <h1 class="text-gray-900 font-bold text-3xl uppercase">NIKE AIR</h1>
-            <p class="text-gray-600 text-sm mt-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi quos quidem sequi illum facere recusandae voluptatibus</p>
+            <h1 class="text-gray-900 font-bold text-3xl uppercase">{{product.name}} </h1>
+            <p class="text-gray-600 text-sm mt-1" *ngIf="product.description.length > 103  ; else elseBlock">
+               {{product.description | slice:0:102 }}
+               <a class="text-indigo-600 hover:text-indigo-500" href="#"> View more .</a>
+            </p>
+            <ng-template #elseBlock>
+              <p class="text-gray-600 text-sm mt-1">
+                  {{ product.description }}                 
+              </p>
+            </ng-template>
           </div>
-          <img class="h-56 w-full object-cover mt-2" src="../../../assets/img/photo-shoes.jpeg" alt="NIKE AIR">
+          <img class="h-56 w-full object-cover mt-2" src="{{product.picture}}" alt="NIKE AIR">
           <div class="flex items-center justify-between px-4 py-2 bg-gray-900">
-            <h1 class="text-gray-200 font-bold text-xl">$129</h1>
+            <h1 class="text-gray-200 font-bold text-xl">${{product.price}}</h1>
             <button class="px-3 py-1 bg-gray-200 text-sm text-gray-900 font-semibold rounded">Add to card</button>
           </div>
-        </div>
-        <div class="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden my-10 mr-12">
-          <div class="px-4 py-2">
-            <h1 class="text-gray-900 font-bold text-3xl uppercase">PUMA</h1>
-            <p class="text-gray-600 text-sm mt-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi quos quidem sequi illum facere recusandae voluptatibus</p>
-          </div>
-          <img class="h-56 w-full object-cover mt-2" src="../../../assets/img/photo-shoes2.jpeg" alt="PUMA">
-          <div class="flex items-center justify-between px-4 py-2 bg-gray-900">
-            <h1 class="text-gray-200 font-bold text-xl">$129</h1>
-            <button class="px-3 py-1 bg-gray-200 text-sm text-gray-900 font-semibold rounded">Add to card</button>
-          </div>
-        </div>
-        <div class="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden my-10 mr-12">
-          <div class="px-4 py-2">
-            <h1 class="text-gray-900 font-bold text-3xl uppercase">CROYDON</h1>
-            <p class="text-gray-600 text-sm mt-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi quos quidem sequi illum facere recusandae voluptatibus</p>
-          </div>
-          <img class="h-56 w-full object-cover mt-2" src="../../../assets/img/photo-shoes3.jpeg" alt="CROYDON">
-          <div class="flex items-center justify-between px-4 py-2 bg-gray-900">
-            <h1 class="text-gray-200 font-bold text-xl">$129</h1>
-            <button class="px-3 py-1 bg-gray-200 text-sm text-gray-900 font-semibold rounded">Add to card</button>
-          </div>
-        </div>
-        <div class="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden my-10 mr-12">
-          <div class="px-4 py-2">
-            <h1 class="text-gray-900 font-bold text-3xl uppercase">BACKPACK</h1>
-            <p class="text-gray-600 text-sm mt-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi quos quidem sequi illum facere recusandae voluptatibus</p>
-          </div>
-          <img class="h-56 w-full object-cover mt-2" src="../../../assets/img/backpack.jpeg" alt="BACK PACK">
-          <div class="flex items-center justify-between px-4 py-2 bg-gray-900">
-            <h1 class="text-gray-200 font-bold text-xl">$129</h1>
-            <button class="px-3 py-1 bg-gray-200 text-sm text-gray-900 font-semibold rounded">Add to card</button>
-          </div>
-        </div>
-        <div class="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden my-10 mr-12">
-          <div class="px-4 py-2">
-            <h1 class="text-gray-900 font-bold text-3xl uppercase">KIT OFFICE</h1>
-            <p class="text-gray-600 text-sm mt-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi quos quidem sequi illum facere recusandae voluptatibus</p>
-          </div>
-          <img class="h-56 w-full object-cover mt-2" src="../../../assets/img/kitoffice.jpeg" alt="KIT OFFICE">
-          <div class="flex items-center justify-between px-4 py-2 bg-gray-900">
-            <h1 class="text-gray-200 font-bold text-xl">$129</h1>
-            <button class="px-3 py-1 bg-gray-200 text-sm text-gray-900 font-semibold rounded">Add to card</button>
-          </div>
-        </div>
-        <div class="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden my-10">
-          <div class="px-4 py-2">
-            <h1 class="text-gray-900 font-bold text-3xl uppercase">COMPUTER</h1>
-            <p class="text-gray-600 text-sm mt-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi quos quidem sequi illum facere recusandae voluptatibus</p>
-          </div>
-          <img class="h-56 w-full object-cover mt-2" src="../../../assets/img/computer.jpeg" alt="COMPUTER">
-          <div class="flex items-center justify-between px-4 py-2 bg-gray-900">
-            <h1 class="text-gray-200 font-bold text-xl">$129</h1>
-            <button class="px-3 py-1 bg-gray-200 text-sm text-gray-900 font-semibold rounded">Add to card</button>
-          </div>
-        </div>
+        </div>     
       </div>
+
     </div>
   </div>
   <!-- This example requires Tailwind CSS v2.0+ -->

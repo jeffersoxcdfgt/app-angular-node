@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component , OnInit} from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
+import { AppState } from '../app.state';
+import { productsGetAll } from '../private/product/store/actions/product.actions';
+import { getProductsError } from '../private/product/store/reducers/product.reducers';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -8,9 +12,21 @@ import { Router } from '@angular/router';
 })
 export class ShoppingCartComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private store: Store<AppState>){
+  }
 
   ngOnInit(): void {
+    this.store.select(getProductsError).subscribe((error) => this.loadingError(error));
+    this.store.dispatch(productsGetAll());
+  }
+
+  /*
+   * Display error message if load of products fails
+   */
+  loadingError(error): void {
+    if (error) {
+      alert('Error while loading the list of products');
+     }
   }
 
   goUser = () => this.router.navigate(['/user']);

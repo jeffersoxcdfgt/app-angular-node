@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component , OnInit} from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
+import { AppState } from '../../app.state';
+import { productsGetAll } from './store/actions/product.actions';
+import { getProductsError } from './store/reducers/product.reducers';
 
 @Component({
   selector: 'app-product',
@@ -7,9 +12,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductComponent implements OnInit {
 
-  constructor() { }
+
+  constructor(private router: Router, private store: Store<AppState>){
+  }
 
   ngOnInit(): void {
+    this.store.select(getProductsError).subscribe((error) => this.loadingError(error));
+    this.store.dispatch(productsGetAll());
   }
+
+  /*
+   * Display error message if load of products fails
+   */
+     loadingError(error): void {
+      if (error) {
+        alert('Error while loading the list of products');
+      }
+    }
 
 }
