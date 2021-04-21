@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  loginurl: 'http://localhost:1337/api/user/uservalidate'
+  urlapi: 'http://localhost:1337'
   };
 
 /*

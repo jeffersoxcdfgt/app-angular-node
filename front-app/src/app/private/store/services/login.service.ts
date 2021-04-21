@@ -14,8 +14,7 @@ interface Userlogged {
 
 @Injectable()
 export class UserService {
-  protected URL = environment.loginurl;
-
+  protected URL = environment.urlapi;
   constructor(private http: HttpClient , private traceService: TraceService){ }
   /**
    * Login user to app
@@ -25,7 +24,7 @@ export class UserService {
    public logIn(data: User): Observable<any>{
      let headers = new HttpHeaders();
      headers = headers.set('Content-Type', 'application/json; charset=utf-8');
-     return this.http.post<User>(this.URL , data  , {headers })
+     return this.http.post<User>( `${this.URL}/api/user/uservalidate` , data  , {headers })
      .pipe(
           map((userdata) => ({ ...userdata, user: data.user.email })),
            catchError(err => of({err}))

@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  loginurl: 'https://security.nubeactiva.com/api/user/uservalidate'
+  urlapi: 'https://security.nubeactiva.com'
 };
