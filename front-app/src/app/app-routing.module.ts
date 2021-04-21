@@ -4,10 +4,15 @@ import { PageNotFoundComponent } from './shared/not-found/not-found.component';
 
 
 const routes: Routes = [
-  { path: '' , redirectTo: '/user' , pathMatch: 'full'},
+  // { path: '' , redirectTo: '/user' , pathMatch: 'full'},
   {
     path: 'user',
     loadChildren: () => import('./private/admin.module').then(m => m.AdminModule)
+  },
+
+  {
+    path: '',
+    loadChildren: () => import('./public/shopping-cart.module').then(m => m.ShoppingCartModule)
   },
   {path: '**', component: PageNotFoundComponent}
 ]; // sets up routes constant where you define your routes
