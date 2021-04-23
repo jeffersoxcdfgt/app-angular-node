@@ -7,11 +7,13 @@ import { EffectsModule  } from '@ngrx/effects';
 import { ProductEffects } from './store/effects/product.effects';
 import * as productReducers from './store/reducers/product.reducers';
 import { TraceService } from '../../shared/utils/traceService';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 
 @NgModule({
   imports: [
     SharedModule,
+    NgxPaginationModule,
     ProductsRoutingModule,
     StoreModule.forFeature('product', productReducers.reducer),
     EffectsModule.forFeature([ProductEffects])

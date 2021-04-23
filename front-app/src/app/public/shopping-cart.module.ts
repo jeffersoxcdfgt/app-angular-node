@@ -9,6 +9,7 @@ import * as productReducers from '../private/product/store/reducers/product.redu
 import { TraceService } from '../shared/utils/traceService';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '../private/product/store/services/product.service';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 export const reducers: ActionReducerMap<any> = {
   product: productReducers.reducer,
@@ -18,6 +19,7 @@ export const reducers: ActionReducerMap<any> = {
   imports: [
     SharedModule,
     ShoppingCartRoutingModule,
+    NgxPaginationModule,
     StoreModule.forRoot(reducers, {
       runtimeChecks: {
        strictStateImmutability: true,

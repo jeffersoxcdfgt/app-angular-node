@@ -12,6 +12,7 @@ import { getAllProducts } from '../store/reducers/product.reducers';
 })
 export class ProductListComponent implements OnInit {
 
+  p: any;
   products: Observable<Product[]>;
   constructor(private store: Store<AppState>) { }
 
