@@ -2,9 +2,11 @@ import { Component , OnInit} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { AppState } from '../app.state';
-import { productsGetAll } from '../private/product/store/actions/product.actions';
+import { productsGetAll  } from '../private/product/store/actions/product.actions';
 import { getProductsError } from '../private/product/store/reducers/product.reducers';
 import { getProductInShoppingCart } from './store/reducers/shopping-cart.reducers';
+import { getListShoppingCart } from './store/actions/shopping-cart.actions';
+import { Product } from '../private/product/class/product';
 
 
 @Component({
@@ -15,7 +17,7 @@ import { getProductInShoppingCart } from './store/reducers/shopping-cart.reducer
 export class ShoppingCartComponent implements OnInit {
 
   textCounter = 0;
-  arrayProducts = [];
+  arrayProducts: Product [] = [];
 
   constructor(private router: Router, private store: Store<AppState>){
   }
@@ -40,9 +42,16 @@ export class ShoppingCartComponent implements OnInit {
   getProductShoppingCart(): void {
     this.store.select(getProductInShoppingCart).subscribe((data: any) => {
         if (data != null){
-          this.arrayProducts.push(data.product);
+          this.arrayProducts = Object.assign([], this.arrayProducts);
+          this.arrayProducts.push(data);
           this.textCounter = this.arrayProducts.length;
         }
     });
+  }
+
+  getListShoppingCart  = () => {
+     this.store.dispatch(getListShoppingCart({
+       products: this.arrayProducts
+     }));
   }
 }

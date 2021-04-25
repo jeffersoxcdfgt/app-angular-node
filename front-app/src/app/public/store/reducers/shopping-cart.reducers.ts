@@ -25,7 +25,8 @@ const shoppingCartReducer = createReducer(
   on(shoppingCartActions.shoppingCartAdd,
     (state, { product }) => (
      {
-        ...state, selected: product,
+        ...state,
+        selected: product,
         action: shoppingCartActions.ShoppingcartActionTypes.ADD_PRODUCT_SHOPPING_CART,
         done: false,
         error: null
@@ -45,7 +46,33 @@ const shoppingCartReducer = createReducer(
          done: true,
          selected: null,
          error: err
-  }))
+  })),
+  // List products from shopping cart
+  on(shoppingCartActions.getListShoppingCart,
+    (state, { products }) => (
+     {
+        ...state,
+        data: products,
+        action: shoppingCartActions.ShoppingcartActionTypes.GET_PRODUCTS_SHOPPING_CART,
+        done: false,
+        error: null
+      }
+   )),
+   on(shoppingCartActions.getListShoppingCartSuccess,
+    (state, { products }) => ({
+      ...state,
+      data: products,
+      done: true,
+      error:
+      null
+  })),
+  on(shoppingCartActions.getListShoppingCartError,
+    (state, { err }) => ({
+      ...state,
+      done: true,
+      selected: null,
+      error: err
+})),
 );
 
 export function reducer(state: State | undefined, action: AppAction): any {
@@ -65,6 +92,20 @@ export const getProductInShoppingCart = createSelector( getShoppingCartState , (
 
 export const getProductInShoppingCartError = createSelector(getShoppingCartState, (state: State) => {
   return state.action === shoppingCartActions.ShoppingcartActionTypes.ADD_PRODUCT_SHOPPING_CART_ERROR
+    ? state.error
+   : null;
+});
+
+export const getListShoppingCart = createSelector( getShoppingCartState , ( state: State ) => {
+  if (state.action ===  shoppingCartActions.ShoppingcartActionTypes.GET_PRODUCTS_SHOPPING_CART && state.done && !state.error){
+    return state.data;
+  } else{
+    return [];
+  }
+});
+
+export const getListShoppingCartError = createSelector(getShoppingCartState, (state: State) => {
+  return state.action === shoppingCartActions.ShoppingcartActionTypes.GET_PRODUCTS_SHOPPING_CART_ERROR
     ? state.error
    : null;
 });

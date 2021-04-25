@@ -23,4 +23,19 @@ export class ShoppingcartService {
                 catchError(this.traceService.handleError<Product>('addProductToShoppingcart'))
       );
    }
+
+
+  /**
+   * Get list products for shopping cart
+   * @param data the list object from products
+   * @returns gets the response
+   */
+      public getListProductToShoppingcart(products: Product[]): Observable<Product[]>{
+        return of<Product[]>(products)
+          .pipe(
+              tap((_) => this.traceService.log(`list products for shopping cart`)),
+                    catchError(this.traceService.handleError<Product[]>('getListProductToShoppingcart'))
+          );
+       }
+
 }

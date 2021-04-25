@@ -4,13 +4,15 @@ import { Routes , RouterModule } from '@angular/router';
 // components
 import { ShoppingCartComponent } from './shopping-cart.component';
 import { ShoppingCartListComponent } from './shopping-cart-list/shopping-cart-list.component';
+import { PaymentProcessComponent } from './payment-process/payment-process.component';
 
 
 const shoppingcartRoutes: Routes  =  [{
   path: '',
   component : ShoppingCartComponent,
   children: [
-    { path: '' , component:  ShoppingCartListComponent }
+    { path: '' , component:  ShoppingCartListComponent },
+    { path: 'payment' , component:  PaymentProcessComponent }
   ]
 }] as Routes;
 
@@ -25,5 +27,6 @@ export class ShoppingCartRoutingModule {
 
 export const shoppingcartRoutedComponents = [
   ShoppingCartComponent,
-  ShoppingCartListComponent
+  ShoppingCartListComponent,
+  PaymentProcessComponent
 ];

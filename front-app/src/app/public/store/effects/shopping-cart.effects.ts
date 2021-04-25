@@ -9,8 +9,7 @@ import { ShoppingcartActionTypes } from '../actions/shopping-cart.actions';
 @Injectable()
 export class ShoppingcartEffects {
 
-  // @Effect()
-  public createTeams$ = createEffect(() => this.actions$.pipe(
+  public addProductShoppingCart$ = createEffect(() => this.actions$.pipe(
     ofType(ShoppingcartActionTypes.ADD_PRODUCT_SHOPPING_CART),
     mergeMap((product) => this.shoppingcartService.addProductToShoppingcart(product)
       .pipe(
@@ -25,6 +24,23 @@ export class ShoppingcartEffects {
       ))
     )
   );
+
+  public getListShoppingCart$ = createEffect(() => this.actions$.pipe(
+    ofType(ShoppingcartActionTypes.GET_PRODUCTS_SHOPPING_CART),
+    mergeMap((productslstnew) => this.shoppingcartService.getListProductToShoppingcart(productslstnew)
+      .pipe(
+        map((productslst: Product[]) => ({
+          type: ShoppingcartActionTypes.GET_PRODUCTS_SHOPPING_CART_SUCCESS,
+          products: productslst
+        })),
+          catchError(error => of({
+            type: ShoppingcartActionTypes.GET_PRODUCTS_SHOPPING_CART_ERROR,
+            err: error
+          }))
+      ))
+    )
+  );
+
 
   constructor(
     private actions$: Actions,
