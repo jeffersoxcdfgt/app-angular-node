@@ -11,8 +11,14 @@ import { FormsModule } from '@angular/forms';
 import { ProductService } from '../private/product/store/services/product.service';
 import {NgxPaginationModule} from 'ngx-pagination';
 
+import * as shoppingCartReducers from './store/reducers/shopping-cart.reducers';
+import { ShoppingcartEffects } from './store/effects/shopping-cart.effects';
+import { ShoppingcartService } from './store/services/shopping-cart.service';
+
+
 export const reducers: ActionReducerMap<any> = {
   product: productReducers.reducer,
+  shoppingcart: shoppingCartReducers.reducer
 };
 
 @NgModule({
@@ -26,12 +32,17 @@ export const reducers: ActionReducerMap<any> = {
        strictActionImmutability: true
      }
     }),
-    EffectsModule.forRoot([ProductEffects]),
+    EffectsModule.forRoot(
+      [
+        ProductEffects,
+        ShoppingcartEffects
+      ]),
     FormsModule,
   ],
   declarations: [shoppingcartRoutedComponents],
   providers: [
     ProductService,
+    ShoppingcartService,
     TraceService
   ]
 })
