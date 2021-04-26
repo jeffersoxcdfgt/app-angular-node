@@ -14,6 +14,8 @@ import { distinct, toArray, map } from 'rxjs/operators';
 export class PaymentProcessComponent implements OnInit {
 
   products: Observable<Product[]>;
+  p: any;
+
   constructor(private store: Store<AppState>){
   }
 

@@ -19,7 +19,7 @@
     </div>
   </div>
   <div class="px-6">
-    <div class="flex justify-between items-center h-16 p-4 my-6  rounded-lg border border-gray-100 shadow-md" *ngFor="let product of products | async">
+    <div class="flex justify-between items-center h-16 p-4 my-6  rounded-lg border border-gray-100 shadow-md" *ngFor="let product of products | async | paginate: { itemsPerPage: 3, currentPage: p }">
       <div class="flex items-center">
         <img class="rounded-full h-12 w-12" src="{{product.picture}}" alt="Logo" />
       <div class="ml-2">
@@ -44,6 +44,7 @@
         </button>
     </div>
     </div>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
   </div>
   </div>
 </div>
