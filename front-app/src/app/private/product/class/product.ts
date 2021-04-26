@@ -5,6 +5,7 @@ export class Product {
     price: number;
     picture: string;
     cost: number;
+    quantity?: number;
     createdAt: string;
     updatedAt: string;
 }
