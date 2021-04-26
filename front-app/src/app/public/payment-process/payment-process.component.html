@@ -44,7 +44,15 @@
         </button>
     </div>
     </div>
-    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    <div class="flex justify-between items-center h-16 p-4 my-6  rounded-lg border border-gray-100 shadow-md">
+      <div class="flex items-center">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
+      <div>
+         $ 1000
+      </div>
+    </div>
+    
   </div>
   </div>
 </div>
