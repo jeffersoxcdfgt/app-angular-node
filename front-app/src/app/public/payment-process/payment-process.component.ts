@@ -155,12 +155,20 @@ export class PaymentProcessComponent implements OnInit {
            }
         }
         this.valuesInputs[index].quantity = valuech;
-
+    }
+    else if (Number(this.valuesInputs[index].quantity) <= 0 ){
+      const myvd =  this.valuesModeldata.filter((ele) => ele.id === id);
+      if (myvd !== undefined && myvd.length > 0){
+       this.valuesInputs[index].quantity = myvd[myvd.length - 1 ].quantity;
+      }
+      else {
+       this.valuesInputs[index].quantity = product.quantity;
+      }
     }
   }
 
   changeModel = (event, id: number , price: number) => {
-    if (event !== '' && /^\d+$/.test(event)){
+    if (event !== '' && /^\d+$/.test(event) && Number(event) > 0 ){
        this.valuesModeldata.push({
           id,
           quantity: event,
