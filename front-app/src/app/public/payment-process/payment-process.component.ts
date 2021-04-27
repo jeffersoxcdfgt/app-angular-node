@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
 import { getListShoppingCart } from '../store/reducers/shopping-cart.reducers';
 import { Product } from '../../private/product/class/product';
 import { from , Observable , BehaviorSubject, of } from 'rxjs';
-import { distinct, toArray, map , scan , find , tap } from 'rxjs/operators';
+import { distinct, toArray, map , scan , find , tap, ignoreElements } from 'rxjs/operators';
+import { MessageBoxComponent } from '../../shared/components/message-box/message-box.component';
 
 @Component({
   selector: 'app-payment-process',
@@ -17,10 +18,13 @@ export class PaymentProcessComponent implements OnInit {
   p: any;
   totalprice: Observable<number>;
   dataInput: BehaviorSubject<any>;
+  messageValidation = '';
+  @ViewChild('messageBoxComponent') messageBoxComponent: MessageBoxComponent;
+  funcrange: any;
+
 
   constructor(private store: Store<AppState>){
     this.dataInput = new BehaviorSubject<string>('');
-
   }
 
   ngOnInit(): void {
@@ -31,12 +35,8 @@ export class PaymentProcessComponent implements OnInit {
   getListShoppingCart = () => {
       this.store.select(getListShoppingCart).subscribe((products: any) => {
         if (products.hasOwnProperty('products') && products.products.length > 0 ){
-
          const myproducts: Product[] = products.products.map((currentpro) => currentpro.product)
                 .sort((a, b) => (a.id > b.id) ? 1 : -1);
-
-        // this.totalprice = from(myproducts).pipe(scan((acc, curr) => Number(acc) + Number(curr.price), 0))
-         this.getTotalPrice(myproducts);
 
          this.products = from(myproducts).pipe(
               distinct(e => e.id ),
@@ -53,9 +53,11 @@ export class PaymentProcessComponent implements OnInit {
                       quantity: myproducts.filter((data) => data.id === val.id ).length
                     };
                }),
-               toArray()
-            );
-        }
+               toArray());
+
+         const proquantity = this.products;
+         proquantity.subscribe((myproval) => this.getTotalPrice(myproval));
+           }
       });
   }
 
@@ -63,38 +65,50 @@ export class PaymentProcessComponent implements OnInit {
   getInputQuantity = () => {
    this.dataInput.pipe().subscribe((valswitf) => {
       if (valswitf !== ''){
-        console.log('valor product', valswitf.qchnage);
-
-        if (valswitf.qchnage === ''){
-              alert('No allowed null or empty value');
-              this.products = this.products.pipe(
-                map((mypro) => {
-                    const resval =  mypro.find((proc) =>  proc.id === valswitf.productchange.id );
-                    return [
-                      ...mypro.filter((cupro) => cupro.id !== valswitf.productchange.id ),
-                      {
-                        cost: resval.cost,
-                        createdAt: resval.createdAt,
-                        description: resval.description,
-                        id: resval.id,
-                        name: resval.name,
-                        picture: resval.picture,
-                        price: resval.price,
-                        quantity: resval.quantity,
-                        updatedAt: resval.updatedAt
-                      }
-                    ]
-                   .sort((a, b) => (a.id > b.id) ? 1 : -1);
-                })
-            );
+          if (valswitf.qchnage === ''){
+            this.messageValidation = 'No allowed null or empty value';
+            this.messageBoxComponent.open();
           }
-      }
+          else if (!/^\d+$/.test(valswitf.qchnage)){
+            this.messageValidation = 'Only numbers and integers';
+            this.messageBoxComponent.open();
+          }
+          else if (Number(valswitf.qchnage) <= 0){
+            this.messageValidation = 'Only values hight than zero';
+            this.messageBoxComponent.open();
+          }
+          this.products = this.products.pipe(
+              map((mypro) => {
+                      const resval = mypro.find((proc) =>  proc.id === valswitf.productchange.id);
+                      let qt = valswitf.qchnage !== '' ? valswitf.qchnage : resval.quantity;
+                      qt = !/^\d+$/.test(qt) ? resval.quantity : qt;
+                      qt = qt <= 0 ? resval.quantity : qt;
+
+                      return [
+                        ...mypro.filter((cupro) => cupro.id !== valswitf.productchange.id ),
+                        {
+                          cost: resval.cost,
+                          createdAt: resval.createdAt,
+                          description: resval.description,
+                          id: resval.id,
+                          name: resval.name,
+                          picture: resval.picture,
+                          price: resval.price,
+                          quantity: qt,
+                          updatedAt: resval.updatedAt
+                        }
+                      ]
+                    .sort((a, b) => (a.id > b.id) ? 1 : -1);
+            }),
+            tap((val) => this.getTotalPrice(val))
+          );
+        }
     });
   }
 
 
   getTotalPrice = (myproducts: Product[]) => {
-    this.totalprice = from(myproducts).pipe(scan((acc, curr) => Number(acc) + Number(curr.price), 0));
+    this.totalprice = from(myproducts).pipe(scan((acc, curr) =>
+          Number(acc) + (Number(curr.price) * Number(curr.quantity)) , 0));
   }
-
 }

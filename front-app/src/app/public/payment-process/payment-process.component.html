@@ -38,9 +38,7 @@
         })"
       type="text" 
       class="border border-transparent shadow px-1 py-2 leading-normal text-gray-700 bg-white rounded-md focus:outline-none focus:shadow-outline text-center"
-      x-model="colorSelected"
-      value="{{product.quantity}}"
-      >
+      value="{{product.quantity}}">
     </div>
     <div>
         <button class="bg-red-400 hover:bg-red-500 p-2 rounded-full shadow-md flex justify-center items-center">
@@ -166,3 +164,4 @@
       </div>
     </div>
 </ng-template>
+<app-message-box #messageBoxComponent [message]="messageValidation"></app-message-box>
