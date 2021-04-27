@@ -1,10 +1,10 @@
-import { Component, OnInit , ViewChild } from '@angular/core';
+import { Component, OnInit , ViewChild , ElementRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
 import { getListShoppingCart } from '../store/reducers/shopping-cart.reducers';
 import { Product } from '../../private/product/class/product';
-import { from , Observable , BehaviorSubject, of } from 'rxjs';
-import { distinct, toArray, map , scan , find , tap, ignoreElements } from 'rxjs/operators';
+import { from , Observable , BehaviorSubject } from 'rxjs';
+import { distinct, toArray, map , scan , tap } from 'rxjs/operators';
 import { MessageBoxComponent } from '../../shared/components/message-box/message-box.component';
 
 @Component({
@@ -16,20 +16,26 @@ export class PaymentProcessComponent implements OnInit {
 
   products: Observable<Product[]>;
   p: any;
-  totalprice: Observable<number>;
+  totalprice: number;
+  totalpriceaux: number;
   dataInput: BehaviorSubject<any>;
   messageValidation = '';
   @ViewChild('messageBoxComponent') messageBoxComponent: MessageBoxComponent;
-  funcrange: any;
+  valuesInputs = [];
+  proquantityval: Product[];
+  valuesModeldata = [];
 
 
-  constructor(private store: Store<AppState>){
+  constructor(private store: Store<AppState>,
+              private el: ElementRef){
     this.dataInput = new BehaviorSubject<string>('');
   }
+
 
   ngOnInit(): void {
       this.getListShoppingCart();
       this.getInputQuantity();
+
   }
 
   getListShoppingCart = () => {
@@ -40,7 +46,7 @@ export class PaymentProcessComponent implements OnInit {
 
          this.products = from(myproducts).pipe(
               distinct(e => e.id ),
-                 map((val) => {
+                 map((val, i) => {
                     return {
                       cost: val.cost,
                       createdAt: val.createdAt,
@@ -50,13 +56,24 @@ export class PaymentProcessComponent implements OnInit {
                       picture: val.picture,
                       price: val.price,
                       updatedAt: val.updatedAt,
-                      quantity: myproducts.filter((data) => data.id === val.id ).length
+                      quantity: myproducts.filter((data) => data.id === val.id ).length,
+                      idproc: i
                     };
                }),
                toArray());
 
          const proquantity = this.products;
-         proquantity.subscribe((myproval) => this.getTotalPrice(myproval));
+         proquantity.subscribe((myproval) => {
+                this.proquantityval = myproval;
+                this.getTotalPrice(myproval);
+                this.valuesInputs = myproval.map((valp) => {
+                      return {
+                        id: valp.id,
+                        quantity: valp.quantity,
+                        price: valp.price
+                      };
+                });
+              });
            }
       });
   }
@@ -77,8 +94,9 @@ export class PaymentProcessComponent implements OnInit {
             this.messageValidation = 'Only values hight than zero';
             this.messageBoxComponent.open();
           }
-          this.products = this.products.pipe(
-              map((mypro) => {
+
+          this.products.pipe(
+              map((mypro, i) => {
                       const resval = mypro.find((proc) =>  proc.id === valswitf.productchange.id);
                       let qt = valswitf.qchnage !== '' ? valswitf.qchnage : resval.quantity;
                       qt = !/^\d+$/.test(qt) ? resval.quantity : qt;
@@ -95,12 +113,12 @@ export class PaymentProcessComponent implements OnInit {
                           picture: resval.picture,
                           price: resval.price,
                           quantity: qt,
-                          updatedAt: resval.updatedAt
+                          updatedAt: resval.updatedAt,
+                          idproc: resval.idproc
                         }
                       ]
                     .sort((a, b) => (a.id > b.id) ? 1 : -1);
-            }),
-            tap((val) => this.getTotalPrice(val))
+            })
           );
         }
     });
@@ -108,7 +126,55 @@ export class PaymentProcessComponent implements OnInit {
 
 
   getTotalPrice = (myproducts: Product[]) => {
-    this.totalprice = from(myproducts).pipe(scan((acc, curr) =>
-          Number(acc) + (Number(curr.price) * Number(curr.quantity)) , 0));
+     from(myproducts).pipe(scan((acc, curr) =>
+          Number(acc) + (Number(curr.price) * Number(curr.quantity)) , 0)).subscribe((total) => {
+            this.totalprice = total;
+      });
+  }
+
+  viewToModelUpdate( id: number , product: Product): void {
+    const index = this.valuesInputs.findIndex((valsearch) => valsearch.id === id);
+    if (this.valuesInputs[index].quantity === ''){
+       const myvd =  this.valuesModeldata.filter((ele) => ele.id === id);
+       if (myvd !== undefined && myvd.length > 0){
+        this.valuesInputs[index].quantity = myvd[myvd.length - 1 ].quantity;
+       }
+       else {
+        this.valuesInputs[index].quantity = product.quantity;
+       }
+    }
+    else if (!/^\d+$/.test(this.valuesInputs[index].quantity)){
+        let valuech = this.valuesInputs[index].quantity.replace(/\D/g, '');
+        const myvd =  this.valuesModeldata.filter((ele) => ele.id === id);
+        if (valuech === ''){
+          if (myvd !== undefined && myvd.length > 0){
+            valuech = myvd[myvd.length - 1 ].quantity;
+           }
+           else {
+            valuech = product.quantity;
+           }
+        }
+        this.valuesInputs[index].quantity = valuech;
+
+    }
+  }
+
+  changeModel = (event, id: number , price: number) => {
+    if (event !== '' && /^\d+$/.test(event)){
+       this.valuesModeldata.push({
+          id,
+          quantity: event,
+          price
+        });
+       this.totalprice = 0;
+       this.valuesInputs.forEach((val) => {
+          const tot = Number(val.quantity) * Number(val.price);
+          this.totalprice = this.totalprice + tot;
+          this.totalpriceaux = this.totalprice ;
+        });
+    }
+    else {
+      this.totalpriceaux = this.totalprice;
+   }
   }
 }

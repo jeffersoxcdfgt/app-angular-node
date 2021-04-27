@@ -8,4 +8,5 @@ export class Product {
     quantity?: number;
     createdAt: string;
     updatedAt: string;
+    idproc?: number;
 }
