@@ -6,6 +6,7 @@ import { Product } from '../../private/product/class/product';
 import { from , Observable , BehaviorSubject } from 'rxjs';
 import { distinct, toArray, map , scan , tap } from 'rxjs/operators';
 import { MessageBoxComponent } from '../../shared/components/message-box/message-box.component';
+import { updateAmountOfproducts } from '../store/actions/shopping-cart.actions';
 
 @Component({
   selector: 'app-payment-process',
@@ -24,7 +25,6 @@ export class PaymentProcessComponent implements OnInit {
   valuesInputs = [];
   proquantityval: Product[];
   valuesModeldata = [];
-
 
   constructor(private store: Store<AppState>,
               private el: ElementRef){
@@ -175,8 +175,11 @@ export class PaymentProcessComponent implements OnInit {
           price
         });
        this.totalprice = 0;
+       let qtotal  = 0;
        this.valuesInputs.forEach((val) => {
           const tot = Number(val.quantity) * Number(val.price);
+          qtotal = qtotal + Number(val.quantity);
+          this.store.dispatch(updateAmountOfproducts({amount: qtotal}));
           this.totalprice = this.totalprice + tot;
           this.totalpriceaux = this.totalprice ;
         });

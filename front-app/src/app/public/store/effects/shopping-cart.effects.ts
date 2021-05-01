@@ -41,6 +41,22 @@ export class ShoppingcartEffects {
     )
   );
 
+  public updateAmountOfProduct = createEffect(() => this.actions$.pipe(
+    ofType(ShoppingcartActionTypes.UPDATE_PRODUCT_SHOPPING_CART),
+    mergeMap((amount) => this.shoppingcartService.updateAmountproducts(amount)
+      .pipe(
+        map((amountnew: any) => ({
+          type: ShoppingcartActionTypes.UPDATE_PRODUCT_SHOPPING_CART_SUCCESS,
+          amount: amountnew
+        })),
+          catchError(error => of({
+            type: ShoppingcartActionTypes.UPDATE_PRODUCT_SHOPPING_CART_ERROR,
+            err: error
+          }))
+      ))
+    )
+  );
+
 
   constructor(
     private actions$: Actions,

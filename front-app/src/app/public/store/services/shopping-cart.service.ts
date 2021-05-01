@@ -30,12 +30,26 @@ export class ShoppingcartService {
    * @param data the list object from products
    * @returns gets the response
    */
-      public getListProductToShoppingcart(products: Product[]): Observable<Product[]>{
-        return of<Product[]>(products)
+   public getListProductToShoppingcart(products: Product[]): Observable<Product[]>{
+      return of<Product[]>(products)
           .pipe(
               tap((_) => this.traceService.log(`list products for shopping cart`)),
                     catchError(this.traceService.handleError<Product[]>('getListProductToShoppingcart'))
           );
-       }
+    }
+
+
+  /**
+   * update counter product
+   * @param data new number of products
+   * @returns gets the response
+   */
+   public updateAmountproducts(data: any): Observable<any>{
+    return of<any>(data)
+      .pipe(
+          tap((_) => this.traceService.log(`update amount of products`)),
+                catchError(this.traceService.handleError<any>('updateAmountproducts'))
+      );
+   }
 
 }

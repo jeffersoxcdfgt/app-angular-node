@@ -8,6 +8,12 @@ export enum ShoppingcartActionTypes {
   GET_PRODUCTS_SHOPPING_CART = '[GET_PRODUCTS_SHOPPING_CART] List shopping cart',
   GET_PRODUCTS_SHOPPING_CART_SUCCESS = '[GET_PRODUCTS_SHOPPING_CART_SUCESS] List shopping cart success',
   GET_PRODUCTS_SHOPPING_CART_ERROR = '[GET_PRODUCTS_SHOPPING_CART_ERROR] List shopping cart error',
+  UPDATE_PRODUCT_SHOPPING_CART = '[UPDATE_PRODUCT_SHOPPING_CART] Update amount of products',
+  UPDATE_PRODUCT_SHOPPING_CART_SUCCESS = '[UPDATE_PRODUCT_SHOPPING_CART_SUCCESS] Update amount of products success',
+  UPDATE_PRODUCT_SHOPPING_CART_ERROR = '[UPDATE_PRODUCT_SHOPPING_CART_ERROR] Update amount of products error',
+
+
+
 }
 
 // Add product to shopping cart
@@ -23,4 +29,10 @@ export const getListShoppingCartSuccess = createAction(ShoppingcartActionTypes.G
   props<{products: Product[]}>());
 export const getListShoppingCartError = createAction(ShoppingcartActionTypes.GET_PRODUCTS_SHOPPING_CART_ERROR, props<{err: Error}>());
 
+// Update amount of product
+
+export const updateAmountOfproducts = createAction(ShoppingcartActionTypes.UPDATE_PRODUCT_SHOPPING_CART, props<{amount: any} >());
+export const updateAmountOfproductsSuccess = createAction(ShoppingcartActionTypes.UPDATE_PRODUCT_SHOPPING_CART_SUCCESS,
+  props<{amount: any}>());
+export const updateAmountOfproductsError = createAction(ShoppingcartActionTypes.UPDATE_PRODUCT_SHOPPING_CART_ERROR, props<{err: Error}>());
 

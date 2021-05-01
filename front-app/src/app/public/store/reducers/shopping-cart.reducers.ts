@@ -72,7 +72,34 @@ const shoppingCartReducer = createReducer(
       done: true,
       selected: null,
       error: err
-})),
+  })),
+  // Update amount of products
+  on(shoppingCartActions.updateAmountOfproducts,
+     (state, { amount }) => (
+      {
+          ...state,
+          selected: amount,
+          action: shoppingCartActions.ShoppingcartActionTypes.UPDATE_PRODUCT_SHOPPING_CART,
+          done: false,
+          error: null
+        }
+  )),
+  on(shoppingCartActions.updateAmountOfproductsSuccess,
+    (state, { amount }) => ({
+      ...state,
+      selected: amount,
+      done: true,
+      error:
+      null
+  })),
+  on(shoppingCartActions.updateAmountOfproductsError,
+    (state, { err }) => ({
+      ...state,
+      done: true,
+      selected: null,
+      error: err
+  })),
+
 );
 
 export function reducer(state: State | undefined, action: AppAction): any {
@@ -106,6 +133,22 @@ export const getListShoppingCart = createSelector( getShoppingCartState , ( stat
 
 export const getListShoppingCartError = createSelector(getShoppingCartState, (state: State) => {
   return state.action === shoppingCartActions.ShoppingcartActionTypes.GET_PRODUCTS_SHOPPING_CART_ERROR
+    ? state.error
+   : null;
+});
+
+
+export const updateAmountOfProduct = createSelector( getShoppingCartState , ( state: State ) => {
+  if (state.action ===  shoppingCartActions.ShoppingcartActionTypes.UPDATE_PRODUCT_SHOPPING_CART && state.done && !state.error){
+    return state.selected;
+  } else{
+    return null;
+  }
+});
+
+
+export const updateAmountOfProductError = createSelector(getShoppingCartState, (state: State) => {
+  return state.action === shoppingCartActions.ShoppingcartActionTypes.UPDATE_PRODUCT_SHOPPING_CART_ERROR
     ? state.error
    : null;
 });

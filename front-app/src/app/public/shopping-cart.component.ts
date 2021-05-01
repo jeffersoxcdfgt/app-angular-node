@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AppState } from '../app.state';
 import { productsGetAll  } from '../private/product/store/actions/product.actions';
 import { getProductsError } from '../private/product/store/reducers/product.reducers';
-import { getProductInShoppingCart } from './store/reducers/shopping-cart.reducers';
+import { getProductInShoppingCart , updateAmountOfProduct} from './store/reducers/shopping-cart.reducers';
 import { getListShoppingCart } from './store/actions/shopping-cart.actions';
 import { Product } from '../private/product/class/product';
 
@@ -26,6 +26,7 @@ export class ShoppingCartComponent implements OnInit {
     this.store.select(getProductsError).subscribe((error) => this.loadingError(error));
     this.store.dispatch(productsGetAll());
     this.getProductShoppingCart();
+    this.upateAmountOfProduct();
   }
 
   /*
@@ -53,5 +54,14 @@ export class ShoppingCartComponent implements OnInit {
      this.store.dispatch(getListShoppingCart({
        products: this.arrayProducts
      }));
+  }
+
+  upateAmountOfProduct = () => {
+    this.store.select(updateAmountOfProduct).subscribe((amount: any) => {
+      if (amount != null &&  amount.hasOwnProperty('amount')){
+          this.textCounter = Number(amount.amount);
+      }
+  });
+
   }
 }
