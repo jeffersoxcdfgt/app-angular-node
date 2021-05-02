@@ -179,7 +179,11 @@ export class PaymentProcessComponent implements OnInit {
        this.valuesInputs.forEach((val) => {
           const tot = Number(val.quantity) * Number(val.price);
           qtotal = qtotal + Number(val.quantity);
-          this.store.dispatch(updateAmountOfproducts({amount: qtotal}));
+          this.store.dispatch(updateAmountOfproducts({
+            amount: qtotal,
+            idpro: id,
+            quantity: event
+          }));
           this.totalprice = this.totalprice + tot;
           this.totalpriceaux = this.totalprice ;
         });
@@ -198,7 +202,10 @@ export class PaymentProcessComponent implements OnInit {
       lstvalues.forEach((valpro) => {
           const totamount = Number(valpro.quantity) * Number(valpro.price);
           qtotalq = qtotalq + Number(valpro.quantity);
-          this.store.dispatch(updateAmountOfproducts({amount: qtotalq}));
+          this.store.dispatch(updateAmountOfproducts({
+            amount: qtotalq,
+            idpro: id
+          }));
           total = total + totamount;
       });
 

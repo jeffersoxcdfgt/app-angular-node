@@ -17,7 +17,7 @@ import { Product } from '../private/product/class/product';
 export class ShoppingCartComponent implements OnInit {
 
   textCounter = 0;
-  arrayProducts: Product [] = [];
+  arrayProducts  = [];
 
   constructor(private router: Router, private store: Store<AppState>){
   }
@@ -61,7 +61,32 @@ export class ShoppingCartComponent implements OnInit {
       if (amount != null &&  amount.hasOwnProperty('amount')){
           this.textCounter = Number(amount.amount);
       }
+
+
+      if (amount != null &&  amount.hasOwnProperty('idpro') &&
+          amount.hasOwnProperty('quantity')){
+          const  prochange = this.arrayProducts.find((valfilter) => valfilter.product.id === amount.idpro );
+          const arraych  = this.arrayProducts.filter((valfilter) => valfilter.product.id !== amount.idpro );
+          const valuearray = this.fillArray(prochange, amount.quantity);
+          this.arrayProducts = arraych.concat(valuearray);
+
+     }
+     else if (amount != null &&  amount.hasOwnProperty('idpro')){
+        this.arrayProducts = this.arrayProducts.filter((valfilter) => valfilter.product.id !== amount.idpro );
+
+     }
+
   });
 
   }
+
+   fillArray = (value, len)  => {
+    if (len === 0) { return []; }
+    let a = [value];
+    while (a.length * 2 <= len) { a = a.concat(a); }
+    if (a.length < len) { a = a.concat(a.slice(0, len - a.length)); }
+    return a;
+  }
+
+
 }

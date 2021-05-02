@@ -31,7 +31,11 @@ export const getListShoppingCartError = createAction(ShoppingcartActionTypes.GET
 
 // Update amount of product
 
-export const updateAmountOfproducts = createAction(ShoppingcartActionTypes.UPDATE_PRODUCT_SHOPPING_CART, props<{amount: any} >());
+export const updateAmountOfproducts = createAction(ShoppingcartActionTypes.UPDATE_PRODUCT_SHOPPING_CART, props<{
+  amount: any,
+  idpro?: any,
+  quantity?: any
+} >());
 export const updateAmountOfproductsSuccess = createAction(ShoppingcartActionTypes.UPDATE_PRODUCT_SHOPPING_CART_SUCCESS,
   props<{amount: any}>());
 export const updateAmountOfproductsError = createAction(ShoppingcartActionTypes.UPDATE_PRODUCT_SHOPPING_CART_ERROR, props<{err: Error}>());
