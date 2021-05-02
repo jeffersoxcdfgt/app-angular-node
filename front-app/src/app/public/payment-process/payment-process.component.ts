@@ -4,7 +4,7 @@ import { AppState } from '../../app.state';
 import { getListShoppingCart } from '../store/reducers/shopping-cart.reducers';
 import { Product } from '../../private/product/class/product';
 import { from , Observable , BehaviorSubject } from 'rxjs';
-import { distinct, toArray, map , scan , tap } from 'rxjs/operators';
+import { distinct, toArray, map , scan , tap, filter } from 'rxjs/operators';
 import { MessageBoxComponent } from '../../shared/components/message-box/message-box.component';
 import { updateAmountOfproducts } from '../store/actions/shopping-cart.actions';
 
@@ -187,5 +187,29 @@ export class PaymentProcessComponent implements OnInit {
     else {
       this.totalpriceaux = this.totalprice;
    }
+  }
+
+
+  updateAmountDelete = (id: number) => {
+      const lstvalues = this.valuesInputs.filter((filtervalue) => filtervalue.id !== id);
+      const indexarray = this.valuesInputs.findIndex((filtervalue) => filtervalue.id  === id);
+      let qtotalq = 0;
+      let total = 0;
+      lstvalues.forEach((valpro) => {
+          const totamount = Number(valpro.quantity) * Number(valpro.price);
+          qtotalq = qtotalq + Number(valpro.quantity);
+          this.store.dispatch(updateAmountOfproducts({amount: qtotalq}));
+          total = total + totamount;
+      });
+
+      this.products.pipe(
+             map((valpro) => valpro.filter((valfil) => valfil.id !== id)),
+              ).subscribe((valpfil) => {
+              this.products = from([valpfil]);
+      });
+
+      this.totalprice = total;
+      this.valuesInputs[indexarray].quantity = 0;
+
   }
 }
