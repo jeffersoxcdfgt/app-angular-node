@@ -7,6 +7,7 @@ import { from , Observable , BehaviorSubject } from 'rxjs';
 import { distinct, toArray, map , scan , tap, filter } from 'rxjs/operators';
 import { MessageBoxComponent } from '../../shared/components/message-box/message-box.component';
 import { updateAmountOfproducts } from '../store/actions/shopping-cart.actions';
+import { ValidationPaymentService } from '../../shared/validations/validationPayment';
 
 @Component({
   selector: 'app-payment-process',
@@ -27,8 +28,10 @@ export class PaymentProcessComponent implements OnInit {
   valuesModeldata = [];
 
   constructor(private store: Store<AppState>,
-              private el: ElementRef){
+              private el: ElementRef,
+              private validationPaymentService: ValidationPaymentService){
     this.dataInput = new BehaviorSubject<string>('');
+    this.validationPaymentService.initValidation();
   }
 
 
