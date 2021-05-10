@@ -107,10 +107,33 @@
           <span *ngIf="(validationPaymentService.obsNameOfCard | async) === false;" class="text-red-400" >Name of card is required</span>
         </div>
         <div class="mb-3">
-            <label class="font-bold text-sm mb-2 ml-1">Card number</label>
+            <label for="Number of card" 
+            [className]="'font-bold text-sm mb-2 ml-1'" 
+            [ngClass]="{'text-red-400' : (validationPaymentService.obsCardNumber | async) === false || (validationPaymentService.obsCardOnlyNumber | async) === false  }">
+            Card number</label>
             <div>
-                <input class="w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors" placeholder="0000 0000 0000 0000" type="text"/>
+                <input 
+                (input)="
+                validationPaymentService.inputCardNumber( $event.target.value); 
+                validationPaymentService.inputCardOnlyNumber( $event.target.value); 
+                subgetCreditNumber.next($event.target.value)
+                "
+                [className]="'w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none'" 
+                [ngClass]="
+                {
+                  'border border-transparent border-red-400 focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent' : 
+                  (validationPaymentService.obsCardNumber | async) === false || (validationPaymentService.obsCardOnlyNumber | async) === false 
+                }"
+                maxlength="19"
+                value="{{valueInputcard}}"
+                placeholder="0000 0000 0000 0000" type="text"/>
             </div>
+        </div>
+        <div class="mt-1">
+          <span *ngIf="(validationPaymentService.obsCardNumber | async) === false; else elseBlockData" class="text-red-400" >Number card is required</span>
+          <ng-template #elseBlockData>
+            <span *ngIf="(validationPaymentService.obsCardOnlyNumber | async) === false" class="text-red-400" >Number card only allowed number</span>
+          </ng-template>
         </div>
         <div class="mb-3 -mx-2 flex items-end">
             <div class="px-2 w-1/2">
@@ -148,13 +171,30 @@
             </div>
         </div>
         <div class="mb-10">
-            <label class="font-bold text-sm mb-2 ml-1">Security code</label>
+          <label for="Number of card" 
+            [className]="'font-bold text-sm mb-2 ml-1'" 
+            [ngClass]="{'text-red-400' : (validationPaymentService.obsSecurityCode | async) === false }">
+            Security code</label>
             <div>
-                <input class="w-32 px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors" placeholder="000" type="text"/>
+                <input 
+                (input)="validationPaymentService.inputSecurityCode( $event.target.value);"
+                [className]="'w-32 px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none'" 
+                [ngClass]="
+                {
+                  'border border-transparent border-red-400 focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent' : 
+                  (validationPaymentService.obsSecurityCode | async) === false
+                }"
+                placeholder="000" type="text"/>
+            </div>
+            <div class="mt-1">
+              <span *ngIf="(validationPaymentService.obsSecurityCode | async) === false;" class="text-red-400" >Security Code is required</span>
             </div>
         </div>
         <div>
-            <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold"><i class="mdi mdi-lock-outline mr-1"></i> PAY NOW</button>
+            <button 
+            (click)="payNow()"
+            class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">
+              <i class="mdi mdi-lock-outline mr-1"></i> PAY NOW</button>
         </div>
     </div>
 </div>
