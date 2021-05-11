@@ -4,7 +4,7 @@ import { AppState } from '../../app.state';
 import { getListShoppingCart } from '../store/reducers/shopping-cart.reducers';
 import { Product } from '../../private/product/class/product';
 import { from , Observable , BehaviorSubject  } from 'rxjs';
-import { distinct, toArray, map , scan , tap } from 'rxjs/operators';
+import { distinct, toArray, map , scan  } from 'rxjs/operators';
 import { MessageBoxComponent } from '../../shared/components/message-box/message-box.component';
 import { updateAmountOfproducts } from '../store/actions/shopping-cart.actions';
 import { ValidationPaymentService } from '../../shared/validations/validationPayment';
@@ -52,32 +52,11 @@ export class PaymentProcessComponent implements OnInit {
 
   getDatainputs = () => {
     this.obsgetCreditNumber = this.subgetCreditNumber
-         .pipe(
-           map((dataInput) => {
-            let data = dataInput;
-            if (dataInput.length === 4  ){
-             data = this.addStr(dataInput, 4, '-');
-            }
-            if (dataInput.length === 9  ){
-              data = this.addStr(data, 10, '-');
-            }
-            if (dataInput.length === 14  ){
-              data = this.addStr(data, 15, '-');
-            }
-            return data;
-         }
-         )
-
-         ).subscribe((input) => {
-          if (input !== '' && (input.length === 5  || input.length === 10 || input.length === 15)){
+         .pipe(map((dataInput) =>  dataInput))
+          .subscribe((input) => {
             this.valueInputcard = input;
-          }
-
-
     });
   }
-
-
 
   getListShoppingCart = () => {
       this.store.select(getListShoppingCart).subscribe((products: any) => {

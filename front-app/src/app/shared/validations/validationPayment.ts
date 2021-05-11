@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject , of , combineLatest } from 'rxjs';
-import { cleanBlank , ifEmpty , validObs , onlyNumberCard } from './validation';
+import { cleanBlank , ifEmpty , validObs , onlyNumber , creditCardLength } from './validation';
 
 
 @Injectable({ providedIn: 'root' })
@@ -12,8 +12,11 @@ export class ValidationPaymentService {
   subCardNumber: BehaviorSubject<string>;
   obsCardNumber: any;
 
-  subCardOnlyNumber: BehaviorSubject<string>;
-  obsCardOnlyNumber: any;
+  subOnlyNumber: BehaviorSubject<string>;
+  obsOnlyNumber: any;
+
+  subLengthCard: BehaviorSubject<string>;
+  obsLengthCard: any;
 
   subSecurityCode: BehaviorSubject<string>;
   obsSecurityCode: any;
@@ -31,8 +34,11 @@ export class ValidationPaymentService {
     this.subCardNumber = new BehaviorSubject<string>('');
     this.obsCardNumber =  of(true);
 
-    this.subCardOnlyNumber = new BehaviorSubject<string>('');
-    this.obsCardOnlyNumber =  of(true);
+    this.subOnlyNumber = new BehaviorSubject<string>('');
+    this.obsOnlyNumber =  of(true);
+
+    this.subLengthCard = new BehaviorSubject<string>('');
+    this.obsLengthCard =  of(true);
 
     this.subSecurityCode = new BehaviorSubject<string>('');
     this.obsSecurityCode =  of(true);
@@ -53,9 +59,16 @@ export class ValidationPaymentService {
   }
 
   inputCardOnlyNumber(str: string): void {
-    this.subCardOnlyNumber.next(str);
-    this.obsCardOnlyNumber = this.subCardOnlyNumber.pipe(
-            onlyNumberCard
+    this.subOnlyNumber.next(str);
+    this.obsOnlyNumber = this.subOnlyNumber.pipe(
+            onlyNumber
+    );
+  }
+
+  inputLengthCard(str: string): void {
+    this.subLengthCard.next(str);
+    this.obsLengthCard = this.subLengthCard.pipe(
+         creditCardLength
     );
   }
 
@@ -71,13 +84,13 @@ export class ValidationPaymentService {
     this.click$ = false;
     this.obsNameOfCard = this.subNameOfCard.pipe(cleanBlank, ifEmpty);
     this.obsCardNumber = this.subCardNumber.pipe(cleanBlank, ifEmpty);
-    this.obsCardOnlyNumber = this.subCardOnlyNumber.pipe(onlyNumberCard);
+    this.obsLengthCard = this.subLengthCard.pipe(creditCardLength);
     this.obsSecurityCode = this.subSecurityCode.pipe(cleanBlank, ifEmpty);
 
     combineLatest(
         [this.obsNameOfCard.pipe(validObs),
         this.obsCardNumber.pipe(validObs),
-        this.obsCardOnlyNumber.pipe(validObs),
+        this.obsLengthCard.pipe(validObs),
         this.obsSecurityCode.pipe(validObs)]
       ).subscribe(() => this.click$ =  true );
 

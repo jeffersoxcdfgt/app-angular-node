@@ -14,7 +14,9 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import * as shoppingCartReducers from './store/reducers/shopping-cart.reducers';
 import { ShoppingcartEffects } from './store/effects/shopping-cart.effects';
 import { ShoppingcartService } from './store/services/shopping-cart.service';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
 
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
 
 export const reducers: ActionReducerMap<any> = {
   product: productReducers.reducer,
@@ -24,6 +26,7 @@ export const reducers: ActionReducerMap<any> = {
 @NgModule({
   imports: [
     SharedModule,
+    NgxMaskModule.forRoot(),
     ShoppingCartRoutingModule,
     NgxPaginationModule,
     StoreModule.forRoot(reducers, {

@@ -109,31 +109,33 @@
         <div class="mb-3">
             <label for="Number of card" 
             [className]="'font-bold text-sm mb-2 ml-1'" 
-            [ngClass]="{'text-red-400' : (validationPaymentService.obsCardNumber | async) === false || (validationPaymentService.obsCardOnlyNumber | async) === false  }">
+            [ngClass]="{'text-red-400' : (validationPaymentService.obsCardNumber | async) === false ||  (validationPaymentService.obsLengthCard | async) === false   }">
             Card number</label>
             <div>
                 <input 
                 (input)="
-                validationPaymentService.inputCardNumber( $event.target.value); 
-                validationPaymentService.inputCardOnlyNumber( $event.target.value); 
+                validationPaymentService.inputCardNumber( $event.target.value);  
+                validationPaymentService.inputLengthCard( $event.target.value); 
                 subgetCreditNumber.next($event.target.value)
                 "
                 [className]="'w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none'" 
                 [ngClass]="
                 {
                   'border border-transparent border-red-400 focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent' : 
-                  (validationPaymentService.obsCardNumber | async) === false || (validationPaymentService.obsCardOnlyNumber | async) === false 
+                  (validationPaymentService.obsCardNumber | async) === false || (validationPaymentService.obsLengthCard | async) === false  
                 }"
                 maxlength="19"
                 value="{{valueInputcard}}"
-                placeholder="0000 0000 0000 0000" type="text"/>
+                mask="0000-0000-0000-0000"
+                placeholder="0000-0000-0000-0000" type="text"/>
             </div>
         </div>
         <div class="mt-1">
-          <span *ngIf="(validationPaymentService.obsCardNumber | async) === false; else elseBlockData" class="text-red-400" >Number card is required</span>
-          <ng-template #elseBlockData>
-            <span *ngIf="(validationPaymentService.obsCardOnlyNumber | async) === false" class="text-red-400" >Number card only allowed number</span>
+          <span *ngIf="(validationPaymentService.obsCardNumber | async) === false; else elseBlockLength " class="text-red-400" >Number card is required</span>
+          <ng-template #elseBlockLength>
+            <span *ngIf="(validationPaymentService.obsLengthCard | async) === false; " class="text-red-400" >Number card is at least 16 caracters </span>
           </ng-template>
+          
         </div>
         <div class="mb-3 -mx-2 flex items-end">
             <div class="px-2 w-1/2">

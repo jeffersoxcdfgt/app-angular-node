@@ -23,23 +23,21 @@ export const passwordLength = map((str: string) => {
   return false;
 });
 
-export const onlyNumberCard = map((str: string) => {
- if ((str.length >= 6 && str.length <= 9) && (str.substr(4, 1) === '-')){
-   return true;
- }
-
- if ((str.length >= 11 && str.length <= 14) && (str.substr(9, 1) === '-')){
+export const onlyNumber = map((str: string) => {
+if (/^\d+$/.test(str)){
   return true;
 }
 
- if ((str.length >= 15  && str.length <= 19) && (str.substr(14, 1) === '-')){
-  return true;
-}
+return false;
+});
 
- if (/^\d+$/.test(str)){
+
+export const creditCardLength = map((str: string) => {
+  const res = str.replace( /-/g, '');
+  if (res.length === 16){
     return true;
   }
- return false;
+  return false;
 });
 
 
