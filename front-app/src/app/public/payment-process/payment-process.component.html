@@ -92,7 +92,10 @@
                 [className]="'font-bold text-sm mb-2 ml-1'" 
                 [ngClass]="{'text-red-400' : (validationPaymentService.obsNameOfCard | async) === false }">Name on card</label>
             <div>
-                <input (input)="validationPaymentService.inputNameOfCard( $event.target.value);"
+                <input 
+                (input)="
+                validationPaymentService.inputNameOfCard( $event.target.value);
+                subgetMynamecard.next($event.target.value)"
                 [className]="'w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none '" 
                 [ngClass]="
                 {
@@ -116,7 +119,8 @@
                 (input)="
                 validationPaymentService.inputCardNumber( $event.target.value);  
                 validationPaymentService.inputLengthCard( $event.target.value); 
-                subgetCreditNumber.next($event.target.value)
+                subgetCreditNumber.next($event.target.value);
+                subgetMynumbercard.next($event.target.value)
                 "
                 [className]="'w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none'" 
                 [ngClass]="

@@ -3,11 +3,12 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
 import { getListShoppingCart } from '../store/reducers/shopping-cart.reducers';
 import { Product } from '../../private/product/class/product';
-import { from , Observable , BehaviorSubject  } from 'rxjs';
-import { distinct, toArray, map , scan  } from 'rxjs/operators';
+import { from , Observable , BehaviorSubject , combineLatest , interval , merge , forkJoin , of , zip} from 'rxjs';
+import { distinct, toArray, map , scan  , mapTo , take , delay , withLatestFrom, filter , tap } from 'rxjs/operators';
 import { MessageBoxComponent } from '../../shared/components/message-box/message-box.component';
 import { updateAmountOfproducts } from '../store/actions/shopping-cart.actions';
 import { ValidationPaymentService } from '../../shared/validations/validationPayment';
+const NUMINPUTS = 2;
 
 @Component({
   selector: 'app-payment-process',
@@ -31,11 +32,25 @@ export class PaymentProcessComponent implements OnInit {
   obsgetCreditNumber: any;
   valueInputcard = '';
 
+  // get values inputs
+
+  subgetMynamecard: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  obsgetMynamecard: any;
+
+  subgetMynumbercard: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  obsgetMynumbercard: any;
+
+  // get values inputs
+
+
   constructor(private store: Store<AppState>,
               private el: ElementRef,
               private validationPaymentService: ValidationPaymentService){
     this.dataInput = new BehaviorSubject<string>('');
     this.validationPaymentService.initValidation();
+
+    this.obsgetMynamecard = this.subgetMynamecard;
+    this.obsgetMynumbercard = this.subgetMynumbercard;
   }
 
 
@@ -56,7 +71,19 @@ export class PaymentProcessComponent implements OnInit {
           .subscribe((input) => {
             this.valueInputcard = input;
     });
-  }
+
+     // Get data all inputs
+    combineLatest([
+       this.obsgetMynamecard ,
+       this.obsgetMynumbercard]
+    )
+    .pipe(
+        filter( (filterdata) => filterdata.filter((dataFil) => dataFil !== '').length >= NUMINPUTS))
+          .subscribe((dataInputs) => {
+             console.log(dataInputs, '====');
+     });
+     // Get data all inputs
+    }
 
   getListShoppingCart = () => {
       this.store.select(getListShoppingCart).subscribe((products: any) => {
