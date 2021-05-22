@@ -3,12 +3,12 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
 import { getListShoppingCart } from '../store/reducers/shopping-cart.reducers';
 import { Product } from '../../private/product/class/product';
-import { from , Observable , BehaviorSubject , combineLatest , interval , merge , forkJoin , of , zip} from 'rxjs';
-import { distinct, toArray, map , scan  , mapTo , take , delay , withLatestFrom, filter , tap } from 'rxjs/operators';
+import { from , Observable , BehaviorSubject , combineLatest } from 'rxjs';
+import { distinct, toArray, map , scan , filter } from 'rxjs/operators';
 import { MessageBoxComponent } from '../../shared/components/message-box/message-box.component';
 import { updateAmountOfproducts } from '../store/actions/shopping-cart.actions';
 import { ValidationPaymentService } from '../../shared/validations/validationPayment';
-const NUMINPUTS = 2;
+const NUMINPUTS = 3;
 
 @Component({
   selector: 'app-payment-process',
@@ -40,6 +40,9 @@ export class PaymentProcessComponent implements OnInit {
   subgetMynumbercard: BehaviorSubject<string> = new BehaviorSubject<string>('');
   obsgetMynumbercard: any;
 
+  subgetSecurityCode: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  obsgetSecurityCode: any;
+
   // get values inputs
 
 
@@ -51,6 +54,7 @@ export class PaymentProcessComponent implements OnInit {
 
     this.obsgetMynamecard = this.subgetMynamecard;
     this.obsgetMynumbercard = this.subgetMynumbercard;
+    this.obsgetSecurityCode = this.subgetSecurityCode;
   }
 
 
@@ -75,13 +79,23 @@ export class PaymentProcessComponent implements OnInit {
      // Get data all inputs
     combineLatest([
        this.obsgetMynamecard ,
-       this.obsgetMynumbercard]
+       this.obsgetMynumbercard,
+       this.obsgetSecurityCode
+      ]
     )
     .pipe(
         filter( (filterdata) => filterdata.filter((dataFil) => dataFil !== '').length >= NUMINPUTS))
           .subscribe((dataInputs) => {
-             console.log(dataInputs, '====');
+            const [ nameCard , numCard, securitycode ] = dataInputs;
+            const myObject = {
+                nameCard,
+                numCard,
+                securitycode
+            };
+            // console.log(myObject,"7777")
      });
+
+
      // Get data all inputs
     }
 
