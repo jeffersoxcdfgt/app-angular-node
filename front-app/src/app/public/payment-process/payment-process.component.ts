@@ -43,6 +43,15 @@ export class PaymentProcessComponent implements OnInit {
   subgetSecurityCode: BehaviorSubject<string> = new BehaviorSubject<string>('');
   obsgetSecurityCode: any;
 
+  subgetDay: BehaviorSubject<string> = new BehaviorSubject<string>('01');
+  obsgetDay: any;
+
+  subgetMonth: BehaviorSubject<string> = new BehaviorSubject<string>('1');
+  obsgetMonth: any;
+
+  subgetYear: BehaviorSubject<string> = new BehaviorSubject<string>('2020');
+  obsgetYear: any;
+
   // get values inputs
 
 
@@ -55,6 +64,9 @@ export class PaymentProcessComponent implements OnInit {
     this.obsgetMynamecard = this.subgetMynamecard;
     this.obsgetMynumbercard = this.subgetMynumbercard;
     this.obsgetSecurityCode = this.subgetSecurityCode;
+    this.obsgetDay = this.subgetDay;
+    this.obsgetMonth = this.subgetMonth;
+    this.obsgetYear = this.subgetYear;
   }
 
 
@@ -80,23 +92,27 @@ export class PaymentProcessComponent implements OnInit {
     combineLatest([
        this.obsgetMynamecard ,
        this.obsgetMynumbercard,
-       this.obsgetSecurityCode
+       this.obsgetSecurityCode,
+       this.obsgetDay,
+       this.obsgetMonth,
+       this.obsgetYear
       ]
     )
     .pipe(
         filter( (filterdata) => filterdata.filter((dataFil) => dataFil !== '').length >= NUMINPUTS))
           .subscribe((dataInputs) => {
-            const [ nameCard , numCard, securitycode ] = dataInputs;
+            const [ nameCard, numCard, securitycode, daycard, monthcard, yearcard] = dataInputs;
             const myObject = {
                 nameCard,
                 numCard,
-                securitycode
+                securitycode,
+                daycard,
+                monthcard,
+                yearcard
             };
-            // console.log(myObject,"7777")
      });
-
-
      // Get data all inputs
+
     }
 
   getListShoppingCart = () => {
