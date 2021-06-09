@@ -75,7 +75,6 @@ export class ShoppingCartComponent implements OnInit {
         this.arrayProducts = this.arrayProducts.filter((valfilter) => valfilter.product.id !== amount.idpro );
 
      }
-
   });
 
   }

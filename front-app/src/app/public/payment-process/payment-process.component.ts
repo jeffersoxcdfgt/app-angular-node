@@ -3,12 +3,13 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
 import { getListShoppingCart } from '../store/reducers/shopping-cart.reducers';
 import { Product } from '../../private/product/class/product';
-import { from , Observable , BehaviorSubject , combineLatest } from 'rxjs';
+import { from , Observable , BehaviorSubject , combineLatest , concat , of} from 'rxjs';
 import { distinct, toArray, map , scan , filter } from 'rxjs/operators';
 import { MessageBoxComponent } from '../../shared/components/message-box/message-box.component';
 import { updateAmountOfproducts } from '../store/actions/shopping-cart.actions';
 import { ValidationPaymentService } from '../../shared/validations/validationPayment';
 const NUMINPUTS = 3;
+
 
 @Component({
   selector: 'app-payment-process',
@@ -52,6 +53,8 @@ export class PaymentProcessComponent implements OnInit {
   subgetYear: BehaviorSubject<string> = new BehaviorSubject<string>('2020');
   obsgetYear: any;
 
+  dataPayment = of();
+
   // get values inputs
 
 
@@ -89,29 +92,27 @@ export class PaymentProcessComponent implements OnInit {
     });
 
      // Get data all inputs
-    combineLatest([
-       this.obsgetMynamecard ,
-       this.obsgetMynumbercard,
-       this.obsgetSecurityCode,
-       this.obsgetDay,
-       this.obsgetMonth,
-       this.obsgetYear
-      ]
-    )
-    .pipe(
-        filter( (filterdata) => filterdata.filter((dataFil) => dataFil !== '').length >= NUMINPUTS))
-          .subscribe((dataInputs) => {
-            const [ nameCard, numCard, securitycode, daycard, monthcard, yearcard] = dataInputs;
-            const myObject = {
-                nameCard,
-                numCard,
-                securitycode,
-                daycard,
-                monthcard,
-                yearcard
-            };
-     });
-     // Get data all inputs
+    this.dataPayment = combineLatest([
+      this.obsgetMynamecard ,
+      this.obsgetMynumbercard,
+      this.obsgetSecurityCode,
+      this.obsgetDay,
+      this.obsgetMonth,
+      this.obsgetYear
+    ]
+   )
+   .pipe(
+         filter((filterdata) => filterdata.filter((dataFil) => dataFil !== '').length >= NUMINPUTS),
+           map((
+             [nameCard,
+              numCard,
+              securitycode,
+              daycard
+              , monthcard,
+              yearcard
+            ])  =>  ({ nameCard, numCard, securitycode, daycard, monthcard, yearcard }))
+        );
+    // Get data all inputs
 
     }
 
@@ -299,7 +300,31 @@ export class PaymentProcessComponent implements OnInit {
 
   payNow = () => {
     if (this.validationPaymentService.ifGood()){
-        console.log(78544);
+        const lstpro = [{
+         idpro: 1,
+         nameproduct: 'produc1'
+        },
+        {
+          idpro: 2,
+          nameproduct: 'produc2'
+         }
+       ];
+        this.dataPayment.pipe(
+            map(({nameCard, numCard, securitycode, daycard, monthcard, yearcard})  =>  (
+              {
+                nameCard,
+                numCard,
+                securitycode, daycard,
+                monthcard,
+                yearcard,
+                products: [{
+                   ...lstpro
+                 }
+               ]
+              }
+            ))
+          ).subscribe((m) => console.log(m, 'transation product'));
+
     }
   }
 
