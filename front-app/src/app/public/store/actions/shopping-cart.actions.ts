@@ -11,9 +11,9 @@ export enum ShoppingcartActionTypes {
   UPDATE_PRODUCT_SHOPPING_CART = '[UPDATE_PRODUCT_SHOPPING_CART] Update amount of products',
   UPDATE_PRODUCT_SHOPPING_CART_SUCCESS = '[UPDATE_PRODUCT_SHOPPING_CART_SUCCESS] Update amount of products success',
   UPDATE_PRODUCT_SHOPPING_CART_ERROR = '[UPDATE_PRODUCT_SHOPPING_CART_ERROR] Update amount of products error',
-
-
-
+  GET_LAST_LIST_PRODUCTS = '[Getlist products update ] return all producst amount update',
+  GET_LAST_LIST_PRODUCTS_SUCCESS = '[Getlist products update success ] return all producst amount update success',
+  GET_LAST_LIST_PRODUCTS_ERROR = '[Getlist products update error ] return all producst amount update error'
 }
 
 // Add product to shopping cart
@@ -40,3 +40,8 @@ export const updateAmountOfproductsSuccess = createAction(ShoppingcartActionType
   props<{amount: any}>());
 export const updateAmountOfproductsError = createAction(ShoppingcartActionTypes.UPDATE_PRODUCT_SHOPPING_CART_ERROR, props<{err: Error}>());
 
+// Return new list products
+
+export const getListproductslast = createAction(ShoppingcartActionTypes.GET_LAST_LIST_PRODUCTS);
+export const getListproductslastSuccess = createAction(ShoppingcartActionTypes.GET_LAST_LIST_PRODUCTS_SUCCESS);
+export const getListproductslastError = createAction(ShoppingcartActionTypes.GET_LAST_LIST_PRODUCTS_ERROR);

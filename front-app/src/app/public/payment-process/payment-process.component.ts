@@ -3,13 +3,15 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
 import { getListShoppingCart } from '../store/reducers/shopping-cart.reducers';
 import { Product } from '../../private/product/class/product';
-import { from , Observable , BehaviorSubject , combineLatest , concat , of} from 'rxjs';
-import { distinct, toArray, map , scan , filter } from 'rxjs/operators';
+import { from , Observable , BehaviorSubject , combineLatest , concat , of, merge} from 'rxjs';
+import { distinct, toArray, map , scan , filter , tap , mergeMap, mapTo} from 'rxjs/operators';
 import { MessageBoxComponent } from '../../shared/components/message-box/message-box.component';
 import { updateAmountOfproducts } from '../store/actions/shopping-cart.actions';
 import { ValidationPaymentService } from '../../shared/validations/validationPayment';
-const NUMINPUTS = 3;
+import {PaymentTransaction} from './class/paymentTransaction';
 
+
+const NUMINPUTS = 3;
 
 @Component({
   selector: 'app-payment-process',
@@ -107,8 +109,8 @@ export class PaymentProcessComponent implements OnInit {
              [nameCard,
               numCard,
               securitycode,
-              daycard
-              , monthcard,
+              daycard,
+              monthcard,
               yearcard
             ])  =>  ({ nameCard, numCard, securitycode, daycard, monthcard, yearcard }))
         );
@@ -309,7 +311,19 @@ export class PaymentProcessComponent implements OnInit {
           nameproduct: 'produc2'
          }
        ];
-        this.dataPayment.pipe(
+
+        const obs = of([
+        {
+          idpro: 1,
+          nameproduct: 'produc1'
+         },
+         {
+           idpro: 2,
+           nameproduct: 'produc2'
+          }
+       ]);
+
+        /*this.dataPayment.pipe(
             map(({nameCard, numCard, securitycode, daycard, monthcard, yearcard})  =>  (
               {
                 nameCard,
@@ -323,8 +337,21 @@ export class PaymentProcessComponent implements OnInit {
                ]
               }
             ))
-          ).subscribe((m) => console.log(m, 'transation product'));
+          ).subscribe((m) => console.log(m, 'transation product'));*/
 
+        this.dataPayment
+                .pipe(mergeMap((data: PaymentTransaction) => obs.pipe(
+                  map((lstmyproducts) => ({
+                        ...data,
+                        products: [
+                          ...lstmyproducts
+                        ]
+                      })
+                   )
+                )))
+            .subscribe((res) => {
+                  console.log(res, '=');
+            });
     }
   }
 
