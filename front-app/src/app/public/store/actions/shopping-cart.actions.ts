@@ -44,4 +44,4 @@ export const updateAmountOfproductsError = createAction(ShoppingcartActionTypes.
 
 export const getListproductslast = createAction(ShoppingcartActionTypes.GET_LAST_LIST_PRODUCTS);
 export const getListproductslastSuccess = createAction(ShoppingcartActionTypes.GET_LAST_LIST_PRODUCTS_SUCCESS);
-export const getListproductslastError = createAction(ShoppingcartActionTypes.GET_LAST_LIST_PRODUCTS_ERROR);
+export const getListproductslastError = createAction(ShoppingcartActionTypes.GET_LAST_LIST_PRODUCTS_ERROR, props<{err: Error}>());

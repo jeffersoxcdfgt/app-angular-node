@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable , of } from 'rxjs';
+import { Observable , of , EMPTY } from 'rxjs';
 import { tap , catchError} from 'rxjs/operators';
 import { Product } from '../../../private/product/class/product';
 import { TraceService } from '../../../shared/utils/traceService';
@@ -50,6 +50,14 @@ export class ShoppingcartService {
           tap((_) => this.traceService.log(`update amount of products`)),
                 catchError(this.traceService.handleError<any>('updateAmountproducts'))
       );
+   }
+
+  /**
+   * Calling parent component
+   * @returns gets the response
+   */
+   public callinService(): Observable<any>{
+          return of();
    }
 
 }

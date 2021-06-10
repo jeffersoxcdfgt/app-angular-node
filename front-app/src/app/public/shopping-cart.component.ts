@@ -1,12 +1,18 @@
 import { Component , OnInit} from '@angular/core';
-import { Store } from '@ngrx/store';
+import { ActionsSubject, Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { AppState } from '../app.state';
 import { productsGetAll  } from '../private/product/store/actions/product.actions';
 import { getProductsError } from '../private/product/store/reducers/product.reducers';
-import { getProductInShoppingCart , updateAmountOfProduct} from './store/reducers/shopping-cart.reducers';
+import {
+  getProductInShoppingCart ,
+  updateAmountOfProduct ,
+  getLastlistproducts
+} from './store/reducers/shopping-cart.reducers';
 import { getListShoppingCart } from './store/actions/shopping-cart.actions';
 import { Product } from '../private/product/class/product';
+import { from } from 'rxjs';
+import { map , groupBy ,  mergeMap , toArray , distinct, tap, scan, reduce} from 'rxjs/operators';
 
 
 @Component({
@@ -27,6 +33,7 @@ export class ShoppingCartComponent implements OnInit {
     this.store.dispatch(productsGetAll());
     this.getProductShoppingCart();
     this.upateAmountOfProduct();
+    this.getListlastproducts();
   }
 
   /*
@@ -87,5 +94,32 @@ export class ShoppingCartComponent implements OnInit {
     return a;
   }
 
+  getListlastproducts = () => {
+    this.store.select(getLastlistproducts).subscribe((data: any) => {
+          if (data !== null && data === 'lstproducts'){
+            // console.log("products = ",this.arrayProducts)
 
+             const obs1 = from(this.arrayProducts)
+                  .pipe(
+                    map((mypro) =>  mypro.product),
+                       groupBy( datapro => datapro.id),
+                         mergeMap(group => group.pipe(toArray())) ,
+                           map((proamount) => proamount.map((lstp) => ({...lstp, amount: proamount.length}))),
+                            reduce((a, b) => (a.concat(b)), []));
+
+             obs1
+                   .pipe(
+                       mergeMap((xdata) => from(xdata)
+                          .pipe(
+                             distinct(e => e.id),
+                              toArray()
+                      ),
+                    )
+                  )
+                  .subscribe((infopro) => {
+                        console.log('products group by and consolidate', infopro);
+                  });
+          }
+    });
+  }
 }

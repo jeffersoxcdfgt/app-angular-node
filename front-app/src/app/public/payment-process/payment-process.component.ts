@@ -6,7 +6,7 @@ import { Product } from '../../private/product/class/product';
 import { from , Observable , BehaviorSubject , combineLatest , concat , of, merge} from 'rxjs';
 import { distinct, toArray, map , scan , filter , tap , mergeMap, mapTo} from 'rxjs/operators';
 import { MessageBoxComponent } from '../../shared/components/message-box/message-box.component';
-import { updateAmountOfproducts } from '../store/actions/shopping-cart.actions';
+import { updateAmountOfproducts, getListproductslast } from '../store/actions/shopping-cart.actions';
 import { ValidationPaymentService } from '../../shared/validations/validationPayment';
 import {PaymentTransaction} from './class/paymentTransaction';
 
@@ -339,6 +339,8 @@ export class PaymentProcessComponent implements OnInit {
             ))
           ).subscribe((m) => console.log(m, 'transation product'));*/
 
+        this.store.dispatch((getListproductslast()));
+
         this.dataPayment
                 .pipe(mergeMap((data: PaymentTransaction) => obs.pipe(
                   map((lstmyproducts) => ({
@@ -348,10 +350,7 @@ export class PaymentProcessComponent implements OnInit {
                         ]
                       })
                    )
-                )))
-            .subscribe((res) => {
-                  console.log(res, '=');
-            });
+        )));
     }
   }
 

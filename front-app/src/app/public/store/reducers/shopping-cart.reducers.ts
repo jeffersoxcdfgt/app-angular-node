@@ -4,7 +4,7 @@ import { Product } from '../../../private/product/class/product';
 import * as shoppingCartActions from '../actions/shopping-cart.actions';
 
 export interface State {
-  data: Product[];
+  data: Product[] | string;
   selected: Product;
   action: string;
   done: boolean;
@@ -100,6 +100,34 @@ const shoppingCartReducer = createReducer(
       error: err
   })),
 
+  // Get list products last list
+
+  on(shoppingCartActions.getListproductslast,
+     state => (
+      { ...state,
+        action: shoppingCartActions.ShoppingcartActionTypes.GET_LAST_LIST_PRODUCTS,
+        done: false,
+        data: 'lstproducts',
+        selected: null,
+        error: null
+   })),
+
+   on(shoppingCartActions.getListproductslastSuccess,
+    state => (
+     { ...state,
+       action: shoppingCartActions.ShoppingcartActionTypes.GET_LAST_LIST_PRODUCTS_SUCCESS,
+       done: false,
+       selected: null,
+       error: null
+  })),
+
+  on(shoppingCartActions.getListproductslastError,
+    (state, { err }) => ({
+      ...state,
+      done: true,
+      selected: null,
+      error: err
+  })),
 );
 
 export function reducer(state: State | undefined, action: AppAction): any {
@@ -150,5 +178,12 @@ export const updateAmountOfProduct = createSelector( getShoppingCartState , ( st
 export const updateAmountOfProductError = createSelector(getShoppingCartState, (state: State) => {
   return state.action === shoppingCartActions.ShoppingcartActionTypes.UPDATE_PRODUCT_SHOPPING_CART_ERROR
     ? state.error
+   : null;
+});
+
+
+export const getLastlistproducts = createSelector(getShoppingCartState, (state: State) => {
+  return state.action === shoppingCartActions.ShoppingcartActionTypes.GET_LAST_LIST_PRODUCTS && state.data === 'lstproducts'
+    ? state.data
    : null;
 });

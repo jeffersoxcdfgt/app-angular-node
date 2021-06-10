@@ -58,6 +58,17 @@ export class ShoppingcartEffects {
   );
 
 
+  public callParentComponent$ = createEffect(() => this.actions$.pipe(
+    ofType(ShoppingcartActionTypes.GET_LAST_LIST_PRODUCTS),
+    mergeMap(() => this.shoppingcartService.callinService()
+      .pipe(
+        map((_) => ({ type: ShoppingcartActionTypes.GET_LAST_LIST_PRODUCTS_SUCCESS })),
+         catchError(errcross => of({ type: ShoppingcartActionTypes.GET_LAST_LIST_PRODUCTS_ERROR, err: errcross }))
+      ))
+    )
+  );
+
+
   constructor(
     private actions$: Actions,
     private shoppingcartService: ShoppingcartService
