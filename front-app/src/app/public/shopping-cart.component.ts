@@ -123,6 +123,9 @@ export class ShoppingCartComponent implements OnInit {
                         }));
 
                   });*/
+
+             this.arrayProducts = [];
+             this.textCounter = 0;
              this.store.dispatch(getlistProductsamount({lstproamount: obsend }));
           }
     });

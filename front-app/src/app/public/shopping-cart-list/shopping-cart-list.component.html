@@ -7,7 +7,7 @@
           </svg>
        </span>
         <span class="hidden sm:block">
-          <input type="text" name="search" id="search" class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-80 rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="Search for word">
+          <input type="text" name="search" id="search2" class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-80 rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="Search for word">
         </span>
       </div>
     </div>
@@ -21,7 +21,25 @@
       <p class="py-1 text-sm text-center text-gray-500 mb-10">
         This is the list of products we have
       </p>   
-
+      <div class="flex">
+        <div class="flex-grow">
+        </div>
+        <div class="flex-shrink">
+          <!-- This item will shrink -->         
+        <div class="flex flex-nowrap">
+          <span class="inline-flex items-center px-3 rounded-l-md border border-l-1 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+            </svg>
+          </span>
+          <span class="hidden sm:block">
+            <input type="search" name="search" id="search" class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-80 rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="Search for word">
+          </span>
+        </div>
+        </div>
+        <div class="flex-grow">
+        </div>
+      </div>
       <div class="flex flex-wrap items-center justify-center py-4 pt-0 mx-auto">   
         <div class="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden my-10 mr-12" *ngFor="let product of products | async | paginate: { itemsPerPage: 6, currentPage: p }">
           <div class="px-4 py-2">

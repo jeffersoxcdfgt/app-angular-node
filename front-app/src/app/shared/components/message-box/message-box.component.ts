@@ -10,6 +10,7 @@ export class MessageBoxComponent implements OnInit {
 
   @Input() message: string;
   @Input() urlredirect = '';
+  @Input() title = 'Error validation user';
   showAlert = 'none';
 
   constructor(private router: Router) { }
