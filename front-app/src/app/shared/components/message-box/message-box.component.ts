@@ -1,4 +1,5 @@
 import { Component, OnInit , Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-message-box',
@@ -8,12 +9,20 @@ import { Component, OnInit , Input } from '@angular/core';
 export class MessageBoxComponent implements OnInit {
 
   @Input() message: string;
+  @Input() urlredirect = '';
   showAlert = 'none';
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void { }
 
-  close = () => this.showAlert  = 'none';
-  open = () =>  this.showAlert = 'block';
+  close = () => {
+    this.showAlert  = 'none';
+    if (this.urlredirect !== ''){
+        this.router.navigateByUrl(this.urlredirect);
+    }
+  }
+  open = () =>  {
+    this.showAlert = 'block';
+  }
 }

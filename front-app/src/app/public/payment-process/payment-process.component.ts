@@ -1,16 +1,14 @@
-import { Component, OnInit , ViewChild , ElementRef } from '@angular/core';
+import { Component, OnInit , ViewChild , ElementRef, AfterViewInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
 import { getListShoppingCart , getProductListAmount  } from '../store/reducers/shopping-cart.reducers';
 import { Product } from '../../private/product/class/product';
-import { from , Observable , BehaviorSubject , combineLatest , concat , of, merge} from 'rxjs';
+import { from , Observable , BehaviorSubject , combineLatest , concat , of, merge , fromEvent} from 'rxjs';
 import { distinct, toArray, map , scan , filter , tap , mergeMap, mapTo} from 'rxjs/operators';
 import { MessageBoxComponent } from '../../shared/components/message-box/message-box.component';
 import { updateAmountOfproducts, getListproductslast } from '../store/actions/shopping-cart.actions';
 import { ValidationPaymentService } from '../../shared/validations/validationPayment';
 import {PaymentTransaction} from './class/paymentTransaction';
-
-
 const NUMINPUTS = 3;
 
 @Component({
@@ -356,10 +354,12 @@ export class PaymentProcessComponent implements OnInit {
           if (amountdata !== null && amountdata.hasOwnProperty('lstproamount')){
               amountdata.lstproamount.subscribe((obssent) => {
                     console.log(obssent, 'Observable sent from dispatcher, Not only data , It\'s possible WOOWW');
+                    this.messageValidation = 'Payment was successful';
+                    this.messageBoxComponent.open();
+                    // this.router.navigateByUrl('/')
               });
           }
         });
      }
   }
-
 }
