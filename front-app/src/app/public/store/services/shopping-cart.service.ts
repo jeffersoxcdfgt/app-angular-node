@@ -60,4 +60,16 @@ export class ShoppingcartService {
           return of();
    }
 
+  /**
+   * return list products with amount and group-by
+   * @returns gets the response  with all inform
+   */
+      public getlistamountproducts(data: any): Observable<any>{
+        return of<any>(data)
+          .pipe(
+              tap((_) => this.traceService.log(`list products with amount update`)),
+                    catchError(this.traceService.handleError<any>('getlistamountproducts'))
+          );
+       }
+
 }

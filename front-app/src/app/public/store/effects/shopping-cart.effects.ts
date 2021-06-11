@@ -68,6 +68,22 @@ export class ShoppingcartEffects {
     )
   );
 
+  public getListAmountProducts$ = createEffect(() => this.actions$.pipe(
+    ofType(ShoppingcartActionTypes.GET_LIST_SWITCH_PRODUCT_AMOUNT),
+    mergeMap((dataproductsamount) => this.shoppingcartService.getlistamountproducts(dataproductsamount)
+      .pipe(
+        map((amountproducts: any) => ({
+          type: ShoppingcartActionTypes.GET_LIST_SWITCH_PRODUCT_AMOUNT_SUCCESS,
+          lstproamount: amountproducts
+        })),
+          catchError(error => of({
+            type: ShoppingcartActionTypes.GET_LIST_SWITCH_PRODUCT_AMOUNT_ERROR,
+            err: error
+          }))
+      ))
+    )
+  );
+
 
   constructor(
     private actions$: Actions,

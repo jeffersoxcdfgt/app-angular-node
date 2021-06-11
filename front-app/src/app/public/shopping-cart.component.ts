@@ -9,7 +9,7 @@ import {
   updateAmountOfProduct ,
   getLastlistproducts
 } from './store/reducers/shopping-cart.reducers';
-import { getListShoppingCart } from './store/actions/shopping-cart.actions';
+import { getListShoppingCart , getlistProductsamount} from './store/actions/shopping-cart.actions';
 import { Product } from '../private/product/class/product';
 import { from } from 'rxjs';
 import { map , groupBy ,  mergeMap , toArray , distinct, tap, scan, reduce} from 'rxjs/operators';
@@ -107,7 +107,7 @@ export class ShoppingCartComponent implements OnInit {
                            map((proamount) => proamount.map((lstp) => ({...lstp, amount: proamount.length}))),
                             reduce((a, b) => (a.concat(b)), []));
 
-             obs1
+             const obsend = obs1
                    .pipe(
                        mergeMap((xdata) => from(xdata)
                           .pipe(
@@ -115,10 +115,15 @@ export class ShoppingCartComponent implements OnInit {
                               toArray()
                       ),
                     )
-                  )
-                  .subscribe((infopro) => {
+                  );
+                  /*.subscribe((infopro) => {
                         console.log('products group by and consolidate', infopro);
-                  });
+                        this.store.dispatch(getlistProductsamount({
+                          lstproamount: infopro
+                        }));
+
+                  });*/
+             this.store.dispatch(getlistProductsamount({lstproamount: obsend }));
           }
     });
   }

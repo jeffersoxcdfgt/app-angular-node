@@ -1,7 +1,7 @@
 import { Component, OnInit , ViewChild , ElementRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
-import { getListShoppingCart } from '../store/reducers/shopping-cart.reducers';
+import { getListShoppingCart , getProductListAmount  } from '../store/reducers/shopping-cart.reducers';
 import { Product } from '../../private/product/class/product';
 import { from , Observable , BehaviorSubject , combineLatest , concat , of, merge} from 'rxjs';
 import { distinct, toArray, map , scan , filter , tap , mergeMap, mapTo} from 'rxjs/operators';
@@ -351,7 +351,15 @@ export class PaymentProcessComponent implements OnInit {
                       })
                    )
         )));
-    }
+
+        this.store.select(getProductListAmount).subscribe((amountdata: any) => {
+          if (amountdata !== null && amountdata.hasOwnProperty('lstproamount')){
+              amountdata.lstproamount.subscribe((obssent) => {
+                    console.log(obssent, 'Observable sent from dispatcher, Not only data , It\'s possible WOOWW');
+              });
+          }
+        });
+     }
   }
 
 }

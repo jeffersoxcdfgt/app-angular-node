@@ -13,7 +13,10 @@ export enum ShoppingcartActionTypes {
   UPDATE_PRODUCT_SHOPPING_CART_ERROR = '[UPDATE_PRODUCT_SHOPPING_CART_ERROR] Update amount of products error',
   GET_LAST_LIST_PRODUCTS = '[Getlist products update ] return all producst amount update',
   GET_LAST_LIST_PRODUCTS_SUCCESS = '[Getlist products update success ] return all producst amount update success',
-  GET_LAST_LIST_PRODUCTS_ERROR = '[Getlist products update error ] return all producst amount update error'
+  GET_LAST_LIST_PRODUCTS_ERROR = '[Getlist products update error ] return all producst amount update error',
+  GET_LIST_SWITCH_PRODUCT_AMOUNT  = '[GET_LIST_SWITCH_PRODUCT_AMOUNT] Get list all products with amount update ',
+  GET_LIST_SWITCH_PRODUCT_AMOUNT_SUCCESS  = '[GET_LIST_SWITCH_PRODUCT_AMOUNT_SUCCESS] Get list all products with amount update success',
+  GET_LIST_SWITCH_PRODUCT_AMOUNT_ERROR  = '[GET_LIST_SWITCH_PRODUCT_AMOUNT_ERROR] Get list all products with amount update error',
 }
 
 // Add product to shopping cart
@@ -45,3 +48,12 @@ export const updateAmountOfproductsError = createAction(ShoppingcartActionTypes.
 export const getListproductslast = createAction(ShoppingcartActionTypes.GET_LAST_LIST_PRODUCTS);
 export const getListproductslastSuccess = createAction(ShoppingcartActionTypes.GET_LAST_LIST_PRODUCTS_SUCCESS);
 export const getListproductslastError = createAction(ShoppingcartActionTypes.GET_LAST_LIST_PRODUCTS_ERROR, props<{err: Error}>());
+
+// Return list products with amount
+
+export const getlistProductsamount = createAction(ShoppingcartActionTypes.GET_LIST_SWITCH_PRODUCT_AMOUNT, props<{lstproamount: any} >());
+export const getlistProductsamountSuccess = createAction(ShoppingcartActionTypes.GET_LIST_SWITCH_PRODUCT_AMOUNT_SUCCESS,
+  props<{lstproamount: any} >());
+export const getlistProductsamountError = createAction(ShoppingcartActionTypes.GET_LIST_SWITCH_PRODUCT_AMOUNT_ERROR, props<{err: Error}>());
+
+

@@ -128,6 +128,38 @@ const shoppingCartReducer = createReducer(
       selected: null,
       error: err
   })),
+
+  // Get list products with amount
+
+  on(shoppingCartActions.getlistProductsamount,
+    (state, { lstproamount }) => (
+    {
+        ...state,
+        selected: lstproamount,
+        action: shoppingCartActions.ShoppingcartActionTypes.GET_LIST_SWITCH_PRODUCT_AMOUNT,
+        done: false,
+        error: null
+      }
+  )),
+
+  on(shoppingCartActions.getlistProductsamountSuccess,
+    (state, { lstproamount }) => ({
+      ...state,
+      selected: lstproamount,
+      action: shoppingCartActions.ShoppingcartActionTypes.GET_LIST_SWITCH_PRODUCT_AMOUNT_SUCCESS,
+      done: true,
+      error:
+      null
+  })),
+
+  on(shoppingCartActions.getlistProductsamountError,
+    (state, { err }) => ({
+      ...state,
+      done: true,
+      selected: null,
+      error: err
+  })),
+
 );
 
 export function reducer(state: State | undefined, action: AppAction): any {
@@ -185,5 +217,21 @@ export const updateAmountOfProductError = createSelector(getShoppingCartState, (
 export const getLastlistproducts = createSelector(getShoppingCartState, (state: State) => {
   return state.action === shoppingCartActions.ShoppingcartActionTypes.GET_LAST_LIST_PRODUCTS && state.data === 'lstproducts'
     ? state.data
+   : null;
+});
+
+// Get list products with amount
+
+export const getProductListAmount = createSelector( getShoppingCartState , ( state: State ) => {
+  if (state.action ===  shoppingCartActions.ShoppingcartActionTypes.GET_LIST_SWITCH_PRODUCT_AMOUNT_SUCCESS && state.done && !state.error){
+    return state.selected;
+  } else{
+    return null;
+  }
+});
+
+export const getProductListAmountError = createSelector(getShoppingCartState, (state: State) => {
+  return state.action === shoppingCartActions.ShoppingcartActionTypes.GET_LIST_SWITCH_PRODUCT_AMOUNT_ERROR
+    ? state.error
    : null;
 });
