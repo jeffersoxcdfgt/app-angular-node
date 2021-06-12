@@ -17,7 +17,12 @@
       </svg>
    </span>
     <span class="hidden sm:block">
-      <input type="text" name="search" id="search" class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-80 rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="Search for word">
+      <input 
+      type="search" 
+      name="searchpro"
+      id="searchpro" 
+      (input)="subgetSearch.next($event.target.value)"
+      class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-80 rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="Search for word">
     </span>
   </div>
 </div>
