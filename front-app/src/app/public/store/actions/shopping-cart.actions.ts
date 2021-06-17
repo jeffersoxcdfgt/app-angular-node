@@ -63,5 +63,5 @@ export const getlistProductsamountError = createAction(ShoppingcartActionTypes.G
 // Senda data to other component
 
 export const sendDatacomponent = createAction(ShoppingcartActionTypes.SEND_DATA_COMPONENT, props<{message: string , data?: any} >());
-export const sendDatacomponentSuccess = createAction(ShoppingcartActionTypes.SEND_DATA_COMPONENT_SUCCESS);
+export const sendDatacomponentSuccess = createAction(ShoppingcartActionTypes.SEND_DATA_COMPONENT_SUCCESS  , props<{response: any} >());
 export const sendDatacomponentError = createAction(ShoppingcartActionTypes.SEND_DATA_COMPONENT_ERROR, props<{err: Error}>());

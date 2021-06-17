@@ -173,19 +173,19 @@ const shoppingCartReducer = createReducer(
       }
   )),
   on(shoppingCartActions.sendDatacomponentSuccess,
-    (state) => {
-      return {
+    (state, {response}) => (
+      {
       ...state,
-      selected: state.selected,
+      selected: {
+        message: response.message,
+        data: response.data
+      },
       action: shoppingCartActions.ShoppingcartActionTypes.SEND_DATA_COMPONENT_SUCCESS,
       done: true,
       error:
       null
-    };
-  }
-
-  ),
-
+    }
+  )),
   on(shoppingCartActions.sendDatacomponentError,
     (state, { err }) => ({
       ...state,
