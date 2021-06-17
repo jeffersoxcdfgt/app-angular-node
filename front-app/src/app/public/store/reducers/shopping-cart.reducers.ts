@@ -5,7 +5,7 @@ import * as shoppingCartActions from '../actions/shopping-cart.actions';
 
 export interface State {
   data: Product[] | string;
-  selected: Product;
+  selected: Product | any;
   action: string;
   done: boolean;
   error?: Error;
@@ -160,6 +160,40 @@ const shoppingCartReducer = createReducer(
       error: err
   })),
 
+  // Send Data to components
+
+  on(shoppingCartActions.sendDatacomponent,
+    (state, { message, data }) => (
+    {
+        ...state,
+        selected: { message , data},
+        action: shoppingCartActions.ShoppingcartActionTypes.SEND_DATA_COMPONENT,
+        done: false,
+        error: null
+      }
+  )),
+  on(shoppingCartActions.sendDatacomponentSuccess,
+    (state) => {
+      return {
+      ...state,
+      selected: state.selected,
+      action: shoppingCartActions.ShoppingcartActionTypes.SEND_DATA_COMPONENT_SUCCESS,
+      done: true,
+      error:
+      null
+    };
+  }
+
+  ),
+
+  on(shoppingCartActions.sendDatacomponentError,
+    (state, { err }) => ({
+      ...state,
+      done: true,
+      selected: null,
+      error: err
+  })),
+
 );
 
 export function reducer(state: State | undefined, action: AppAction): any {
@@ -232,6 +266,23 @@ export const getProductListAmount = createSelector( getShoppingCartState , ( sta
 
 export const getProductListAmountError = createSelector(getShoppingCartState, (state: State) => {
   return state.action === shoppingCartActions.ShoppingcartActionTypes.GET_LIST_SWITCH_PRODUCT_AMOUNT_ERROR
+    ? state.error
+   : null;
+});
+
+// Get data sent
+
+export const getDataSend = createSelector( getShoppingCartState , ( state: State ) => {
+  if (state.action ===  shoppingCartActions.ShoppingcartActionTypes.SEND_DATA_COMPONENT_SUCCESS && state.done && !state.error){
+    return state.selected;
+  } else{
+    return null;
+  }
+});
+
+
+export const getDataSendError = createSelector(getShoppingCartState, (state: State) => {
+  return state.action === shoppingCartActions.ShoppingcartActionTypes.SEND_DATA_COMPONENT_ERROR
     ? state.error
    : null;
 });

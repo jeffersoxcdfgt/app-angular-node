@@ -17,6 +17,9 @@ export enum ShoppingcartActionTypes {
   GET_LIST_SWITCH_PRODUCT_AMOUNT  = '[GET_LIST_SWITCH_PRODUCT_AMOUNT] Get list all products with amount update ',
   GET_LIST_SWITCH_PRODUCT_AMOUNT_SUCCESS  = '[GET_LIST_SWITCH_PRODUCT_AMOUNT_SUCCESS] Get list all products with amount update success',
   GET_LIST_SWITCH_PRODUCT_AMOUNT_ERROR  = '[GET_LIST_SWITCH_PRODUCT_AMOUNT_ERROR] Get list all products with amount update error',
+  SEND_DATA_COMPONENT  = '[SEND_DATA_COMPONENT] You can send data to other component',
+  SEND_DATA_COMPONENT_SUCCESS  = '[SEND_DATA_COMPONENT_SUCCESS] You can send data to other component success',
+  SEND_DATA_COMPONENT_ERROR  = '[SEND_DATA_COMPONENT_ERROR] You can send data to other component error',
 }
 
 // Add product to shopping cart
@@ -57,3 +60,8 @@ export const getlistProductsamountSuccess = createAction(ShoppingcartActionTypes
 export const getlistProductsamountError = createAction(ShoppingcartActionTypes.GET_LIST_SWITCH_PRODUCT_AMOUNT_ERROR, props<{err: Error}>());
 
 
+// Senda data to other component
+
+export const sendDatacomponent = createAction(ShoppingcartActionTypes.SEND_DATA_COMPONENT, props<{message: string , data?: any} >());
+export const sendDatacomponentSuccess = createAction(ShoppingcartActionTypes.SEND_DATA_COMPONENT_SUCCESS);
+export const sendDatacomponentError = createAction(ShoppingcartActionTypes.SEND_DATA_COMPONENT_ERROR, props<{err: Error}>());

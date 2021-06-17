@@ -72,4 +72,17 @@ export class ShoppingcartService {
           );
        }
 
+
+  /**
+   * send paramters for dispatcher
+   */
+      public senData(data: any): Observable<any>{
+        return of<any>(data)
+          .pipe(
+              tap((_) => this.traceService.log(`Allow to send data to other component`)),
+                    catchError(this.traceService.handleError<any>('senData'))
+          );
+       }
+
+
 }

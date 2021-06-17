@@ -85,6 +85,24 @@ export class ShoppingcartEffects {
   );
 
 
+  public sendData$ = createEffect(() => this.actions$.pipe(
+    ofType(ShoppingcartActionTypes.SEND_DATA_COMPONENT),
+    mergeMap((data) => this.shoppingcartService.senData(data)
+      .pipe(
+        map((reponse: any) => ({
+          type: ShoppingcartActionTypes.SEND_DATA_COMPONENT_SUCCESS,
+          message: reponse.message,
+          data: reponse.data
+        })),
+          catchError(error => of({
+            type: ShoppingcartActionTypes.SEND_DATA_COMPONENT_ERROR,
+            err: error
+          }))
+      ))
+    )
+  );
+
+
   constructor(
     private actions$: Actions,
     private shoppingcartService: ShoppingcartService
