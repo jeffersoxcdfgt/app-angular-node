@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ValidationProductService } from '../../../shared/validations/validationProduct';
 
 @Component({
   selector: 'app-product-create',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductCreateComponent implements OnInit {
 
-  constructor() { }
+  constructor(public validationProductService: ValidationProductService) {
+    this.validationProductService.initValidation();
+   }
 
   ngOnInit(): void {
+  }
+
+  saveProduct = () => {
+    if (this.validationProductService.ifGood()){
+      console.log('saveProduct()');
+    }
   }
 
 }
