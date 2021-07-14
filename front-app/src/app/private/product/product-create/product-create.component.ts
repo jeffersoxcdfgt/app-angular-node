@@ -8,6 +8,8 @@ import { ValidationProductService } from '../../../shared/validations/validation
 })
 export class ProductCreateComponent implements OnInit {
 
+  filePath = '';
+
   constructor(public validationProductService: ValidationProductService) {
     this.validationProductService.initValidation();
    }
@@ -20,5 +22,17 @@ export class ProductCreateComponent implements OnInit {
       console.log('saveProduct()');
     }
   }
+
+  imagePreview(e): void {
+    const file = (e.target as HTMLInputElement).files[0];
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.filePath = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  }
+
+
 
 }

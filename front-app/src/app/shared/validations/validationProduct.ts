@@ -17,6 +17,9 @@ export class ValidationProductService {
     subCostOfProduct: BehaviorSubject<string>;
     obsCostOfProduct: any;
 
+    subImageOfProduct: BehaviorSubject<string>;
+    obsImageOfProduct: any;
+
     click$: boolean;
 
     constructor(){ }
@@ -35,6 +38,8 @@ export class ValidationProductService {
       this.subCostOfProduct = new BehaviorSubject<string>('');
       this.obsCostOfProduct = of(true);
 
+      this.subImageOfProduct = new BehaviorSubject<string>('');
+      this.obsImageOfProduct = of(true);
     }
 
     inputNameOfProduct(str: string): void{
@@ -66,19 +71,28 @@ export class ValidationProductService {
                     ifEmpty);
     }
 
+    inputImageOfProduct(str: string): void{
+      this.subImageOfProduct.next(str);
+      this.obsImageOfProduct = this.subImageOfProduct.pipe(
+                cleanBlank,
+                    ifEmpty);
+    }
+
     ifGood(): boolean{
         this.click$ = false;
         this.obsNameOfProduct = this.subNameOfProduct.pipe(cleanBlank, ifEmpty);
         this.obsDescriptionOfProduct = this.subDescriptionOfProduct.pipe(cleanBlank, ifEmpty);
         this.obsPriceOfProduct = this.subPriceOfProduct.pipe(cleanBlank, ifEmpty);
         this.obsCostOfProduct = this.subCostOfProduct.pipe(cleanBlank, ifEmpty);
+        this.obsImageOfProduct = this.subImageOfProduct.pipe(cleanBlank, ifEmpty);
 
         combineLatest(
           [
             this.obsNameOfProduct.pipe(validObs),
             this.obsDescriptionOfProduct.pipe(validObs),
             this.obsPriceOfProduct.pipe(validObs),
-            this.obsCostOfProduct.pipe(validObs)
+            this.obsCostOfProduct.pipe(validObs),
+            this.obsImageOfProduct.pipe(validObs)
           ]
           ).subscribe(() => this.click$ =  true );
 
