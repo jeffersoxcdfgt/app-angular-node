@@ -1,4 +1,4 @@
-# Ngrx App using observable RXJS and BehaviorSubject even get data from inputs
+# Ngrx App using observable RXJS and BehaviorSubject even get data from inputs (Tailwind CSS framework 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.2.
 
