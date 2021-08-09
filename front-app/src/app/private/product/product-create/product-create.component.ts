@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ValidationProductService } from '../../../shared/validations/validationProduct';
 
 @Component({
@@ -23,16 +23,35 @@ export class ProductCreateComponent implements OnInit {
     }
   }
 
-  imagePreview(e): void {
-    const file = (e.target as HTMLInputElement).files[0];
+  imagePreview = (e) => {
+    this.getFileConetent((e.target as HTMLInputElement).files[0]);
+  }
 
+  // Dragover listener
+  @HostListener('dragover', ['$event']) onDragOver(evt): void{
+    evt.preventDefault();
+    evt.stopPropagation();
+  }
+
+  // Dragleave listener
+  @HostListener('dragover', ['$event']) onDragLeave(evt): void{
+      evt.preventDefault();
+      evt.stopPropagation();
+  }
+
+  // Drop listener
+   @HostListener('drop', ['$event']) ondrop(evt): void{
+    evt.preventDefault();
+    evt.stopPropagation();
+    this.getFileConetent(evt.dataTransfer.files[0]);
+  }
+
+  getFileConetent = (datafile) => {
+    const file = datafile;
     const reader = new FileReader();
     reader.onload = () => {
       this.filePath = reader.result as string;
     };
     reader.readAsDataURL(file);
-  }
-
-
-
+   }
 }
