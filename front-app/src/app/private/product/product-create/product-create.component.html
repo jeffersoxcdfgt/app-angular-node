@@ -14,19 +14,32 @@
       <div class="grid grid-cols-1 mt-5 mx-7">
         <label 
         [className]="'uppercase md:text-sm text-xs text-gray-500 text-light font-semibold'"
-        [ngClass]="{'text-red-400' : (validationProductService.obsNameOfProduct | async) === false }">Name</label>
+        [ngClass]="{'text-red-400' : 
+        (validationProductService.obsNameOfProduct | async) === false ||
+        (validationProductService.obsNameLengthOfProduct | async) === false
+      
+      }">Name</label>
         <input 
-        (input)="validationProductService.inputNameOfProduct($event.target.value);"        
+        (input)="validationProductService.inputNameOfProduct($event.target.value);
+                 validationProductService.inputNameLengthOfProduct($event.target.value);"        
         [className]="'w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none'"                                 
         [ngClass]="
         {
           'border border-transparent border-red-400 focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent' : 
-          (validationProductService.obsNameOfProduct | async) === false
+          (validationProductService.obsNameOfProduct | async) === false ||
+          (validationProductService.obsNameLengthOfProduct | async) === false
         }"
         type="text" 
         placeholder="Name" />
         <div class="mt-1">
-          <span *ngIf="(validationProductService.obsNameOfProduct | async) === false;" class="text-red-400" >Name of product is required</span>
+          <span *ngIf="
+          (validationProductService.obsNameOfProduct | async) === false; else elseCondition" class="text-red-400" >Name of product is required
+         </span>
+         <ng-template #elseCondition>
+          <span *ngIf="
+            (validationProductService.obsNameLengthOfProduct | async) === false" class="text-red-400" >Name of product should be less or equal than 10
+          </span> 
+         </ng-template>    
         </div>    
       </div>
       <div class="grid grid-cols-1 mt-5 mx-7">

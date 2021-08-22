@@ -41,6 +41,15 @@ export const creditCardLength = map((str: string) => {
 });
 
 
+export const nameLength = map((str: string) => {
+  if (str.length >= 10){
+    return true;
+  }
+  return false;
+});
+
+
+
 
 export const ifEmpty = mergeMap((str: string) => iif(() => str.length === 0, of(false) , of(true)));
 export const ifChecked = map((checked: boolean ) => checked );

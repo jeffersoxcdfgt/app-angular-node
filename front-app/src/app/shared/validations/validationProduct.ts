@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject , of , combineLatest } from 'rxjs';
-import { cleanBlank , ifEmpty , validObs , onlyNumber , creditCardLength } from './validation';
+import { cleanBlank , ifEmpty , validObs , onlyNumber , creditCardLength , nameLength } from './validation';
 
 @Injectable({ providedIn: 'root' })
 export class ValidationProductService {
 
     subNameOfProduct: BehaviorSubject<string>;
     obsNameOfProduct: any;
+
+    subNameLengthOfProduct: BehaviorSubject<string>;
+    obsNameLengthOfProduct: any;
 
     subDescriptionOfProduct: BehaviorSubject<string>;
     obsDescriptionOfProduct: any;
@@ -29,6 +32,9 @@ export class ValidationProductService {
       this.subNameOfProduct = new BehaviorSubject<string>('');
       this.obsNameOfProduct =  of(true);
 
+      this.subNameLengthOfProduct =new BehaviorSubject<string>('');
+      this.obsNameLengthOfProduct = of(true);
+
       this.subDescriptionOfProduct = new BehaviorSubject<string>('');
       this.obsDescriptionOfProduct =  of(true);
 
@@ -47,6 +53,13 @@ export class ValidationProductService {
         this.obsNameOfProduct = this.subNameOfProduct.pipe(
                   cleanBlank,
                       ifEmpty);
+    }
+
+    inputNameLengthOfProduct(str: string): void{
+      this.subNameLengthOfProduct.next(str);
+      this.obsNameLengthOfProduct = this.subNameLengthOfProduct.pipe(
+        nameLength
+        );
     }
 
 
