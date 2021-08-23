@@ -24,7 +24,11 @@ export const passwordLength = map((str: string) => {
 });
 
 export const onlyNumber = map((str: string) => {
-if (/^\d+$/.test(str)){
+/*if (/^\d+$/.test(str)){
+  return true;
+}*/
+
+if (/^\d+(\.\d+)*$/.test(str)){
   return true;
 }
 
@@ -42,12 +46,19 @@ export const creditCardLength = map((str: string) => {
 
 
 export const nameLength = map((str: string) => {
-  if (str.length >= 10){
+  if (str.length <= 10){
     return true;
   }
   return false;
 });
 
+
+export const descriptionLength = map((str: string) => {
+  if (str.length <= 116){
+    return true;
+  }
+  return false;
+});
 
 
 

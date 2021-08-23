@@ -21,7 +21,9 @@
       }">Name</label>
         <input 
         (input)="validationProductService.inputNameOfProduct($event.target.value);
-                 validationProductService.inputNameLengthOfProduct($event.target.value);"        
+                 validationProductService.inputNameLengthOfProduct($event.target.value);
+                 subgetname.next($event.target.value);                 
+                 "        
         [className]="'w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none'"                                 
         [ngClass]="
         {
@@ -45,58 +47,96 @@
       <div class="grid grid-cols-1 mt-5 mx-7">
         <label 
         [className]="'uppercase md:text-sm text-xs text-gray-500 text-light font-semibold'"
-        [ngClass]="{'text-red-400' : (validationProductService.obsDescriptionOfProduct | async) === false }">Description</label>
+        [ngClass]="{'text-red-400' : 
+        (validationProductService.obsDescriptionOfProduct | async) === false ||
+        (validationProductService.obsDescriptionLengthOfProduct | async) === false
+      
+        }">Description</label>
         <input 
-        (input)="validationProductService.inputDescriptionOfProduct($event.target.value);"        
+        (input)="validationProductService.inputDescriptionOfProduct($event.target.value);
+        validationProductService.inputDescriptionLengthOfProduct($event.target.value);  
+        subgetdescription.next($event.target.value);
+        "        
         [className]="'w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none'"                                 
         [ngClass]="
         {
           'border border-transparent border-red-400 focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent' : 
-          (validationProductService.obsDescriptionOfProduct | async) === false
+          (validationProductService.obsDescriptionOfProduct | async) === false ||
+          (validationProductService.obsDescriptionLengthOfProduct | async) === false
+
         }"
         type="text" 
         placeholder="Description" />
         <div class="mt-1">
-          <span *ngIf="(validationProductService.obsDescriptionOfProduct | async) === false;" class="text-red-400" >Description of product is required</span>
+          <span *ngIf="(validationProductService.obsDescriptionOfProduct | async) === false; else elseDescription" class="text-red-400" >Description of product is required</span>
         </div>
+        <ng-template #elseDescription>
+          <div class="mt-1">
+            <span *ngIf="(validationProductService.obsDescriptionLengthOfProduct | async) === false;" class="text-red-400" >Description of product should be less or equal than 116</span>
+          </div>
+        </ng-template>
       </div>
       <div class="grid grid-cols-1 mt-5 mx-7">
         <label 
         [className]="'uppercase md:text-sm text-xs text-gray-500 text-light font-semibold'"
-        [ngClass]="{'text-red-400' : (validationProductService.obsPriceOfProduct | async) === false }">Price</label>
+        [ngClass]="{'text-red-400' :
+         (validationProductService.obsPriceOfProduct | async) === false  ||
+         (validationProductService.obsOnlyNumberPriceOfProduct | async) === false         
+        }">Price</label>
         <input 
-        (input)="validationProductService.inputPriceOfProduct( $event.target.value)"
+        (input)="
+        validationProductService.inputPriceOfProduct( $event.target.value);
+        validationProductService.inputPriceOnlyNumberOfProduct( $event.target.value);
+        subgetprice.next($event.target.value);
+        "
         [className]="'w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none'"                                 
         [ngClass]="
         {
           'border border-transparent border-red-400 focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent' : 
-          (validationProductService.obsPriceOfProduct | async) === false
+          (validationProductService.obsPriceOfProduct | async) === false || 
+          (validationProductService.obsOnlyNumberPriceOfProduct | async) === false 
         }"
         type="text" 
         placeholder="Price" />
         <div class="mt-1">
-          <span *ngIf="(validationProductService.obsPriceOfProduct | async) === false;" class="text-red-400" >Price of product is required</span>
+          <span *ngIf="(validationProductService.obsPriceOfProduct | async) === false; else elsePriceConditions" class="text-red-400" >Price of product is required</span>
         </div>
+        <ng-template #elsePriceConditions>
+          <div class="mt-1">
+            <span *ngIf="(validationProductService.obsOnlyNumberPriceOfProduct | async) === false;" class="text-red-400" >Price of product is only number</span>
+          </div>
+        </ng-template>
       </div>
       <div class="grid grid-cols-1 mt-5 mx-7">
         <label 
         [className]="'uppercase md:text-sm text-xs text-gray-500 text-light font-semibold'"
-        [ngClass]="{'text-red-400' : (validationProductService.obsCostOfProduct | async) === false }"
+        [ngClass]="{'text-red-400' : 
+        (validationProductService.obsCostOfProduct | async) === false ||
+        (validationProductService.obsOnlyNUmberCostOfProduct | async) === false 
+        }"
         > Cost</label>
         <input 
-        (input)="validationProductService.inputCostOfProduct($event.target.value)"
+        (input)="
+        validationProductService.inputCostOfProduct($event.target.value);
+        validationProductService.inputCostOnlyNumberOfProduct($event.target.value);
+        subgetcost.next($event.target.value);"
         [className]="'w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none'"                                 
         [ngClass]="
         {
           'border border-transparent border-red-400 focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent' : 
-          (validationProductService.obsCostOfProduct | async) === false
+          (validationProductService.obsCostOfProduct | async) === false ||
+          (validationProductService.obsOnlyNUmberCostOfProduct | async) === false 
         }"
         type="text" 
         placeholder="Cost" />
         <div class="mt-1">
-          <span *ngIf="(validationProductService.obsCostOfProduct | async) === false;" class="text-red-400" >Cost of product is required</span>
+          <span *ngIf="(validationProductService.obsCostOfProduct | async) === false; else elseConditionsCost" class="text-red-400" >Cost of product is required</span>
         </div>
-
+        <ng-template #elseConditionsCost>
+          <div class="mt-1">
+            <span *ngIf="(validationProductService.obsOnlyNUmberCostOfProduct | async) === false;" class="text-red-400" >Cost of product is only number</span>
+          </div>
+        </ng-template>
       </div>
       <div class="grid grid-cols-1 mt-5 mx-7">
         <label class="uppercase md:text-sm text-xs text-gray-500 text-light font-semibold mb-1">Upload Photo Product</label>
@@ -110,14 +150,17 @@
                     </svg>
                     <p class='lowercase text-sm text-gray-400 group-hover:text-purple-600 pt-1 tracking-wider'>Select a photo product</p>
                   </div>              
-                <input type='file' class="hidden" value="" accept="image/*" (change)="imagePreview($event);validationProductService.inputImageOfProduct($event.target.files[0].name)" />
+                <input type='file' class="hidden" value="" accept="image/*" 
+                (change)="imagePreview($event);validationProductService.inputImageOfProduct($event.target.files[0].name);" />
               </label>
           </div>
           <ng-template #setImage>
             <div  *ngIf="filePath && filePath !== ''">
               <label class=''>
                 <img [src]="filePath" [alt]="">                               
-                 <input type='file' class="hidden" value=""  accept="image/*" (change)="imagePreview($event);validationProductService.inputImageOfProduct($event.target.files[0].name)"  />
+                 <input type='file' class="hidden" value=""  accept="image/*" 
+                    (change)="imagePreview($event);
+                        validationProductService.inputImageOfProduct($event.target.files[0].name);"/>
               </label>
           </div>
           </ng-template>
