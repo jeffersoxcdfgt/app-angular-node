@@ -3,10 +3,12 @@ const products       = require('../models').products;
 const getDirName = require('path').dirname; 
 const path = require('path');
 
+process.cwd()
+process.chdir('../front-app/src/assets/img');
 
 module.exports = {
  create(req, res) {
-    process.chdir('../front-app/src/assets/img');
+    
     const base64Data = req.body.image.replace(/^data:image\/jpeg;base64,/, "");
     require("fs").writeFile( `${req.body.name}.jpeg`, base64Data, 'base64', function(err) {
       console.log(err);
