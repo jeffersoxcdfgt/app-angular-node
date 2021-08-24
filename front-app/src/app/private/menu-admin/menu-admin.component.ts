@@ -37,7 +37,7 @@ export class MenuAdminComponent implements OnInit , AfterViewInit {
 
 
   ngAfterViewInit(): void {
-    this.router.navigate(['/user/menu/homemanage']);
+    // this.router.navigate(['/user/menu/homemanage']);
 
   }
 

@@ -1,8 +1,12 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { BehaviorSubject, of , combineLatest} from 'rxjs';
 import { map } from 'rxjs/operators';
+import { AppState } from 'src/app/app.state';
 import { ValidationProductService } from '../../../shared/validations/validationProduct';
 import { Product } from '../class/product';
+import { productCreate } from '../store/actions/product.actions';
 
 class PruductAdd {
   name?: string;
@@ -10,6 +14,7 @@ class PruductAdd {
   price?: string;
   cost?: string;
   image?: string;
+  picture?: string;
 }
 
 @Component({
@@ -39,11 +44,13 @@ export class ProductCreateComponent implements OnInit {
   obsgetimage: any;
 
   productAdd = {};
-  pruductSend = new PruductAdd();
+  // pruductSend = new Product();
 
   // inputs data
 
-  constructor(public validationProductService: ValidationProductService) {
+  constructor(public validationProductService: ValidationProductService,
+              private store: Store<AppState>,
+              private router: Router) {
     this.validationProductService.initValidation();
 
     this.obsgetname = this.subgetname;
@@ -78,8 +85,16 @@ export class ProductCreateComponent implements OnInit {
   saveProduct = () => {
     if (this.validationProductService.ifGood()){
       console.log('saveProduct()');
-      this.pruductSend = this.productAdd;
-      console.log(this.pruductSend , '******');
+      const pruductSend: Product = this.productAdd;
+      pruductSend.picture =  `../../../assets/img/${pruductSend.name}.jpeg`;
+      console.log(pruductSend , '******');
+
+      this.store.dispatch(productCreate({
+        product: pruductSend
+      }));
+
+      this.router.navigate(['/user/menu/product']);
+
     }
   }
 

@@ -148,7 +148,7 @@ export class ValidationProductService {
         this.obsImageOfProduct = this.subImageOfProduct.pipe(cleanBlank, ifEmpty);
 
         this.obsNameLengthOfProduct = this.subNameLengthOfProduct.pipe(nameLength);
-        this.obsDescriptionOfProduct = this.subDescriptionOfProduct.pipe(descriptionLength);
+        this.obsDescriptionLengthOfProduct = this.subDescriptionOfProduct.pipe(descriptionLength);
         this.obsOnlyNumberPriceOfProduct = this.subOnlyNumberPriceOfProduct.pipe(onlyNumber);
         this.obsOnlyNUmberCostOfProduct = this.subOnlyNumberCostOfProduct.pipe(onlyNumber);
 
@@ -160,7 +160,7 @@ export class ValidationProductService {
             this.obsCostOfProduct.pipe(validObs),
             this.obsImageOfProduct.pipe(validObs),
             this.obsNameLengthOfProduct.pipe(validObs),
-            this.obsDescriptionOfProduct.pipe(validObs),
+            this.obsDescriptionLengthOfProduct.pipe(validObs),
             this.obsOnlyNumberPriceOfProduct.pipe(validObs),
             this.obsOnlyNUmberCostOfProduct.pipe(validObs)
           ]

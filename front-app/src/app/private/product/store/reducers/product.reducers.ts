@@ -47,6 +47,39 @@ const productReducer = createReducer(
        done: true,
        selected: null,
        error: err
+    })),
+    // Create Product
+    on(productActions.productCreate, (state,
+                                      {
+        product
+         }) => ({
+           ...state,
+           selected: product,
+           action: productActions.ProductsActionTypes.CREATE_PRODUCT,
+           done: false,
+           error:
+           null
+       })),
+    on(productActions.productCreateSuccess, (state,
+                                             {
+        product
+         }) => ({
+           ...state,
+           data: [
+             ...state.data, {
+             ...state.selected,
+             id: product.id
+            }],
+            selected:
+            null, done:
+            true
+          })),
+    on(productActions.productCreateError, (state,
+                                           { err }) => ({
+         ...state,
+         done: true,
+          selected: null,
+          error: err
       })),
 );
 
@@ -63,3 +96,15 @@ export const getProductsError = createSelector(getProductsState, (state: State) 
     ? state.error
    : null;
 });
+
+
+// Create Product
+
+export const isCreated = createSelector( getProductsState , ( state: State ) => {
+  if (state.action ===   productActions.ProductsActionTypes.CREATE_PRODUCT && state.done && !state.error){
+    return state.selected;
+  } else{
+    return null;
+  }
+});
+
