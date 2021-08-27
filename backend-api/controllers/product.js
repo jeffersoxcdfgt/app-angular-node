@@ -62,6 +62,7 @@ module.exports = {
         .then(products => res.status(200).send(products))
         .catch(error => res.status(400).send(error))
  },
+
  find (req, res) {
 
      return products.findAll({
@@ -72,4 +73,15 @@ module.exports = {
      .then(products => res.status(200).send(products))
      .catch(error => res.status(400).send(error))
   },
+
+  findbyid (req, res) {
+    return products.findAll({
+        where: {
+           id: req.params.id,
+        }
+    })
+    .then(products => res.status(200).send(products))
+    .catch(error => res.status(400).send(error))
+ },
+
 };

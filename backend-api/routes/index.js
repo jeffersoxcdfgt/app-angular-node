@@ -17,5 +17,6 @@ module.exports = (app) => {
    app.delete('/api/products/delete/id/:id', productsController.delete);   
    app.get('/api/products/list', productsController.list);
    app.get('/api/products/find/name/:name', productsController.find);
+   app.get('/api/products/findbyid/id/:id', productsController.findbyid);
 
 };
