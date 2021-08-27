@@ -81,6 +81,29 @@ const productReducer = createReducer(
           selected: null,
           error: err
       })),
+
+      // Get product
+
+      on(productActions.productGet, state =>
+         ({
+           ...state,
+           action: productActions.ProductsActionTypes.GET_PRODUCT,
+           done: false,
+           selected: null,
+           error: null
+          })),
+      on(productActions.productGetSuccess, (state, { productdata }) => ({
+           ...state,
+           selected: productdata,
+           done: true,
+           error:  null
+        })),
+      on(productActions.productGetError, (state, { err }) => ({
+        ...state,
+        done: true,
+        selected: null,
+        error: err
+      })),
 );
 
 export function reducer(state: State | undefined, action: AppAction): any {
@@ -106,5 +129,22 @@ export const isCreated = createSelector( getProductsState , ( state: State ) => 
   } else{
     return null;
   }
+});
+
+
+// Selector for Get Product
+
+export const getProduct = createSelector( getProductsState , ( state: State ) => {
+  if (state.action ===  productActions.ProductsActionTypes.GET_PRODUCT && state.done){
+    return state.selected;
+  } else{
+    return null;
+  }
+});
+
+export const getProductError = createSelector(getProductsState, (state: State) => {
+  return state.action === productActions.ProductsActionTypes.GET_PRODUCT
+    ? state.error
+   : null;
 });
 

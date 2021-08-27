@@ -34,6 +34,20 @@ export class ProductEffects {
       )
     );
 
+
+
+  public getProduct$ = createEffect(() => this.actions$.pipe(
+    ofType(ProductsActionTypes.GET_PRODUCT),
+    mergeMap((id) => this.productService.findById(id)
+      .pipe(
+        map((productget: Product) => ({ type: ProductsActionTypes.GET_PRODUCTS_SUCCESS, productdata: productget })),
+          catchError(err => of({ type: ProductsActionTypes.GET_PRODUCT_ERROR, err }))
+      ))
+    )
+  );
+
+
+
   constructor(
     private actions$: Actions,
     private productService: ProductService

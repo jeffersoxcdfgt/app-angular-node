@@ -84,11 +84,8 @@ export class ProductCreateComponent implements OnInit {
 
   saveProduct = () => {
     if (this.validationProductService.ifGood()){
-      console.log('saveProduct()');
       const pruductSend: Product = this.productAdd;
       pruductSend.picture =  `../../../assets/img/${pruductSend.name}.jpeg`;
-      console.log(pruductSend , '******');
-
       this.store.dispatch(productCreate({
         product: pruductSend
       }));

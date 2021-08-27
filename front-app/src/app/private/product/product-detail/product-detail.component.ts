@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.state';
+import {  Observable  } from 'rxjs';
+import { Product } from '../class/product';
+import {  productGet } from '../store/actions/product.actions';
+import { getProduct } from '../store/reducers/product.reducers';
 
 @Component({
   selector: 'app-product-detail',
@@ -7,9 +14,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductDetailComponent implements OnInit {
 
-  constructor() { }
+  product: Observable<Product>;
+
+  constructor(private route: ActivatedRoute ,
+              private store: Store<AppState>){
+  }
 
   ngOnInit(): void {
+
+    this.route.params.subscribe( params => {
+        this.store.dispatch(productGet(params.id));
+    });
+
+    this.product = this.store.select(getProduct);
+    this.product.subscribe((data) => {
+      if (data != null && data !== undefined){
+      }
+    });
   }
 
 }

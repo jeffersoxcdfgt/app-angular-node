@@ -39,4 +39,16 @@ export class ProductService {
       );
   }
 
+   /**
+    * Find an object by its identifier
+    * @param id the object identifier
+    * @returns gets the object found
+    */
+      public findById(data: any): Observable<Product> {
+        return this.http.get<Product>(this.URL + '/api/products/findbyid/id/' + data[0]).pipe(
+          tap(_ => this.traceService.log(`fetched product id=${data[0]}`)),
+          catchError(this.traceService.handleError<Product>(`findById id=${data[0]}`))
+        );
+    }
+
 }
