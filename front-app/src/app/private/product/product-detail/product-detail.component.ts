@@ -6,6 +6,7 @@ import {  Observable  } from 'rxjs';
 import { Product } from '../class/product';
 import {  productGet } from '../store/actions/product.actions';
 import { getProduct } from '../store/reducers/product.reducers';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-detail',
@@ -23,14 +24,12 @@ export class ProductDetailComponent implements OnInit {
   ngOnInit(): void {
 
     this.route.params.subscribe( params => {
-        this.store.dispatch(productGet(params.id));
+        this.store.dispatch(productGet({id: +params.id}));
     });
 
-    this.product = this.store.select(getProduct);
-    this.product.subscribe((data) => {
-      if (data != null && data !== undefined){
-      }
-    });
+    this.product = this.store.select(getProduct).pipe(
+          map((dataVal) => dataVal != null && dataVal !== undefined ? dataVal[0] : dataVal)
+    );
   }
 
 }

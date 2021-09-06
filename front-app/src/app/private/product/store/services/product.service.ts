@@ -45,7 +45,7 @@ export class ProductService {
     * @returns gets the object found
     */
       public findById(data: any): Observable<Product> {
-        return this.http.get<Product>(this.URL + '/api/products/findbyid/id/' + data[0]).pipe(
+        return this.http.get<Product>(this.URL + '/api/products/findbyid/id/' + data.id).pipe(
           tap(_ => this.traceService.log(`fetched product id=${data[0]}`)),
           catchError(this.traceService.handleError<Product>(`findById id=${data[0]}`))
         );
