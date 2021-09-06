@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
 import { Product } from '../../private/product/class/product';
 import { Observable , BehaviorSubject , of } from 'rxjs';
-import { mergeMap, map ,  switchMap, startWith } from 'rxjs/operators';
+import { mergeMap, map ,  switchMap, startWith, filter } from 'rxjs/operators';
 import { getAllProducts } from '../../private/product/store/reducers/product.reducers';
 import { shoppingCartAdd } from '../store/actions/shopping-cart.actions';
 import { getProductInShoppingCartError } from '../store/reducers/shopping-cart.reducers';
@@ -46,6 +46,7 @@ export class ShoppingCartListComponent implements OnInit {
         const source =  this.subgetSearch
           .pipe(mergeMap((inputdata: string) =>
                this.products.pipe(
+                     filter((valuesprocess) =>  valuesprocess !== undefined),
                           map((allproducts: Product[]) => ( allproducts.filter((oneproduct) =>
                             oneproduct.name.toLowerCase().includes(inputdata.toLowerCase()) === true))),
                                  switchMap(valpro => ( inputdata === '' ? this.auxproducts : of<Product[]>(valpro))),
