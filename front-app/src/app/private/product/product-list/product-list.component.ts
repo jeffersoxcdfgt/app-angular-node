@@ -27,7 +27,7 @@ export class ProductListComponent implements OnInit {
     this.auxproducts = this.products;
     this.searchData();
     this.products.subscribe( data => {
-      if (data !== undefined && data.length > 0){
+      if (data !== undefined && data !== null){
          // console.log(data,"private")
       }
     });
