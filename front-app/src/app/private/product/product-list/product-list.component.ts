@@ -39,7 +39,7 @@ export class ProductListComponent implements OnInit {
            this.products.pipe(
                 filter((valuesprocess) =>  valuesprocess !== undefined),
                       map((allproducts: Product[]) => ( allproducts.filter((oneproduct) =>
-                        oneproduct.name.toLowerCase().includes(inputdata.toLowerCase()) === true))),
+                      oneproduct.hasOwnProperty('name') && oneproduct.name.toLowerCase().includes(inputdata.toLowerCase()) === true))),
                              switchMap(valpro => ( inputdata === '' ? this.auxproducts : of<Product[]>(valpro))),
            )
          ),
