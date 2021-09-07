@@ -22,15 +22,15 @@ export class ProductListComponent implements OnInit {
   constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
-    this.store.dispatch(productsGetAll());
-    this.products = this.store.select(getAllProducts);
-    this.auxproducts = this.products;
-    this.searchData();
-    this.products.subscribe( data => {
-      if (data !== undefined && data !== null){
-         // console.log(data,"private")
-      }
-    });
+      this.store.dispatch(productsGetAll());
+      this.products = this.store.select(getAllProducts);
+      this.auxproducts = this.products;
+      this.searchData();
+      this.products.subscribe( data => {
+        if (data !== undefined && data !== null){
+           // console.log(data,"private")
+        }
+      });
   }
 
   searchData = () => {

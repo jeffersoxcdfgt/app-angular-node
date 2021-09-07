@@ -125,7 +125,7 @@ export const getProductsError = createSelector(getProductsState, (state: State) 
 
 export const isCreated = createSelector( getProductsState , ( state: State ) => {
   if (state.action ===   productActions.ProductsActionTypes.CREATE_PRODUCT && state.done && !state.error){
-    return state.selected;
+    return state.done;
   } else{
     return null;
   }
