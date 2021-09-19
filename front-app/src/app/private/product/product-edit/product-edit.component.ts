@@ -1,24 +1,28 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
 import { filter, find, map, mergeMap, tap } from 'rxjs/operators';
 import { AppState } from 'src/app/app.state';
 import { ValidationProductService } from 'src/app/shared/validations/validationProduct';
 import { Product } from '../class/product';
-import { productGet } from '../store/actions/product.actions';
-import { getProduct } from '../store/reducers/product.reducers';
+import { productGet, productUpdate } from '../store/actions/product.actions';
+import { getProduct, isUpdated } from '../store/reducers/product.reducers';
 
 @Component({
   selector: 'app-product-edit',
   templateUrl: './product-edit.component.html',
   styleUrls: ['./product-edit.component.css']
 })
-export class ProductEditComponent implements OnInit {
+export class ProductEditComponent implements OnInit , AfterViewInit {
 
   product: Observable<Product>;
+  pruductupdate  = {};
 
-    // inputs data
+   // inputs data
+
+   subgetid: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+   obsgetid: any;
 
    subgetname: BehaviorSubject<string> = new BehaviorSubject<string>('');
    obsgetname: any;
@@ -42,10 +46,10 @@ export class ProductEditComponent implements OnInit {
 
    filePath = '';
 
-
     // inputs data
 
   constructor(public validationProductService: ValidationProductService,
+              private router: Router,
               private route: ActivatedRoute ,
               private store: Store<AppState>){
     this.validationProductService.initValidation();
@@ -54,6 +58,7 @@ export class ProductEditComponent implements OnInit {
     this.obsgetprice = this.subgetprice;
     this.obsgetcost = this.subgetcost;
     this.obsgetimage = this.subgetimage;
+    this.obsgetid = this.subgetid;
   }
 
   ngOnInit(): void {
@@ -68,6 +73,10 @@ export class ProductEditComponent implements OnInit {
     );
 
     this.product.subscribe((pro) => {
+
+        // Id product
+        this.subgetid.next(pro.id);
+
          // Name product
         this.nameproduct = pro.name;
         this.subgetname.next(pro.name);
@@ -135,9 +144,47 @@ export class ProductEditComponent implements OnInit {
 
    saveProduct = () => {
     if (this.validationProductService.ifGood()){
-       // console.log('update product');
+       this.store.dispatch(productUpdate({productupdate: this.pruductupdate}));
     }
   }
 
+  ngAfterViewInit(): void{
+    combineLatest(
+      [
+        this.obsgetid,
+        this.obsgetname,
+        this.obsgetdescription,
+        this.obsgetprice,
+        this.obsgetcost,
+        this.obsgetimage
+      ]
+      )
+      .pipe(
+        map(([id,
+              name,
+              description,
+              price,
+              cost,
+              image
+            ]) =>
+          (
+          {
+            id,
+            name,
+            description,
+            price,
+            cost,
+            image
+          })
+          )
+        ).subscribe((data) => this.pruductupdate = data);
+
+
+    this.store.select(isUpdated).subscribe((updatevalue) => {
+           if (updatevalue === true){
+            this.router.navigate(['/user/menu/product']);
+          }
+        });
+  }
 
 }

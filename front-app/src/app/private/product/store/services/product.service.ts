@@ -60,7 +60,7 @@ export class ProductService {
     public update(data: Product): Observable<Product> {
       let headers = new HttpHeaders();
       headers = headers.set('Content-Type', 'application/json; charset=utf-8');
-      return this.http.put<Product>(this.URL + '/' + data.id, data, {headers}).pipe(
+      return this.http.put<Product>(this.URL + '/api/products/update/id/' + data.id, data, {headers}).pipe(
         tap(_ => this.traceService.log(`updated product id=${data.id}`)),
       catchError(this.traceService.handleError<any>('update'))
       );

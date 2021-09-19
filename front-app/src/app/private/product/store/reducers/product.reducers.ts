@@ -60,9 +60,7 @@ const productReducer = createReducer(
            error:
            null
        })),
-    on(productActions.productCreateSuccess, (state,
-                                             {
-        product
+    on(productActions.productCreateSuccess, (state, {product
          }) => ({
            ...state,
            data: [
@@ -74,8 +72,7 @@ const productReducer = createReducer(
             null, done:
             true
           })),
-    on(productActions.productCreateError, (state,
-                                           { err }) => ({
+    on(productActions.productCreateError, (state, { err }) => ({
          ...state,
          done: true,
           selected: null,
@@ -103,6 +100,36 @@ const productReducer = createReducer(
         done: true,
         selected: null,
         error: err
+      })),
+
+      // Update product
+
+      on(productActions.productUpdate, (state, { productupdate }) => ({
+         ...state,
+         selected:
+         productupdate,
+         action:
+         productActions.ProductsActionTypes.UPDATE_PRODUCT,
+         done: false,
+         error:
+         null
+        })),
+      on(
+        productActions.prodcutUpdateSuccess,
+        state => ({
+            ...state,
+            data: [ ],
+            done: true,
+            selected: state.selected,
+            error: null
+          }
+        )),
+      on(productActions.prodcutUpdateError,
+         (state, { err }) => (
+           {...state,
+            done: true,
+            selected: null,
+            error: err
       })),
 );
 
@@ -148,3 +175,14 @@ export const getProductError = createSelector(getProductsState, (state: State) =
    : null;
 });
 
+
+// Selector for update
+
+export const isUpdated = createSelector(getProductsState , (state: State ) =>
+  state.action === productActions.ProductsActionTypes.UPDATE_PRODUCT  && state.done && !state.error);
+
+export const getUpdateError = createSelector(getProductsState, (state: State) => {
+      return state.action === productActions.ProductsActionTypes.UPDATE_PRODUCT
+        ? state.error
+       : null;
+});
