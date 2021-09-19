@@ -27,14 +27,22 @@ module.exports = {
         .catch(error => res.status(400).send(error))
  },
  update(req, res) {
+
+  const base64Data = req.body.image.replace(/^data:image\/jpeg;base64,/, "");
+  require("fs").writeFile( `${req.body.name}.jpeg`, base64Data, 'base64', function(err) {
+    console.log(err);
+  });
+
+
     return products
         .update (            
          {
            name: req.body.name,
            description: req.body.description,
            price:req.body.price,
-           picture:req.body.picture,
-           cost:req.body.cost
+           picture:`../../../assets/img/${req.body.name}.jpeg`,
+           cost:req.body.cost,
+           image: req.body.image
          },         
          {
            where: {id: req.params.id},
