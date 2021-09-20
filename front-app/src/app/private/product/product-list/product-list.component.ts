@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.state';
 import { Product } from '../class/product';
@@ -6,6 +6,7 @@ import { Observable , of, BehaviorSubject } from 'rxjs';
 import { mergeMap , switchMap , map, filter } from 'rxjs/operators';
 import { getAllProducts } from '../store/reducers/product.reducers';
 import { productsGetAll } from '../store/actions/product.actions';
+import { MessageBoxComponent } from 'src/app/shared/components/message-box/message-box.component';
 
 @Component({
   selector: 'app-product-list',
@@ -18,6 +19,10 @@ export class ProductListComponent implements OnInit {
   products: Observable<Product[]>;
   auxproducts: Observable<Product[]>;
   subgetSearch: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  messageValidation = '';
+  @ViewChild('messageBoxComponent') messageBoxComponent: MessageBoxComponent;
+  id: number;
+
 
   constructor(private store: Store<AppState>) { }
 
@@ -47,5 +52,15 @@ export class ProductListComponent implements OnInit {
     );
     source.subscribe((myproducts) => this.products = myproducts);
 }
+
+  delete = (id: number) => {
+    this.messageValidation = 'Are you sure to delete it?';
+    this.id = id;
+    this.messageBoxComponent.open();
+  }
+
+  deleteAcction = () => {
+    // Here dispatch action
+  }
 
 }

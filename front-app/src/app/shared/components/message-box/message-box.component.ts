@@ -1,4 +1,4 @@
-import { Component, OnInit , Input } from '@angular/core';
+import { Component, OnInit , Input, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,6 +11,8 @@ export class MessageBoxComponent implements OnInit {
   @Input() message: string;
   @Input() urlredirect = '';
   @Input() title = 'Error validation user';
+  @Output() dataOutput = new EventEmitter();
+
   showAlert = 'none';
 
   constructor(private router: Router) { }
@@ -25,5 +27,10 @@ export class MessageBoxComponent implements OnInit {
   }
   open = () =>  {
     this.showAlert = 'block';
+  }
+
+  callBackReturn = () => {
+    this.showAlert  = 'none';
+    this.dataOutput.emit();
   }
 }
