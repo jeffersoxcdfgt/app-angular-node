@@ -61,7 +61,7 @@ module.exports = {
            plain: true
          }
         )
-        .then(products => res.status(200).res.sendStatus(products))
+        .then(products => res.status(200).send(''+products))
         .catch(error => res.status(400).send(error))
  },
 
