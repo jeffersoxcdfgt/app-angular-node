@@ -14,6 +14,9 @@ export enum ProductsActionTypes {
   UPDATE_PRODUCT = '[Update] Product',
   UPDATE_PRODUCT_SUCCESS = '[Update] Product Success',
   UPDATE_PRODUCT_ERROR = '[Update] Product Error',
+  DELETE_PRODUCT = '[Delete] Product',
+  DELETE_PRODUCT_SUCCESS = '[Delete] Product Success',
+  DELETE_PRODUCT_ERROR = '[Delete] Product Error'
 }
 
 // list Products
@@ -41,3 +44,10 @@ export const  productGetError = createAction(ProductsActionTypes.GET_PRODUCT_ERR
 export const productUpdate = createAction(ProductsActionTypes.UPDATE_PRODUCT, props<{productupdate: Product} >());
 export const prodcutUpdateSuccess = createAction(ProductsActionTypes.UPDATE_PRODUCT_SUCCESS);
 export const prodcutUpdateError = createAction(ProductsActionTypes.UPDATE_PRODUCT_ERROR, props<{err: Error}>());
+
+
+// Delete Product
+
+export const productDelete = createAction(ProductsActionTypes.DELETE_PRODUCT, props<{idproduct: number}>());
+export const productDeleteSuccess = createAction(ProductsActionTypes.DELETE_PRODUCT_SUCCESS, props<{productdelete: Product} >());
+export const productDeleteError = createAction(ProductsActionTypes.DELETE_PRODUCT_ERROR, props<{err: Error}>());

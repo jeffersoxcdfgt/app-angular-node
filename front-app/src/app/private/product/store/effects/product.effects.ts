@@ -59,6 +59,18 @@ export class ProductEffects {
 
 
 
+  public deleteProduct$ = createEffect(() => this.actions$.pipe(
+    ofType(ProductsActionTypes.DELETE_PRODUCT),
+    mergeMap((idproduct) => this.productService.delete(idproduct)
+      .pipe(
+        map((product: Product) => ({ type: ProductsActionTypes.DELETE_PRODUCT_SUCCESS, productdelete: product })),
+          catchError(err => of({ type: ProductsActionTypes.DELETE_PRODUCT_ERROR, err }))
+      ))
+    )
+  );
+
+
+
   constructor(
     private actions$: Actions,
     private productService: ProductService

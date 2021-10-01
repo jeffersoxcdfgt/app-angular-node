@@ -66,4 +66,18 @@ export class ProductService {
       );
     }
 
+
+   /**
+    * Delete an object by its identifier field
+    * @param id the object identifier
+    * @returns gets the response
+    */
+    public delete(id): Observable<Product> {
+      return this.http.delete<Product>(this.URL +  '/api/products/delete/id/' + id.idproduct).pipe(
+        tap(_ => this.traceService.log(`deleted team id=${id}`)),
+        catchError(this.traceService.handleError<Product>('delete'))
+      );
+    }
+
+
 }

@@ -131,6 +131,34 @@ const productReducer = createReducer(
             selected: null,
             error: err
       })),
+
+
+      // Delete product
+
+      on(productActions.productDelete, (state, { idproduct }) =>
+          ({
+            ...state,
+            selected: state.data.find(h => h.id === idproduct),
+            action: productActions.ProductsActionTypes.DELETE_PRODUCT,
+            done: false, error: null
+          })),
+      on(productActions.productDeleteSuccess,
+          state => ({
+            ...state,
+             data: state.data.filter( h => h.id !== state.selected.id),
+             selected: null,
+             error: null,
+             done: true
+             })),
+
+      on(productActions.productDeleteError,
+          (state, { err }) =>
+          ({
+            ...state,
+            selected: null,
+            done: true,
+             error: err
+          })),
 );
 
 export function reducer(state: State | undefined, action: AppAction): any {
@@ -185,4 +213,15 @@ export const getUpdateError = createSelector(getProductsState, (state: State) =>
       return state.action === productActions.ProductsActionTypes.UPDATE_PRODUCT
         ? state.error
        : null;
+});
+
+// Selector for Delete Team
+
+export const isDeleted = createSelector(getProductsState , (state: State) =>
+  state.action === productActions.ProductsActionTypes.DELETE_PRODUCT && state.done && !state.error);
+
+export const getDeleteError = createSelector(getProductsState, (state: State) => {
+  return state.action === productActions.ProductsActionTypes.DELETE_PRODUCT_SUCCESS
+    ? state.error
+   : null;
 });

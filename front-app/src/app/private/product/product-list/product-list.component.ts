@@ -5,7 +5,7 @@ import { Product } from '../class/product';
 import { Observable , of, BehaviorSubject } from 'rxjs';
 import { mergeMap , switchMap , map, filter } from 'rxjs/operators';
 import { getAllProducts } from '../store/reducers/product.reducers';
-import { productsGetAll } from '../store/actions/product.actions';
+import { productDelete, productsGetAll } from '../store/actions/product.actions';
 import { MessageBoxComponent } from 'src/app/shared/components/message-box/message-box.component';
 
 @Component({
@@ -59,8 +59,8 @@ export class ProductListComponent implements OnInit {
     this.messageBoxComponent.open();
   }
 
-  deleteAcction = () => {
-    // Here dispatch action
-  }
+  // Here dispatch action
+
+  deleteAcction = () => this.store.dispatch(productDelete({idproduct: this.id }));
 
 }
