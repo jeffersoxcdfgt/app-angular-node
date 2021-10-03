@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.state';
 import { Product } from '../class/product';
 import { Observable , of, BehaviorSubject } from 'rxjs';
-import { mergeMap , switchMap , map, filter } from 'rxjs/operators';
+import { mergeMap , switchMap , map, filter, tap } from 'rxjs/operators';
 import { getAllProducts } from '../store/reducers/product.reducers';
 import { productDelete } from '../store/actions/product.actions';
 import { MessageBoxComponent } from 'src/app/shared/components/message-box/message-box.component';
@@ -22,6 +22,7 @@ export class ProductListComponent implements OnInit {
   messageValidation = '';
   @ViewChild('messageBoxComponent') messageBoxComponent: MessageBoxComponent;
   id: number;
+  amountperpagge = 6;
 
 
   constructor(private store: Store<AppState>) { }
@@ -36,6 +37,7 @@ export class ProductListComponent implements OnInit {
     const source =  this.subgetSearch
       .pipe(mergeMap((inputdata: string) =>
            this.products.pipe(
+             tap((lstpro) =>  this.p = lstpro.length <= this.amountperpagge ? 1 : this.p ),
                 filter((valuesprocess) =>  valuesprocess !== undefined),
                       map((allproducts: Product[]) => ( allproducts.filter((oneproduct) =>
                       oneproduct.hasOwnProperty('name') && oneproduct.name.toLowerCase().includes(inputdata.toLowerCase()) === true))),

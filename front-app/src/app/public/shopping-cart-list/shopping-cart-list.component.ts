@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
 import { Product } from '../../private/product/class/product';
 import { Observable , BehaviorSubject , of } from 'rxjs';
-import { mergeMap, map ,  switchMap, startWith, filter } from 'rxjs/operators';
+import { mergeMap, map ,  switchMap, startWith, filter, tap } from 'rxjs/operators';
 import { getAllProducts } from '../../private/product/store/reducers/product.reducers';
 import { shoppingCartAdd } from '../store/actions/shopping-cart.actions';
 import { getProductInShoppingCartError } from '../store/reducers/shopping-cart.reducers';
@@ -20,6 +20,7 @@ export class ShoppingCartListComponent implements OnInit {
   products: Observable<Product[]>;
   auxproducts: Observable<Product[]>;
   subgetSearch: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  amountperpagge = 6;
 
   constructor(private store: Store<AppState>) { }
 
@@ -46,6 +47,7 @@ export class ShoppingCartListComponent implements OnInit {
         const source =  this.subgetSearch
           .pipe(mergeMap((inputdata: string) =>
                this.products.pipe(
+                tap((lstpro) =>  this.p = lstpro.length <= this.amountperpagge ? 1 : this.p ),
                      filter((valuesprocess) =>  valuesprocess !== undefined),
                           map((allproducts: Product[]) => ( allproducts.filter((oneproduct) =>
                           oneproduct.hasOwnProperty('name') && oneproduct.name.toLowerCase().includes(inputdata.toLowerCase()) === true))),

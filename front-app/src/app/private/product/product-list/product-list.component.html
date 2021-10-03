@@ -56,7 +56,7 @@
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              <ng-template ngFor let-product [ngForOf]="products | async | paginate: { itemsPerPage: 6, currentPage: p }" let-i="index">
+             <ng-template ngFor let-product [ngForOf]="products | async | paginate: { itemsPerPage: amountperpagge, currentPage: p }" let-i="index">
                 <tr *ngIf="product.hasOwnProperty('picture') && product.hasOwnProperty('name') && product.hasOwnProperty('description') && 
                 product.hasOwnProperty('price') && product.hasOwnProperty('cost')">
                 <td class="px-6 py-4 whitespace-nowrap">
