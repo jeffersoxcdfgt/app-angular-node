@@ -9,14 +9,6 @@ import { Product } from '../class/product';
 import { productCreate } from '../store/actions/product.actions';
 import { isCreated } from '../store/reducers/product.reducers';
 
-class PruductAdd {
-  name?: string;
-  description?: string;
-  price?: string;
-  cost?: string;
-  image?: string;
-  picture?: string;
-}
 
 @Component({
   selector: 'app-product-create',
