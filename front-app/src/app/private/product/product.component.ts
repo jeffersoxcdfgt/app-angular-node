@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { AppState } from '../../app.state';
 import { getProductsError } from './store/reducers/product.reducers';
+import { productsGetAll } from './store/actions/product.actions';
 
 @Component({
   selector: 'app-product',
@@ -16,6 +17,7 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.store.dispatch(productsGetAll());
     this.store.select(getProductsError).subscribe((error) => this.loadingError(error));
   }
 

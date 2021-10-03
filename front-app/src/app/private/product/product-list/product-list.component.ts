@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.state';
 import { Product } from '../class/product';
 import { Observable , of, BehaviorSubject } from 'rxjs';
 import { mergeMap , switchMap , map, filter } from 'rxjs/operators';
 import { getAllProducts } from '../store/reducers/product.reducers';
-import { productDelete, productsGetAll } from '../store/actions/product.actions';
+import { productDelete } from '../store/actions/product.actions';
 import { MessageBoxComponent } from 'src/app/shared/components/message-box/message-box.component';
 
 @Component({
@@ -27,15 +27,9 @@ export class ProductListComponent implements OnInit {
   constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
-      this.store.dispatch(productsGetAll());
       this.products = this.store.select(getAllProducts);
       this.auxproducts = this.products;
       this.searchData();
-      this.products.subscribe( data => {
-        if (data !== undefined && data !== null){
-           // console.log(data,"private")
-        }
-      });
   }
 
   searchData = () => {

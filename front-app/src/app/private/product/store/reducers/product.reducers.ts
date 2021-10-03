@@ -34,7 +34,7 @@ const productReducer = createReducer(
     }) =>
      ({
         ...state,
-        data: products,
+        data: products === undefined ? state.data : products ,
         done: true,
         selected: null,
         error: null
