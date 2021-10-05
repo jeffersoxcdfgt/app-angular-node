@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AppState } from '../../app.state';
 import { getDeleteError, getProductsError, getUpdateError, isCreated, isUpdated } from './store/reducers/product.reducers';
 import { productsGetAll } from './store/actions/product.actions';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-product',
@@ -28,6 +29,7 @@ export class ProductComponent implements OnInit {
 
     this.store.select(getUpdateError).subscribe((error) =>
                   this.actionError(error, 'Error while updating the product'));
+
   }
 
 
@@ -48,7 +50,8 @@ export class ProductComponent implements OnInit {
    */
      loadingError(error): void {
       if (error) {
-        alert('Error while loading the list of products');
+        Swal.fire({title: 'Error!', text: 'Error while loading the list of products',
+                  icon: 'error', confirmButtonText: 'Cool'});
       }
     }
 
@@ -59,7 +62,7 @@ export class ProductComponent implements OnInit {
    */
     actionError(error, message: string): void {
       if (error) {
-        alert(message);
+        Swal.fire({title: 'Error!', text: message, icon: 'error', confirmButtonText: 'Cool' });
       }
     }
 
