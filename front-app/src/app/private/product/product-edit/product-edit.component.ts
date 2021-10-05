@@ -1,13 +1,13 @@
 import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
-import { filter, find, map, mergeMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable} from 'rxjs';
+import { find, map } from 'rxjs/operators';
 import { AppState } from 'src/app/app.state';
 import { ValidationProductService } from 'src/app/shared/validations/validationProduct';
 import { Product } from '../class/product';
 import { productGet, productUpdate } from '../store/actions/product.actions';
-import { getProduct, isUpdated } from '../store/reducers/product.reducers';
+import { getProduct } from '../store/reducers/product.reducers';
 
 @Component({
   selector: 'app-product-edit',
@@ -179,12 +179,6 @@ export class ProductEditComponent implements OnInit , AfterViewInit {
           )
         ).subscribe((data) => this.pruductupdate = data);
 
-
-    this.store.select(isUpdated).subscribe((updatevalue) => {
-           if (updatevalue === true){
-            this.router.navigate(['/user/menu/product']);
-          }
-        });
   }
 
 }

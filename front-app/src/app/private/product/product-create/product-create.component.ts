@@ -1,13 +1,12 @@
-import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, of , combineLatest} from 'rxjs';
+import { BehaviorSubject , combineLatest} from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AppState } from 'src/app/app.state';
 import { ValidationProductService } from '../../../shared/validations/validationProduct';
 import { Product } from '../class/product';
 import { productCreate } from '../store/actions/product.actions';
-import { isCreated } from '../store/reducers/product.reducers';
 
 
 @Component({
@@ -15,7 +14,7 @@ import { isCreated } from '../store/reducers/product.reducers';
   templateUrl: './product-create.component.html',
   styleUrls: ['./product-create.component.css']
 })
-export class ProductCreateComponent implements OnInit , AfterViewInit {
+export class ProductCreateComponent implements OnInit {
 
   filePath = '';
 
@@ -117,12 +116,4 @@ export class ProductCreateComponent implements OnInit , AfterViewInit {
     };
     reader.readAsDataURL(file);
    }
-
-    ngAfterViewInit(): void {
-      this.store.select(isCreated).subscribe((createvalue) => {
-        if (createvalue === true){
-          this.router.navigate(['/user/menu/product']);
-        }
-      });
-    }
 }
