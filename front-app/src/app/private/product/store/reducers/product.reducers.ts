@@ -118,7 +118,10 @@ const productReducer = createReducer(
         productActions.prodcutUpdateSuccess,
         state => ({
             ...state,
-            data: [ ],
+            data: [
+              ...state.data.filter((data) => data.id !== state.selected.id),
+              state.selected
+             ],
             done: true,
             selected: state.selected,
             error: null
