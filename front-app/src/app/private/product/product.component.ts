@@ -18,7 +18,7 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(productsGetAll());
+//    this.store.dispatch(productsGetAll());
     this.store.select(getProductsError).subscribe((error) => this.loadingError(error));
 
     this.store.select(isCreated).subscribe((done) => this.actionSuccess(done));
