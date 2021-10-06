@@ -116,17 +116,24 @@ const productReducer = createReducer(
         })),
       on(
         productActions.prodcutUpdateSuccess,
-        state => ({
-            ...state,
-            data: [
-              ...state.data.filter((data) => data.id !== state.selected.id),
-              state.selected
-             ],
-            done: true,
-            selected: state.selected,
-            error: null
+        state => {
+          const index = state.data.findIndex((data) => data.id === state.selected.id);
+          if (index >= 0) {
+            const data = [
+              ...state.data.slice(0, index),
+              state.selected,
+              ...state.data.slice(index + 1)
+            ];
+            return {
+              ...state,
+              data,
+              done: true,
+              selected: null,
+              error: null
+            };
           }
-        )),
+        }
+        ),
       on(productActions.prodcutUpdateError,
          (state, { err }) => (
            {...state,
