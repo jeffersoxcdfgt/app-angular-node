@@ -51,7 +51,7 @@ export class ProductEffects {
       ofType(ProductsActionTypes.UPDATE_PRODUCT),
       mergeMap((product) => this.productService.update(product['productupdate']) // tslint:disable-line
         .pipe(
-          map((_) => ({ type: ProductsActionTypes.UPDATE_PRODUCT_SUCCESS })),
+          map((updpro) => ({ type: ProductsActionTypes.UPDATE_PRODUCT_SUCCESS , productupdate: updpro  })),
             catchError(error => of({ type: ProductsActionTypes.UPDATE_PRODUCT_ERROR, err: error }))
         ))
       )

@@ -42,7 +42,7 @@ export const  productGetError = createAction(ProductsActionTypes.GET_PRODUCT_ERR
 // Update Pruduct
 
 export const productUpdate = createAction(ProductsActionTypes.UPDATE_PRODUCT, props<{productupdate: Product} >());
-export const prodcutUpdateSuccess = createAction(ProductsActionTypes.UPDATE_PRODUCT_SUCCESS);
+export const prodcutUpdateSuccess = createAction(ProductsActionTypes.UPDATE_PRODUCT_SUCCESS , props<{productupdate: Product} >());
 export const prodcutUpdateError = createAction(ProductsActionTypes.UPDATE_PRODUCT_ERROR, props<{err: Error}>());
 
 

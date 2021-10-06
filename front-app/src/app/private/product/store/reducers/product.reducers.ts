@@ -116,7 +116,7 @@ const productReducer = createReducer(
         })),
       on(
         productActions.prodcutUpdateSuccess,
-        state => {
+        (state , { productupdate }) => {
           const index = state.data.findIndex((data) => data.id === state.selected.id);
           if (index >= 0) {
             const data = [
