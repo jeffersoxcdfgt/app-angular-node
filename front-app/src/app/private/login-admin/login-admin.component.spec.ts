@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LoginAdminComponent } from './login-admin.component';
+import {  StoreModule } from '@ngrx/store';
 
 describe('LoginAdminComponent', () => {
   let component: LoginAdminComponent;
@@ -8,6 +8,7 @@ describe('LoginAdminComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [StoreModule.forRoot({})],
       declarations: [ LoginAdminComponent ]
     })
     .compileComponents();
