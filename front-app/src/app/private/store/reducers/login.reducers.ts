@@ -57,10 +57,12 @@ export function reducer(state: State | undefined, action: AppAction): any{
 export const getUsersState = createFeatureSelector < State > ('user');
 
 // Selector logging user
-export const isLogged = createSelector( getUsersState , ( state: State ) => state.selected );
+export const isLogged = createSelector( getUsersState , ( state: State ) => {
+  return !!state && !!state.selected ? state.selected : null;
+});
 
 export const erroLogging = createSelector( getUsersState , (state: State) => {
-      return state.action === loginActions.LoginActionTypes.LOGIN_USER
+      return  !!state && !!state.action && state.action === loginActions.LoginActionTypes.LOGIN_USER
        ? state.error
        : null;
 });

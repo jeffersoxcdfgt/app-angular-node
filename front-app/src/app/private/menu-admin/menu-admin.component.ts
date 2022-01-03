@@ -21,7 +21,7 @@ export class MenuAdminComponent implements OnInit , AfterViewInit {
 
   ngOnInit(): void {
     this.store.select(isLogged).subscribe( data => {
-      if (data != null){
+      if (!!data){
         this.currentuser = data.user;
       }
     });

@@ -2,6 +2,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ShoppingCartListComponent } from './shopping-cart-list.component';
+import { StoreModule } from '@ngrx/store';
+import { NgxPaginationModule } from 'ngx-pagination';
+
 
 describe('ShoppingCartListComponent', () => {
   let component: ShoppingCartListComponent;
@@ -9,7 +12,11 @@ describe('ShoppingCartListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [
+        RouterTestingModule,
+        StoreModule.forRoot({}),
+        NgxPaginationModule
+      ],
       declarations: [ ShoppingCartListComponent ]
     })
     .compileComponents();

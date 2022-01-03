@@ -170,7 +170,8 @@ export function reducer(state: State | undefined, action: AppAction): any {
 export const getShoppingCartState = createFeatureSelector < State > ('shoppingcart');
 
 export const getProductInShoppingCart = createSelector( getShoppingCartState , ( state: State ) => {
-  if (state.action ===  shoppingCartActions.ShoppingcartActionTypes.ADD_PRODUCT_SHOPPING_CART && state.done && !state.error){
+  if (!!state && !!state.action && state.action ===  shoppingCartActions.ShoppingcartActionTypes.ADD_PRODUCT_SHOPPING_CART &&
+    state.done && !state.error){
     return state.selected;
   } else{
     return null;
@@ -178,13 +179,14 @@ export const getProductInShoppingCart = createSelector( getShoppingCartState , (
 });
 
 export const getProductInShoppingCartError = createSelector(getShoppingCartState, (state: State) => {
-  return state.action === shoppingCartActions.ShoppingcartActionTypes.ADD_PRODUCT_SHOPPING_CART_ERROR
+  return !!state && !!state.action && state.action === shoppingCartActions.ShoppingcartActionTypes.ADD_PRODUCT_SHOPPING_CART_ERROR
     ? state.error
    : null;
 });
 
 export const getListShoppingCart = createSelector( getShoppingCartState , ( state: State ) => {
-  if (state.action ===  shoppingCartActions.ShoppingcartActionTypes.GET_PRODUCTS_SHOPPING_CART && state.done && !state.error){
+  if (!!state && !!state.action && state.action ===  shoppingCartActions.ShoppingcartActionTypes.GET_PRODUCTS_SHOPPING_CART &&
+    state.done && !state.error){
     return state.data;
   } else{
     return [];
@@ -192,14 +194,15 @@ export const getListShoppingCart = createSelector( getShoppingCartState , ( stat
 });
 
 export const getListShoppingCartError = createSelector(getShoppingCartState, (state: State) => {
-  return state.action === shoppingCartActions.ShoppingcartActionTypes.GET_PRODUCTS_SHOPPING_CART_ERROR
+  return !!state && !!state.action && state.action === shoppingCartActions.ShoppingcartActionTypes.GET_PRODUCTS_SHOPPING_CART_ERROR
     ? state.error
    : null;
 });
 
 
 export const updateAmountOfProduct = createSelector( getShoppingCartState , ( state: State ) => {
-  if (state.action ===  shoppingCartActions.ShoppingcartActionTypes.UPDATE_PRODUCT_SHOPPING_CART && state.done && !state.error){
+  if ( !!state && !!state.action && state.action ===  shoppingCartActions.ShoppingcartActionTypes.UPDATE_PRODUCT_SHOPPING_CART &&
+    state.done && !state.error){
     return state.selected;
   } else{
     return null;
@@ -208,14 +211,14 @@ export const updateAmountOfProduct = createSelector( getShoppingCartState , ( st
 
 
 export const updateAmountOfProductError = createSelector(getShoppingCartState, (state: State) => {
-  return state.action === shoppingCartActions.ShoppingcartActionTypes.UPDATE_PRODUCT_SHOPPING_CART_ERROR
+  return !!state && !!state.action &&  state.action === shoppingCartActions.ShoppingcartActionTypes.UPDATE_PRODUCT_SHOPPING_CART_ERROR
     ? state.error
    : null;
 });
 
 
 export const getLastlistproducts = createSelector(getShoppingCartState, (state: State) => {
-  return state.action === shoppingCartActions.ShoppingcartActionTypes.GET_LAST_LIST_PRODUCTS && state.data === 'lstproducts'
+  return !!state && !!state.action &&  state.action === shoppingCartActions.ShoppingcartActionTypes.GET_LAST_LIST_PRODUCTS && state.data === 'lstproducts'
     ? state.data
    : null;
 });
@@ -223,7 +226,8 @@ export const getLastlistproducts = createSelector(getShoppingCartState, (state: 
 // Get list products with amount
 
 export const getProductListAmount = createSelector( getShoppingCartState , ( state: State ) => {
-  if (state.action ===  shoppingCartActions.ShoppingcartActionTypes.GET_LIST_SWITCH_PRODUCT_AMOUNT_SUCCESS && state.done && !state.error){
+  if (!!state && !!state.action && state.action ===  shoppingCartActions.ShoppingcartActionTypes.GET_LIST_SWITCH_PRODUCT_AMOUNT_SUCCESS &&
+    state.done && !state.error){
     return state.selected;
   } else{
     return null;
@@ -231,7 +235,7 @@ export const getProductListAmount = createSelector( getShoppingCartState , ( sta
 });
 
 export const getProductListAmountError = createSelector(getShoppingCartState, (state: State) => {
-  return state.action === shoppingCartActions.ShoppingcartActionTypes.GET_LIST_SWITCH_PRODUCT_AMOUNT_ERROR
+  return !!state && !!state.action && state.action === shoppingCartActions.ShoppingcartActionTypes.GET_LIST_SWITCH_PRODUCT_AMOUNT_ERROR
     ? state.error
    : null;
 });

@@ -38,8 +38,8 @@ export class ProductListComponent implements OnInit {
     const source =  this.subgetSearch
       .pipe(mergeMap((inputdata: string) =>
            this.products.pipe(
-             tap((lstpro) =>  this.p = lstpro.length <= this.amountperpagge ? 1 : this.p ),
-                filter((valuesprocess) =>  valuesprocess !== undefined),
+             tap((lstpro) =>  this.p = !! lstpro && lstpro.length <= this.amountperpagge ? 1 : this.p ),
+                filter((valuesprocess) =>  !!valuesprocess),
                       map((allproducts: Product[]) => ( allproducts.filter((oneproduct) =>
                       oneproduct.hasOwnProperty('name') && oneproduct.name.toLowerCase().includes(inputdata.toLowerCase()) === true))),
                              switchMap(valpro => ( inputdata === '' ? this.auxproducts : of<Product[]>(valpro))),

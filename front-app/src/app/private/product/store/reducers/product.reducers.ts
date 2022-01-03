@@ -178,9 +178,13 @@ export const getProductsState = createFeatureSelector < State > ('product');
 
 // Selector for list products
 
-export const getAllProducts = createSelector( getProductsState , (state: State ) => state.data);
+export const getAllProducts = createSelector( getProductsState , (state: State ) => {
+  return !!state && !!state.data
+  ? state.data
+  : null;
+});
 export const getProductsError = createSelector(getProductsState, (state: State) => {
-  return state.action === productActions.ProductsActionTypes.GET_PRODUCTS
+  return !!state && !!state.action && state.action === productActions.ProductsActionTypes.GET_PRODUCTS
     ? state.error
    : null;
 });
@@ -189,7 +193,7 @@ export const getProductsError = createSelector(getProductsState, (state: State) 
 // Create Product
 
 export const isCreated = createSelector( getProductsState , ( state: State ) => {
-  if (state.action ===   productActions.ProductsActionTypes.CREATE_PRODUCT && state.done && !state.error){
+  if (!!state && !!state.action && state.action === productActions.ProductsActionTypes.CREATE_PRODUCT && state.done && !state.error){
     return state.done;
   } else{
     return null;
@@ -200,7 +204,7 @@ export const isCreated = createSelector( getProductsState , ( state: State ) => 
 // Selector for Get Product
 
 export const getProduct = createSelector( getProductsState , ( state: State ) => {
-  if (state.action ===  productActions.ProductsActionTypes.GET_PRODUCT && state.done){
+  if (!!state && !!state.action && state.action ===  productActions.ProductsActionTypes.GET_PRODUCT && state.done){
     return state.selected;
   } else{
     return null;
@@ -208,7 +212,7 @@ export const getProduct = createSelector( getProductsState , ( state: State ) =>
 });
 
 export const getProductError = createSelector(getProductsState, (state: State) => {
-  return state.action === productActions.ProductsActionTypes.GET_PRODUCT
+  return !!state && !!state.action && state.action === productActions.ProductsActionTypes.GET_PRODUCT
     ? state.error
    : null;
 });
@@ -217,10 +221,10 @@ export const getProductError = createSelector(getProductsState, (state: State) =
 // Selector for update
 
 export const isUpdated = createSelector(getProductsState , (state: State ) =>
-  state.action === productActions.ProductsActionTypes.UPDATE_PRODUCT  && state.done && !state.error);
+!!state && !!state.action && state.action === productActions.ProductsActionTypes.UPDATE_PRODUCT  && state.done && !state.error);
 
 export const getUpdateError = createSelector(getProductsState, (state: State) => {
-      return state.action === productActions.ProductsActionTypes.UPDATE_PRODUCT
+      return !!state && !!state.action && state.action === productActions.ProductsActionTypes.UPDATE_PRODUCT
         ? state.error
        : null;
 });
@@ -228,10 +232,10 @@ export const getUpdateError = createSelector(getProductsState, (state: State) =>
 // Selector for Delete Team
 
 export const isDeleted = createSelector(getProductsState , (state: State) =>
-  state.action === productActions.ProductsActionTypes.DELETE_PRODUCT && state.done && !state.error);
+!!state && !!state.action && state.action === productActions.ProductsActionTypes.DELETE_PRODUCT && state.done && !state.error);
 
 export const getDeleteError = createSelector(getProductsState, (state: State) => {
-  return state.action === productActions.ProductsActionTypes.DELETE_PRODUCT_SUCCESS
+  return !!state && !!state.action && state.action === productActions.ProductsActionTypes.DELETE_PRODUCT_SUCCESS
     ? state.error
    : null;
 });

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProductListComponent } from './product-list.component';
 import { StoreModule } from '@ngrx/store';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 describe('ProductListComponent', () => {
   let component: ProductListComponent;
@@ -9,10 +10,11 @@ describe('ProductListComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        NgxPaginationModule,
         StoreModule.forRoot({})
       ],
       declarations: [ ProductListComponent ]
-      
+
     })
     .compileComponents();
   });

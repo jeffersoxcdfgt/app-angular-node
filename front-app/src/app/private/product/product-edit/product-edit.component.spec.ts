@@ -9,7 +9,7 @@ describe('ProductEditComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule,StoreModule.forRoot({})],
+      imports: [RouterTestingModule, StoreModule.forRoot({})],
       declarations: [ ProductEditComponent ]
     })
     .compileComponents();
