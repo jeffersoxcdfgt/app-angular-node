@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient , HttpHeaders } from '@angular/common/http';
-import { Observable , of } from 'rxjs';
-import { catchError , map} from 'rxjs/operators';
+import { Observable , throwError } from 'rxjs';
+import { catchError , map } from 'rxjs/operators';
 import { User } from '../../shared/user';
 import { TraceService } from '../../../shared/utils/traceService';
 import { environment } from '../../../../environments/environment';
@@ -27,8 +27,8 @@ export class UserService {
      return this.http.post<User>(`${this.URL}/api/user/uservalidate` , data  , {headers })
      .pipe(
           map((userdata) => ({ ...userdata, user: data.user.email })),
-           catchError(err => of({err}))
-     );
+            catchError((err: Error) => throwError(err)),
+      );
    }
 
    getToken(): string {
