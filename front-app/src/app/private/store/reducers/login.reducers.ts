@@ -62,7 +62,7 @@ export const isLogged = createSelector( getUsersState , ( state: State ) => {
 });
 
 export const erroLogging = createSelector( getUsersState , (state: State) => {
-      return  !!state && !!state.action && state.action === loginActions.LoginActionTypes.LOGIN_USER
+      return state?.error !== null && !!state && !!state.action && state.action === loginActions.LoginActionTypes.LOGIN_USER
        ? state.error
        : null;
 });

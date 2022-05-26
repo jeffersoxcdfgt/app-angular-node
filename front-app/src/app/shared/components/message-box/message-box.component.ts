@@ -1,4 +1,4 @@
-import { Component, OnInit , Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit , Input, EventEmitter, Output, SimpleChanges, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
   templateUrl: './message-box.component.html',
   styleUrls: ['./message-box.component.css']
 })
-export class MessageBoxComponent implements OnInit {
+export class MessageBoxComponent implements OnInit, OnChanges {
 
   @Input() message: string;
   @Input() urlredirect = '';
@@ -32,5 +32,19 @@ export class MessageBoxComponent implements OnInit {
   callBackReturn = () => {
     this.showAlert  = 'none';
     this.dataOutput.emit();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    for (const propName in changes) {
+      if (changes.hasOwnProperty(propName)) {
+        switch (propName) {
+          case 'message': {
+            if (!!changes.message.currentValue){
+              this.open();
+            }
+          }
+        }
+      }
+    }
   }
 }

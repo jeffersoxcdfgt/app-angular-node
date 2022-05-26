@@ -18,24 +18,24 @@
       <div class="mt-8 sm:mx-auto sm:w-full sm:mas-w-md">
           <div class="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
             <form class="mb-0 space-y-6" action="#" method="POST">
-                <div>  
+                <div>
                     <label for="email" [className]="'block text-sm font-medium text-gray-700'" [ngClass]="
                     {
-                      'text-red-400' : (validationLoginService.obsEmail | async) === false || (validationLoginService.obsifEmail | async) === false  
+                      'text-red-400' : (validationLoginService.obsEmail | async) === false || (validationLoginService.obsifEmail | async) === false
                     }">Email address </label>
                     <div class="mt-1">
-                        <input  id="email" name="email"  type="email"  autocomplete="email" required 
+                        <input  id="email" name="email"  type="email"  autocomplete="email" required
                         (input)="
-                        validationLoginService.inputEmail( $event.target.value); 
+                        validationLoginService.inputEmail( $event.target.value);
                         validationLoginService.inputIfemailvalidate( $event.target.value );
                         subgetEmail.next($event.target.value)"
-                        [className]="'w-full border-gray-300 rounded-lg shadow-sm'" 
+                        [className]="'w-full border-gray-300 rounded-lg shadow-sm'"
                         [ngClass]="
                         {
-                          'border border-transparent border-red-400  focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent' : 
+                          'border border-transparent border-red-400  focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent' :
                           (validationLoginService.obsEmail | async) === false || (validationLoginService.obsifEmail | async) === false
                         }"/>
-                    </div>                    
+                    </div>
                     <div class="mt-2">
                       <span *ngIf="(validationLoginService.obsEmail | async) === false ; else elseBlock" class="text-red-400" >Email is required</span>
                       <ng-template #elseBlock>
@@ -44,21 +44,21 @@
                     </div>
                 </div>
                 <div>
-                    <label for="password" 
-                    [className]="'block text-sm font-medium text-gray-700'" 
+                    <label for="password"
+                    [className]="'block text-sm font-medium text-gray-700'"
                     [ngClass]="{'text-red-400' : (validationLoginService.obsPassword | async) === false || (validationLoginService.obsPasswordlength | async) === false}"  >Password</label>
                     <div class="mt-1">
-                        <input id="password" name="password"  type="password"  autocomplete="current-password" 
-                          required 
+                        <input id="password" name="password"  type="password"  autocomplete="current-password"
+                          required
                           (input)="
-                          validationLoginService.inputPassword( $event.target.value); 
+                          validationLoginService.inputPassword( $event.target.value);
                           validationLoginService.inputPasswordlength( $event.target.value);
                           subgetPassword.next($event.target.value)"
-                          [className]="'w-full border-gray-300 rounded-lg shadow-sm'" 
+                          [className]="'w-full border-gray-300 rounded-lg shadow-sm'"
                           [ngClass]="
                           {
-                            'border border-transparent border-red-400 focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent' : 
-                            (validationLoginService.obsPassword | async) === false || (validationLoginService.obsPasswordlength | async) === false 
+                            'border border-transparent border-red-400 focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent' :
+                            (validationLoginService.obsPassword | async) === false || (validationLoginService.obsPasswordlength | async) === false
                           }"/>
                     </div>
                     <div class="mt-2">
@@ -66,17 +66,17 @@
                       <ng-template #elseBlocklength>
                         <span *ngIf="(validationLoginService.obsPasswordlength | async) === false" class="text-red-400" >Password at least 6 characters </span>
                       </ng-template>
-                    </div>                    
+                    </div>
                 </div>
                 <div class="flex items-center">
-                    <input 
-                    id="terms-and-privacy" 
-                    name="terms-and-privacy" 
-                    type="checkbox" 
+                    <input
+                    id="terms-and-privacy"
+                    name="terms-and-privacy"
+                    type="checkbox"
                     (change)="validationLoginService.inputTerms( $event.target.checked)"
                     [ngClass]="{'rounded border-red-400 text-red-400 focus:ring-red-400' : (validationLoginService.obsTerms | async) === false }"/>
-                    <label for="terms-and-privacy"                     
-                    [className]="'ml-2 block text-sm text-gray-900'"                   
+                    <label for="terms-and-privacy"
+                    [className]="'ml-2 block text-sm text-gray-900'"
                     > I agree to the
                       <a href="#" class="text-indigo-600 hover:text-indigo-500" >Terms</a>
                       and
@@ -90,15 +90,15 @@
                     <button
                     (click)="login()"
                     type="submit" class="
-                    w-full flex 
-                    justify-center 
-                    py-2 px-4 
-                    border 
-                    border-transparent 
-                    rounded-md shadow-sm 
-                    text-sm 
-                    font-medium 
-                    text-white 
+                    w-full flex
+                    justify-center
+                    py-2 px-4
+                    border
+                    border-transparent
+                    rounded-md shadow-sm
+                    text-sm
+                    font-medium
+                    text-white
                     bg-indigo-600
                     hover:bg-indigo-700
                     focus:outline-none
@@ -113,4 +113,4 @@
       </div>
     </div>
   </div>
-  <app-message-box #messageBoxComponent [message]="messageValidation"></app-message-box>
+  <app-message-box [message]="obsMessage$ | async"></app-message-box>
