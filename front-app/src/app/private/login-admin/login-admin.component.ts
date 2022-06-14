@@ -14,7 +14,7 @@ class Error {
   status: string;
 }
 
-const MAPERRO = map((errorcustom) => Object.assign(new Error(), errorcustom).messageError);
+const MAPERROR = map((errorcustom) => Object.assign(new Error(), errorcustom).messageError);
 
 @Component({
   selector: 'app-login-admin',
@@ -44,7 +44,7 @@ export class LoginAdminComponent implements OnInit , OnDestroy{
 
     ngOnInit(): void{
       this.validationLoginService.initValidation();
-      this.obsMessage$ = this.store.select(erroLogging).pipe(MAPERRO);
+      this.obsMessage$ = this.store.select(erroLogging).pipe(MAPERROR);
     }
 
     getDatainputs$ = () => combineLatest([this.obsgetEmail , this.obsgetPassword])
